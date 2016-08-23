@@ -17,11 +17,11 @@ Item {
         onZapChanged: {
             Qt.createQmlObject(
                 "QPlaceButton {
-                    qwidth:     parent.width - parent.width / 20;
-                    qheight:    parent.width / 8;
-                    qradius:    parent.width / 40;
+                    qwidth:     parent.width - parent.width / 20
+                    qheight:    parent.width / 8
+                    qradius:    parent.width / 40
                     qtooltip:   '"+zap.split(",",3).slice(zap.split(",",2).length)+"'
-                    qtext:      '"+zap.split(",",2).slice(zap.split(",",1).length)+"';
+                    qtext:      '"+zap.split(",",2).slice(zap.split(",",1).length)+"'
                     onQClicked: placeLaunch('xdg-open "+zap.split(",",1)+"')
                 }", this, "../components/QPlaceButton")
         }

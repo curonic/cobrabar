@@ -29,11 +29,11 @@
 #include <QDirIterator>
 #include <QVBoxLayout>
 #include <QStandardPaths>
-#include <QtXml/QDomDocument>
+#include <QDomDocument>
 #include <QFile>
 #include <QProcess>
 #include <QHBoxLayout>
-#include <QQuickWidget>
+
 
 
 CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
@@ -41,15 +41,17 @@ CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
     QDesktopWidget qw;
     QRect mainScreenSize = qw.availableGeometry(qw.primaryScreen());
 
-    position_ = new QStringList;
+    position_   = new QStringList;
 
     qmlObject_  = new QObject;
     qmlWidget_  = new QWidget;
-    auto *emptyView_    = new QQuickView;
-    emptyView_->setSource(QUrl("qrc:/qml/Main.qml"));
-    qmlObject_ = emptyView_->rootObject();
-    qmlWidget_  = QWidget::createWindowContainer(emptyView_);
-    emptyView_->setColor(QColor(Qt::transparent));
+    qmlView_    = new QQuickView;
+
+    qmlView_->setSource(QUrl("qrc:/qml/Main.qml"));
+    qmlView_->setColor(QColor(Qt::transparent));
+
+    qmlObject_ = qmlView_->rootObject();
+    qmlWidget_ = QWidget::createWindowContainer(qmlView_);
 
     auto layout  = new QVBoxLayout;
     layout->addWidget(qmlWidget_);
@@ -58,8 +60,6 @@ CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
 
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setObjectName("CobraBar");
-    this->autoFillBackground();
-//    this->setStyleSheet("background: #33ff0000;");
     this->setFocusPolicy(Qt::NoFocus);
     this->setLayout(layout);
     this->move(mainScreenSize.width() - 200,0);

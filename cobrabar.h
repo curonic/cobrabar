@@ -2,9 +2,9 @@
 #define COBRABAR_H
 
 #include <QMainWindow>
+#include <QObject>
 #include <QQuickView>
 #include <QQuickItem>
-#include <QObject>
 
 class CobraBar : public QWidget {
 
@@ -24,6 +24,8 @@ private slots:
 private:
     QObject     *qmlObject_;
     QWidget     *qmlWidget_;
+    QQuickView  *qmlView_;
+
     QStringList *position_;
 
     void getApplications();

@@ -21,7 +21,7 @@
 #include "cobrabar.h"
 
 #include <QApplication>
-#include <QtX11Extras/QX11Info>
+#include <QX11Info>
 
 #include <X11/Xlib.h>
 
