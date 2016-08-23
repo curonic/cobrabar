@@ -1,3 +1,0 @@
-CobraBar is a very simple desktop widget for linux, built using Qt framework.
-
-cd CobraBar; qmake .; make;
