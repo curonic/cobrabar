@@ -3,14 +3,6 @@
 
 #include <QString>
 
-/* not for this class, probably.
-
-+ add cd/usb monitor
-+ add more detailed disk I/O activity maybe?
-+ add filesystem formats
-
-*/
-
 class Stats {
 
 public:

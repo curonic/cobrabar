@@ -112,7 +112,7 @@ void CobraSettings::readSettings() {
 
             QString b;
 
-            b.append(path).prepend("xdg-open ")
+            b.append(path)
                     .append(",").append(text)
                     .append(",").append(tool);
 
@@ -131,7 +131,6 @@ void CobraSettings::readSettings() {
         places_list.append("places are empty or not provided");
 
     }
-
 }
 
 QString CobraSettings::getSettingsFile() {

@@ -43,23 +43,23 @@ CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
 
     position_ = new QStringList;
 
-    emptyObject_  = new QObject;
-    emptyWidget_  = new QWidget;
+    qmlObject_  = new QObject;
+    qmlWidget_  = new QWidget;
     auto *emptyView_    = new QQuickView;
     emptyView_->setSource(QUrl("qrc:/qml/Main.qml"));
-    emptyObject_ = emptyView_->rootObject();
-    emptyWidget_  = QWidget::createWindowContainer(emptyView_);
+    qmlObject_ = emptyView_->rootObject();
+    qmlWidget_  = QWidget::createWindowContainer(emptyView_);
     emptyView_->setColor(QColor(Qt::transparent));
 
     auto layout  = new QVBoxLayout;
-    layout->addWidget(emptyWidget_);
+    layout->addWidget(qmlWidget_);
     layout->setMargin(0);
     layout->setSpacing(0);
 
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setObjectName("CobraBar");
     this->autoFillBackground();
-    this->setStyleSheet("background: #33ff0000;");
+//    this->setStyleSheet("background: #33ff0000;");
     this->setFocusPolicy(Qt::NoFocus);
     this->setLayout(layout);
     this->move(mainScreenSize.width() - 200,0);
@@ -72,14 +72,14 @@ CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
     auto *date_timer = new QTimer(this);
     date_timer->start(4000);
 
-    emptyObject_->setProperty("globalWidth",QString::number(this->width()));
+    qmlObject_->setProperty("globalWidth",QString::number(this->width()));
 
     connect(time_timer, SIGNAL(timeout()), this, SLOT(slotTime()));
     connect(date_timer, SIGNAL(timeout()), this, SLOT(slotDate()));
-    connect(emptyObject_, SIGNAL(placeLaunch(QString)), this, SLOT(slotExec(QString)));
-    connect(emptyObject_, SIGNAL(applicationLaunch(QString)), this, SLOT(slotExec(QString)));
-    connect(emptyObject_, SIGNAL(loaderPosition(QString, int, int, int, int)), this, SLOT(slotPosition(QString, int, int, int, int)));
-    connect(emptyObject_, SIGNAL(exit()), this, SLOT(slotExit()));
+    connect(qmlObject_, SIGNAL(placeLaunch(QString)), this, SLOT(slotExec(QString)));
+    connect(qmlObject_, SIGNAL(applicationLaunch(QString)), this, SLOT(slotExec(QString)));
+    connect(qmlObject_, SIGNAL(loaderPosition(QString, int, int, int, int)), this, SLOT(slotPosition(QString, int, int, int, int)));
+    connect(qmlObject_, SIGNAL(exit()), this, SLOT(slotExit()));
 
     getApplications();
     getPlaces();
@@ -112,14 +112,14 @@ void CobraBar::slotPosition(QString id, int x, int y , int w, int h) {
 void CobraBar::slotDate() {
 
     QDate date = QDate::currentDate();
-    emptyObject_->setProperty("calendarDate", date.toString("dd-MM-yyyy"));
+    qmlObject_->setProperty("calendarDate", date.toString("dd-MM-yyyy"));
 
 }
 
 void CobraBar::slotTime() {
 
     QTime time = QTime::currentTime();
-    emptyObject_->setProperty("calendarTime", time.toString("hh:mm:ss"));
+    qmlObject_->setProperty("calendarTime", time.toString("hh:mm:ss"));
 
 }
 
@@ -127,12 +127,12 @@ void CobraBar::getApplications() {
 
     auto a = new CobraSettings;
 
-    emptyObject_->setProperty("applicationIcon", a->getIconsDir());
-    emptyObject_->setProperty("applicationHeight", a->getApplicationsHeight(this->width()));
+    qmlObject_->setProperty("applicationIcon", a->getIconsDir());
+    qmlObject_->setProperty("applicationHeight", a->getApplicationsHeight(this->width()));
 
     for(int i = 0; i < a->getApplicationsCount(); i++) {
 
-        emptyObject_->setProperty("applicationEntry", a->getApplicationsList().at(i));
+        qmlObject_->setProperty("applicationEntry", a->getApplicationsList().at(i));
 
     }
 }
@@ -148,11 +148,11 @@ void CobraBar::getPlaces() {
 
     auto a = new CobraSettings;
 
-    emptyObject_->setProperty("placeHeight", a->getPlacesHeight(this->width()));
+    qmlObject_->setProperty("placeHeight", a->getPlacesHeight(this->width()));
 
     for(int i = 0; i < a->getPlacesCount(); i++) {
 
-        emptyObject_->setProperty("placeEntry", a->getPlacesList().at(i));
+        qmlObject_->setProperty("placeEntry", a->getPlacesList().at(i));
 
     }
 }
@@ -163,14 +163,14 @@ void CobraBar::getDisks() {
 
     for( int i = 0; i < s->getDisksCount(); i++) {
 
-        emptyObject_->setProperty("diskEntry",
+        qmlObject_->setProperty("diskEntry",
                                   QString(s->getDisksList().at(i))
                                   .append(",")
                                   .append(QString::number(i)));
 
     }
 
-    emptyObject_->setProperty("diskHeight", ( this->width() / 6 ) * s->getDisksCount() );
+    qmlObject_->setProperty("diskHeight", ( this->width() / 6 ) * s->getDisksCount() );
 
 }
 

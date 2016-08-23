@@ -22,9 +22,8 @@ private slots:
     void slotExit();
 
 private:
-    QObject *emptyObject_;
-    QWidget *emptyWidget_;
-
+    QObject     *qmlObject_;
+    QWidget     *qmlWidget_;
     QStringList *position_;
 
     void getApplications();

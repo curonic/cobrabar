@@ -5,7 +5,6 @@
         <file>components/QPlaceButton.qml</file>
         <file>components/QDiskInfo.qml</file>
         <file>components/QPin.qml</file>
-        <file>js/Theme.js</file>
         <file>qml/Applications.qml</file>
         <file>qml/Calendar.qml</file>
         <file>qml/Pins.qml</file>

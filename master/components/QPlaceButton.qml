@@ -2,7 +2,6 @@ import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
-import "qrc:/js/Theme.js" as Theme
 
 Item {
 
@@ -12,9 +11,11 @@ Item {
     property    string  qtext
     property    string  qtooltip
 
-    property color cds: "#33ffffff"
-    property color gradient0: "#444"
-    property color gradient1: "#111"
+    property color cds:         "#33ffffff"
+    property color gradient0:   "#444"
+    property color gradient1:   "#111"
+    property color borderColor: "#44000000"
+    property color shadow:      "#333"
 
     signal qClicked()
     signal qChecked()
@@ -43,15 +44,15 @@ Item {
                 cds = "#aaffffff";
                 gradient0 = "#555";
                 gradient1 = "#222";
-//                effect.start();
             }
+
             onExited: {
                 cds = "#33ffffff"
                 gradient0 = "#444";
                 gradient1 = "#111";
             }
 
-            onClicked:        { effect.stop(); effect.start(); qClicked(); }
+            onClicked:        { effect.stop(); effect.start(); qClicked() }
             anchors.fill: button
 
         }
@@ -61,9 +62,8 @@ Item {
                 width:              parent.width
                 height:             parent.height
                 radius:             qradius
-                border.color:       Theme.PlaceBorderColor
+                border.color:       borderColor
                 anchors.centerIn:   parent
-
 
                 gradient: Gradient {
                     GradientStop { position: 0.0; color: gradient0 }
@@ -74,32 +74,31 @@ Item {
 
         Label {
             anchors.centerIn:               parent
-            anchors.verticalCenterOffset:   1
-            anchors.horizontalCenterOffset:   1
-            color:                          Theme.PlaceTextShadow
+            color:                          shadow
             text:                           qtext
-            font.pixelSize: parent.width > 0 ? parent.width / 14 : 1
+            font.pixelSize:                 parent.width > 0 ? parent.width / 14 : 1
+            anchors.verticalCenterOffset:   1
+            anchors.horizontalCenterOffset: 1
         }
 
         Label {
-            anchors.centerIn:   parent
-            color:              "#aaffffff"
-            text:               qtext
-            font.pixelSize: parent.width > 0 ? parent.width / 14 : 1
+            anchors.centerIn: parent
+            color:            "#aaffffff"
+            text:             qtext
+            font.pixelSize:   parent.width > 0 ? parent.width / 14 : 1
         }
 
         Rectangle {
-
-            width: 1
-            height: parent.width - qradius
-            anchors.centerIn: parent
+            width:                        1
+            height:                       parent.width - qradius
+            anchors.centerIn:             parent
+            rotation:                     90
             anchors.verticalCenterOffset: parent.height / 2 - 2
-            rotation:                       90
 
             gradient: Gradient {
-                GradientStop { position: 0.0; color: Theme.NoColor }
+                GradientStop { position: 0.0; color: "#00000000" }
                 GradientStop { position: 0.5; color: cds }
-                GradientStop { position: 1.0; color: Theme.NoColor }
+                GradientStop { position: 1.0; color: "#00000000" }
             }
         }
 

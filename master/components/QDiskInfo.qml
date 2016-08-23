@@ -3,7 +3,6 @@ import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.0
 import QtGraphicalEffects 1.0
-import "qrc:/js/Theme.js" as Theme
 
 Item {
 
@@ -20,99 +19,93 @@ Item {
 
     width:  qwidth
     height: qheight
+
     signal qClicked()
 
+    Rectangle {
 
-        Rectangle {
+        anchors.fill: parent
+        radius:       qradius
+        border.color: "#22000000"
+        gradient: Gradient {
+            GradientStop { position: 0; color: "#555" }
+            GradientStop { position: 1; color: "#222" }
+        }
 
-            anchors.fill:       parent
-            radius:           qradius
-            border.color: "#22000000"
-            gradient: Gradient {
-                GradientStop { position: 0; color: "#555" }
-                GradientStop { position: 1; color: "#222" }
-            }
+        MouseArea {
+            anchors.fill: parent
+            onClicked:    qClicked()
+        }
 
+        Column {
+            width:      parent.width
+            height:     parent.height
 
-        Row {
-            anchors.fill:               parent
-
-            Column {
+            Row {
                 width:  parent.width
-                height: parent.height
+                height: parent.height / 1.5
 
-                Row {
-                    width:  parent.width
-                    height: parent.height / 1.5
+                Rectangle {
+                    width:  parent.width / 2
+                    height: parent.height
+                    color:  "#00000000"
 
-                    Rectangle {
-                        width:  parent.width / 2
-                        height: parent.height
-                        color:  Theme.NoColor
-
-                        Label {
-                            color:            "#aaffffff"
-                            text:             qlabel
-                            font.pixelSize:   parent.width > 0 ? parent.width / 7 : 1
-                            anchors.centerIn: parent
-                            anchors.verticalCenterOffset: parent.width / 40
-                        }
-                    }
-
-                    Rectangle {
-                        width:  parent.width / 2
-                        height: parent.height
-                        color:  Theme.NoColor
-
-                        Label {
-                            color:            "#FF8000"
-                            height: parent.height
-                            width: parent.width
-                            text:             sizeingb+" Gb  "
-                            font.pixelSize:   parent.width > 0 ? parent.width / 9 : 1
-                            verticalAlignment: Text.AlignVCenter
-                            horizontalAlignment: Text.AlignRight
-                        }
+                    Label {
+                        color:            "#aaffffff"
+                        text:             qlabel
+                        font.pixelSize:   parent.width > 0 ? parent.width / 7 : 1
+                        anchors.centerIn: parent
+                        anchors.verticalCenterOffset: parent.width / 40
                     }
                 }
 
                 Rectangle {
-                    width:  parent.width - height
-                    height: parent.height / 2
-                    color:  Theme.NoColor
-                    x:      height / 2
+                    width:  parent.width / 2
+                    height: parent.height
+                    color:  "#00000000"
+
+                    Label {
+                        color:               "#FF8000"
+                        height:              parent.height
+                        width:               parent.width
+                        text:                sizeingb+" Gb  "
+                        font.pixelSize:      parent.width > 0 ? parent.width / 9 : 1
+                        verticalAlignment:   Text.AlignVCenter
+                        horizontalAlignment: Text.AlignRight
+                    }
+                }
+            }
+
+            Rectangle {
+                width:  parent.width - height
+                height: parent.height / 2
+                color:  "#00000000"
+                x:      height / 2
+
+                Rectangle {
+                    id:           bar
+                    width:        parent.width
+                    height:       parent.height / 2 - 1
+                    y:            parent.height / 8
+                    radius:       parent.height / 2
+                    border.color: "#33000000"
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "#33aaaaaa" }
+                        GradientStop { position: 1.0; color: "#33aaaaaa" }
+                    }
 
                     Rectangle {
-                        id:           bar
-                        width:        parent.width
-                        height:       parent.height / 2 - 1
-                        y:            parent.height / 8
-                        radius:       parent.height / 2
-                        border.color: "#33000000"
-                        gradient: Gradient {
-                            GradientStop { position: 0.0; color: "#33aaaaaa" }
-                            GradientStop { position: 1.0; color: "#33aaaaaa" }
-                        }
-
-                        Rectangle {
-                            width:    bar.height - 3
-                            height:   parent.width *  qfreespace / 100
-                            rotation: 90
-                            x:        -1 + parent.width *  qfreespace / 200
-                            radius:   parent.height / 2
-                            anchors.verticalCenter: bar.verticalCenter
-                            color: "#aaFF8000"
-
-                        }
+                        width:    bar.height - 3
+                        height:   parent.width *  qfreespace / 100
+                        rotation: 90
+                        x:        -1 + parent.width *  qfreespace / 200
+                        radius:   parent.height / 2
+                        color:    "#aaFF8000"
+                        anchors.verticalCenter: bar.verticalCenter
                     }
                 }
             }
         }
     }
-
-        MouseArea {
-        anchors.fill: parent
-        onClicked: { qClicked(); }
-        }
 }
 

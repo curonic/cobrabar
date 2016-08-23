@@ -5,18 +5,16 @@
 
 class CobraSettings {
 
-
 public:
     CobraSettings();
-
-    int applications_count;
-    int places_count;
-    QString settings_file;
-    QString icon_dir_path;
+    void readSettings();
+\
+    int         applications_count;
+    int         places_count;
+    QString     settings_file;
+    QString     icon_dir_path;
     QStringList application_list;
     QStringList places_list;
-
-    void readSettings();
 
     int         getApplicationsCount();
     int         getApplicationsHeight(int parent_width);

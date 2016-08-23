@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.0
-import "qrc:/js/Theme.js" as Theme
 
 Item {
 
@@ -9,37 +8,39 @@ Item {
     property string qtime
     property string qdate
     property string qtextcolor
+    property color  fontColor:  "#aaffffff"
+    property string fontFamily: "Oxygen-Sans"
 
-    width:                          qwidth
-    height:                         qheight
+    width:                       qwidth
+    height:                      qheight
 
     Column {
-        anchors.fill:               parent
+        anchors.fill:            parent
 
         Text {
-            text:                   qtime
-            width:                  parent.width
-            font.pointSize:         parent.width > 0 ? parent.width / 8 : 1
-            color:                  Theme.CalendarTextColor
-            font.family:            Theme.CalendarFont
-            textFormat:             Text.RichText
-            horizontalAlignment:    Text.AlignHCenter
-            verticalAlignment:      Text.AlignVCenter
-            wrapMode:               Text.WordWrap
-            renderType:             Text.NativeRendering
+            text:                qtime
+            width:               parent.width
+            font.pointSize:      parent.width > 0 ? parent.width / 8 : 1
+            color:               fontColor
+            font.family:         fontFamily
+            textFormat:          Text.RichText
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment:   Text.AlignVCenter
+            wrapMode:            Text.WordWrap
+            renderType:          Text.NativeRendering
         }
 
         Text {
-            text:                   qdate
-            width:                  parent.width
-            font.pointSize:         parent.width > 0 ? parent.width / 14 : 1
-            color:                  Theme.CalendarTextColor
-            font.family:            Theme.CalendarFont
-            textFormat:             Text.RichText
-            horizontalAlignment:    Text.AlignHCenter
-            verticalAlignment:      Text.AlignVCenter
-            wrapMode:               Text.WordWrap
-            renderType:             Text.NativeRendering
+            text:                qdate
+            width:               parent.width
+            font.pointSize:      parent.width > 0 ? parent.width / 14 : 1
+            color:               fontColor
+            font.family:         fontFamily
+            textFormat:          Text.RichText
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment:   Text.AlignVCenter
+            wrapMode:            Text.WordWrap
+            renderType:          Text.NativeRendering
         }
     }
 }

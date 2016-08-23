@@ -1,8 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Layouts 1.1
-
 import "../components/"
-import "qrc:/js/Theme.js" as Theme // get rid of lame javascripts in general
 
 Item {
 

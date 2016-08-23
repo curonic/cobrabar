@@ -1,15 +1,16 @@
 import QtQuick 2.5
 import "../components/"
-import "qrc:/js/Theme.js" as Theme
 
 Item {
+
+    property color  fontColor:  "#aaffffff"
 
     anchors.fill:   parent
 
     QCalendar {
         qdate:                  calendarDate
         qtime:                  calendarTime
-        qtextcolor:             Theme.TextColor
+        qtextcolor:             fontColor
         anchors.fill:           parent
         anchors.centerIn:       parent
     }
