@@ -4,14 +4,16 @@ TARGET      = CobraBar
 
 TEMPLATE    = app
 
-SOURCES    += main.cpp       \
-              cobrabar.cpp   \
-              stats.cpp      \
-              cobrasettings.cpp
+SOURCES    += main.cpp          \
+              cobrabar.cpp      \
+              stats.cpp         \
+              cobrasettings.cpp \
+              themeparser.cpp
 
-HEADERS    += cobrabar.h     \
-              stats.h        \
-              cobrasettings.h
+HEADERS    += cobrabar.h      \
+              stats.h         \
+              cobrasettings.h \
+              themeparser.h   \
 
 LIBS       += -lX11
 

@@ -10,7 +10,10 @@ Item {
     property    int     qradius
     property    string  qcolor1
     property    string  qcolor2
+    property    string  qicon
     property    string  qbordercolor
+    property    int     qbordersize
+    property    real    qiconopacity
 
     signal qClicked()
     signal qChecked()
@@ -18,6 +21,32 @@ Item {
 
     width:  qwidth
     height: qheight
+
+    Image {
+        id:                 img
+        source:             qicon
+        anchors.centerIn:   parent
+        layer.enabled:      true
+        width:              parent.width - qbordersize
+        height:             parent.height - qbordersize
+        opacity:            qiconopacity
+
+        layer.effect: OpacityMask {
+            maskSource: Item {
+                width:      img.width
+                height:     img.height
+
+                Rectangle {
+                    anchors.centerIn: parent
+                    width:            img.width
+                    height:           img.height
+                    radius:           qradius
+                    border.color:     qbordercolor
+                    border.width:     qbordersize
+                }
+            }
+        }
+    }
 
     Button {
         id:           button
@@ -29,7 +58,8 @@ Item {
                 width:              parent.width
                 implicitHeight:     parent.height
                 radius:             qradius
-                border.color:       "#33000000"
+                border.color:       qbordercolor
+                border.width:       qbordersize
                 anchors.centerIn:   parent
                 gradient: Gradient {
                     GradientStop { position: 0.0; color: qcolor1 }

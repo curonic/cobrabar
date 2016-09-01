@@ -1,6 +1,9 @@
+--- v0.3 (01-09-2016) ---
++ styling system (stress testing)
+
 --- v0.2 (20-08-2016) ---
-- remove popup class
-- remove slideshow class
+- popup class
+- slideshow class
 + focus on apps/dir/disk
 
 --- v0.1a (11-08-2016) ---

@@ -21,6 +21,7 @@
 #include "cobrabar.h"
 #include "stats.h"
 #include "cobrasettings.h"
+#include "themeparser.h"
 
 #include <QDesktopWidget>
 #include <QTimer>
@@ -33,7 +34,7 @@
 #include <QFile>
 #include <QProcess>
 #include <QHBoxLayout>
-
+#include <QQuickItem>
 
 
 CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
@@ -74,20 +75,29 @@ CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
 
     qmlObject_->setProperty("globalWidth",QString::number(this->width()));
 
+
     connect(time_timer, SIGNAL(timeout()), this, SLOT(slotTime()));
     connect(date_timer, SIGNAL(timeout()), this, SLOT(slotDate()));
     connect(qmlObject_, SIGNAL(placeLaunch(QString)), this, SLOT(slotExec(QString)));
     connect(qmlObject_, SIGNAL(applicationLaunch(QString)), this, SLOT(slotExec(QString)));
     connect(qmlObject_, SIGNAL(loaderPosition(QString, int, int, int, int)), this, SLOT(slotPosition(QString, int, int, int, int)));
     connect(qmlObject_, SIGNAL(exit()), this, SLOT(slotExit()));
+    connect(qmlObject_, SIGNAL(resize(int)), this, SLOT(slotResize(int)));
 
-    getApplications();
-    getPlaces();
-    getDisks();
+
+
+    applyStyle();
 
 }
 
 CobraBar::~CobraBar() {
+
+}
+
+void CobraBar::slotResize(int height_changes) {
+
+    if(extended_height_ == false)
+        this->resize(this->width(), this->height() + height_changes);
 
 }
 
@@ -164,9 +174,9 @@ void CobraBar::getDisks() {
     for( int i = 0; i < s->getDisksCount(); i++) {
 
         qmlObject_->setProperty("diskEntry",
-                                  QString(s->getDisksList().at(i))
-                                  .append(",")
-                                  .append(QString::number(i)));
+                                QString(s->getDisksList().at(i))
+                                .append(",")
+                                .append(QString::number(i)));
 
     }
 
@@ -178,4 +188,76 @@ void CobraBar::slotExit() {
 
     exit(0);
 
+}
+
+void CobraBar::applyStyle() {
+
+    auto a = new ThemeParser;
+
+    for(int i = 0; i < a->getThemeLength(); i++) {
+
+        QString m_ = a->getThemeRules().at(i);
+        QStringList n_ = m_.split(",");
+
+        QString property_;
+        QString value_;
+
+        property_.append(n_.at(0)).append('_').append(n_.at(1));
+        value_.append(n_.at(2));
+
+        QByteArray aa = value_.toLatin1().trimmed();
+        const char *c_value_ = aa.data();
+
+        QByteArray ba = property_.toLatin1().trimmed();
+        const char *c_property_ = ba.data();
+
+
+        if(property_.contains("general_width")) {
+
+            QDesktopWidget qw;
+            QRect mainScreenSize = qw.availableGeometry(qw.primaryScreen());
+
+            this->resize(QString(c_value_).toInt(),this->height());
+            this->move(mainScreenSize.width() - this->width(),0);
+            qmlObject_->setProperty("globalWidth",QString::number(this->width()));
+
+        } else if(property_.contains("general_alignment") && QString(c_value_) == "left") {
+
+            this->move(0,0);
+
+            // move to resizeevent anyway
+        } else if(property_.contains("general_extended_height") && QString(c_value_) == "false") {
+
+            auto m_ = new Stats;
+            auto n_ = new CobraSettings;
+
+            int disks_height;
+            int apps_height;
+            int places_height;
+            int cal_height;
+
+            cal_height = (this->width() / 4) + (this->width() / 20);
+            disks_height = (this->width() / 6 ) * m_->getDisksCount();
+            apps_height = n_->getApplicationsHeight(this->width());
+            places_height = n_->getPlacesHeight(this->width());
+
+            int sum;
+            sum = disks_height + apps_height + places_height + cal_height;
+
+            this->resize(this->width(),sum);
+            extended_height_ = false;
+
+
+        } else { // pass to qml
+
+            qmlObject_->setProperty(c_property_, c_value_);
+
+        }
+
+
+    }
+
+    getApplications();
+    getPlaces();
+    getDisks();
 }

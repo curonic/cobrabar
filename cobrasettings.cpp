@@ -24,7 +24,7 @@
 #include <QFile>
 #include <QStandardPaths>
 #include <QDir>
-
+#include <QDebug>
 
 CobraSettings::CobraSettings() {
 
@@ -44,6 +44,14 @@ CobraSettings::CobraSettings() {
             .append("icons")
             .append(QDir::separator());
 
+    themes_dir = QString(QStandardPaths::standardLocations
+                         (QStandardPaths::ConfigLocation).at(0))
+            .append(QDir::separator())
+            .append("CobraBar")
+            .append(QDir::separator())
+            .append("themes")
+            .append(QDir::separator());
+
     readSettings();
 }
 
@@ -61,14 +69,15 @@ void CobraSettings::readSettings() {
     auto root    = document.firstChildElement();
     auto a_items = root.elementsByTagName("application");
     auto p_items = root.elementsByTagName("place");
+    auto t_items = root.elementsByTagName("theme");
 
-    if(a_items.count() > 0 ) {
+    if(a_items.count() > 0) {
 
         applications_count = a_items.count();
 
         QStringList temp_app_list;
 
-        for( int i = 0; i < applications_count; i++) {
+        for(int i = 0; i < applications_count; i++) {
 
             auto node = a_items.at(i);
             auto map  = node.attributes();
@@ -92,11 +101,11 @@ void CobraSettings::readSettings() {
     } else {
 
         applications_count = -1;
-        application_list.append("applications are empty or not provided");
+        application_list << "applications are empty or not provided";
 
     }
 
-    if(p_items.count() > 0 ) {
+    if(p_items.count() > 0) {
 
         places_count = p_items.count();
 
@@ -128,9 +137,25 @@ void CobraSettings::readSettings() {
     } else {
 
         places_count = -1;
-        places_list.append("places are empty or not provided");
+        places_list << "places are empty or not provided";
 
     }
+
+    if(t_items.count() > 0) {
+
+        auto node = t_items.at(0);
+        auto map  = node.attributes();
+        auto id = map.namedItem("id").toAttr().value();
+
+        theme_name = id;
+
+    } else {
+
+        theme_name = "theme is not set";
+
+    }
+
+
 }
 
 QString CobraSettings::getSettingsFile() {
@@ -142,6 +167,32 @@ QString CobraSettings::getSettingsFile() {
 QString CobraSettings::getIconsDir() {
 
     return icon_dir_path;
+
+}
+
+QString CobraSettings::getThemesDir() {
+
+    return themes_dir;
+
+}
+
+QString CobraSettings::getThemeName() {
+
+    return theme_name;
+
+}
+
+QString CobraSettings::getThemePath() {
+
+    return themes_dir + theme_name + QDir::separator();
+
+}
+
+QString CobraSettings::getThemeFile() {
+
+    auto m_ = themes_dir.append(theme_name).append(QDir::separator()).append("style.txt");
+
+    return m_;
 
 }
 

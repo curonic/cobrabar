@@ -21,6 +21,7 @@ private slots:
     void slotPosition(QString id, int x, int y, int w, int h);
     void slotExit();
 
+    void slotResize(int height_changes);
 private:
     QObject     *qmlObject_;
     QWidget     *qmlWidget_;
@@ -31,7 +32,9 @@ private:
     void getApplications();
     void getPlaces();
     void getDisks();
+    bool extended_height_;
 
+   /* tempy test. will go in different class */ void applyStyle();
 };
 
 #endif // COBRABAR_H

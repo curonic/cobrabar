@@ -1,9 +1,13 @@
 <?xml version="1.0"?>
 
-<!-- this is an example of          ~/.config/CobraBar/settings.xml -->
-<!-- application icons live in      ~/.config/CobraBar/icons -->
+<!-- this is an example of ~/.config/CobraBar/settings.xml -->
+<!-- application icons     ~/.config/CobraBar/icons -->
+<!-- theme location      ~/.config/CobraBar/themes/XXXX/style.txt  where XXXX is theme id -->
 
 <qbar>
+    
+    <theme id="test"></theme>
+    
     <applications>
         <application exec="firefox"             icon="firefox.png"         tooltip="Web Browser">      </application>
         <application exec="konsole --workdir=~" icon="konsole.png"         tooltip="Terminal">         </application>

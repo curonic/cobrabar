@@ -1,10 +1,48 @@
 import QtQuick 2.5
 import QtQuick.Layouts 1.0
+import QtGraphicalEffects 1.0
 import "../components/"
 
 Item {
 
     anchors.fill: parent
+
+    Rectangle {
+        anchors.centerIn:   parent
+        width:              parent.width
+        height:             parent.height
+        radius:             places_radius
+        border.color:       places_border_color
+        border.width:       places_border_size
+        color:              places_background_color
+    }
+
+    Image {
+        id:                 img
+        source:             places_background_image
+        anchors.centerIn:   parent
+        layer.enabled:      true
+        width:              parent.width - places_border_size
+        height:             parent.height - places_border_size
+        opacity:            places_image_opacity
+
+        layer.effect: OpacityMask {
+            maskSource: Item {
+                width:      img.width
+                height:     img.height
+
+                Rectangle {
+                    anchors.centerIn: parent
+                    width:            img.width
+                    height:           img.height
+                    radius:           places_radius
+                    border.color:     places_border_color
+                    border.width:     places_border_size
+                    color:            places_background_color
+                }
+            }
+        }
+    }
 
     Flow {
 

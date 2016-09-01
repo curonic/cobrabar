@@ -1,9 +1,47 @@
 import QtQuick 2.5
+import QtGraphicalEffects 1.0
 import "../components/"
 
 Item {
 
     anchors.fill:       parent
+
+    Rectangle {
+        anchors.centerIn:   parent
+        width:              parent.width
+        height:             parent.height
+        radius:             applications_radius
+        border.color:       applications_border_color
+        border.width:       applications_border_size
+        color:              applications_background_color
+    }
+
+    Image {
+        id:                 img
+        source:             applications_background_image
+        anchors.centerIn:   parent
+        layer.enabled:      true
+        width:              parent.width - applications_border_size
+        height:             parent.height - applications_border_size
+        opacity:            applications_image_opacity
+
+        layer.effect: OpacityMask {
+            maskSource: Item {
+                width:      img.width
+                height:     img.height
+
+                Rectangle {
+                    anchors.centerIn: parent
+                    width:            img.width
+                    height:           img.height
+                    radius:           applications_radius
+                    border.color:     applications_border_color
+                    border.width:     applications_border_size
+                    color:            applications_background_color
+                }
+            }
+        }
+    }
 
     Flow {
         property string zap: applicationEntry
