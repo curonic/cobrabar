@@ -1,0 +1,12 @@
++ add more detailed info for places buttons (items or size)
++ add "smart popup" for calendar
++ add individual corner radius
++ add analog clock option
++ add shadow for main window
++ add auto reload on theme changed
++ add more style properties (button colors, gradients, noise etc...)
++ add more styles
+
+done! get rid of javascripts
+done! make a theming engine
+
