@@ -1,30 +1,3 @@
-/****************************************************************************
- *                                                                          *
- *                    Copyright (C) 2016  <name of author>                  *
- *                                                                          *
- *   This program is free software: you can redistribute it and/or modify   *
- *   it under the terms of the GNU General Public License as published by   *
- *   the  Free Software Foundation,  either version 3 of the License,  or   *
- *   (at your option) any later version.                                    *
- *                                                                          *
- *   This program is distributed in the hope that it will be useful,        *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
- *   MERCHANTABILITY  or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                           *
- *                                                                          *
- *   You should have received a copy of the GNU General Public License      *
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.  *
- *                                                                          *
- ****************************************************************************/
-
-/****************************************************************************
- *                                                                          *
- *          returns all hard drives in QStringList format                   *
- *          order: <mountpoint, dev, % free, size_in_gb, label>             *
- *                                                                          *
- ****************************************************************************/
-
-
 #include "stats.h"
 
 #include <sys/statvfs.h>
@@ -32,14 +5,23 @@
 #include <QString>
 #include <QDir>
 #include <QFile>
+#include <QDebug>
 
+/*
+ *
+ * order: <mountpoint, dev, % free, size_in_gb, label>
+ *
+ */
 
-QStringList Stats::getDisksList() {
+QStringList Stats::disk_data() {
 
-    /* some system files we want */
+    /*
+     * some system files we need
+     */
 
     QString psm_ = "/proc/self/mounts";
     QString ddl_ = "/dev/disk/by-label/";
+
 
     QByteArray device_list;
     QFile f_(psm_);
@@ -55,8 +37,8 @@ QStringList Stats::getDisksList() {
 
             QStringList fs_;
 
-            fs_.append(dl_.split('\n').at(i).split(' ').at(1));
-            fs_.append(dl_.split('\n').at(i).split(' ').at(0));
+            fs_.append(dl_.split('\n').at(i).split(' ').at(1)); // mount point
+            fs_.append(dl_.split('\n').at(i).split(' ').at(0)); // device
 
             QByteArray m = fs_.at(0).toLatin1();
             const char *c = m.data();
@@ -66,9 +48,7 @@ QStringList Stats::getDisksList() {
             double p;
             p = 100.0 * (double) (s.f_blocks - s.f_bfree) / (double) (s.f_blocks - s.f_bfree + s.f_bavail);
             unsigned long long ds = (unsigned long long) (s.f_blocks) * (unsigned long long) (s.f_bsize);
-            /*            /     Kb      /      Mb     /     Gb    */
             double q = ds / (float)1024 / (float)1024 / (float)1024;
-
             fs_.append(QString::number(p, 'f',2));
             fs_.append(QString::number(q, 'f',2));
 
@@ -91,8 +71,9 @@ QStringList Stats::getDisksList() {
                     fs_.append(label.at(0));
 
                     QString fl;
-                    fl = fs_.join(',');
-                    device_list.append(fl).append('|');
+                    fl = fs_.join(",");
+                    device_list.append(fl);
+                    device_list.append("|");
                 }
             }
         }
@@ -101,14 +82,17 @@ QStringList Stats::getDisksList() {
     QString la(device_list.data());
     QStringList z(la.split('|'));
     z.sort();
-    /* 1st split is empty if sort(); is applied. (otherwise last one is empty) */
+
+
+    // 1st split is empty if sort(); is applied. (otherwise last one is empty)
     z.removeAt(0);
     return z;
 
 }
 
-int Stats::getDisksCount() {
+int Stats::disk_count() {
 
-    return getDisksList().length();
+    return disk_data().length();
 
 }
+
