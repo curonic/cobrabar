@@ -28,7 +28,7 @@
 #include <QDomNode>
 #include <QStandardPaths>
 #include <QTextStream>
-#include <QDebug>
+
 
 ThemeParser::ThemeParser() {
 

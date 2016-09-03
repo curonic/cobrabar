@@ -36,8 +36,6 @@
 #include <QHBoxLayout>
 #include <QQuickItem>
 
-#include <QDebug>
-#include <QMetaObject>
 
 CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
 
@@ -86,21 +84,6 @@ CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
     connect(qmlObject_, SIGNAL(resize(int)), this, SLOT(slotResize(int)));
 
     applyStyle();
-
-experimental();
-
-}
-
-
-void CobraBar::experimental() {
-
-
-//    auto meta = qmlObject_->metaObject();
-//    int n = meta->propertyCount();
-//    for(int i = 0; i < n; ++i)
-//    {
-//      qWarning() << "Property: " << meta->property(i).name() << meta->property(i).type();
-//    }
 
 }
 

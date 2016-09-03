@@ -14,7 +14,7 @@ public:
 
     QString     getThemeContent();
     int         getThemeLength();
-QStringList getThemeRules();
+    QStringList getThemeRules();
 
 private:
     QString     themePath_;

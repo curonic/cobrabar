@@ -27,7 +27,7 @@ private:
     QWidget     *qmlWidget_;
     QQuickView  *qmlView_;
     QStringList *position_;
-    bool        extended_height_;
+    bool         extended_height_;
 
     void getApplications();
     void getPlaces();
