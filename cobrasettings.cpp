@@ -24,7 +24,7 @@
 #include <QFile>
 #include <QStandardPaths>
 #include <QDir>
-#include <QDebug>
+
 
 CobraSettings::CobraSettings() {
 
@@ -53,6 +53,7 @@ CobraSettings::CobraSettings() {
             .append(QDir::separator());
 
     readSettings();
+
 }
 
 void CobraSettings::readSettings() {
@@ -126,7 +127,7 @@ void CobraSettings::readSettings() {
                     .append(",").append(tool);
 
             b.replace("~", QString(QStandardPaths::standardLocations(
-                                       QStandardPaths::HomeLocation).at(0)));
+                                   QStandardPaths::HomeLocation).at(0)));
 
 
             temp_places_list.append(b);
@@ -154,8 +155,6 @@ void CobraSettings::readSettings() {
         theme_name = "theme is not set";
 
     }
-
-
 }
 
 QString CobraSettings::getSettingsFile() {
@@ -190,7 +189,9 @@ QString CobraSettings::getThemePath() {
 
 QString CobraSettings::getThemeFile() {
 
-    auto m_ = themes_dir.append(theme_name).append(QDir::separator()).append("style.txt");
+    auto m_ = themes_dir.append(theme_name)
+                        .append(QDir::separator())
+                        .append("style.css");
 
     return m_;
 

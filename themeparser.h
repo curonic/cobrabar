@@ -13,15 +13,16 @@ public:
     QStringList themeRules_;
 
     QString     getThemeContent();
-    QStringList getThemeRules();
     int         getThemeLength();
+QStringList getThemeRules();
 
 private:
     QString     themePath_;
     QString     themeFile_;
 
     void uncommentTheme();
-    void formatRules();
+
+        void formatRules();
 
 };
 

@@ -20,21 +20,21 @@ private slots:
     void slotExec(QString external_application);
     void slotPosition(QString id, int x, int y, int w, int h);
     void slotExit();
-
     void slotResize(int height_changes);
+
 private:
     QObject     *qmlObject_;
     QWidget     *qmlWidget_;
     QQuickView  *qmlView_;
-
     QStringList *position_;
+    bool        extended_height_;
 
     void getApplications();
     void getPlaces();
     void getDisks();
-    bool extended_height_;
+    void applyStyle();
 
-   /* tempy test. will go in different class */ void applyStyle();
+    void experimental();
 };
 
 #endif // COBRABAR_H

@@ -36,6 +36,8 @@
 #include <QHBoxLayout>
 #include <QQuickItem>
 
+#include <QDebug>
+#include <QMetaObject>
 
 CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
 
@@ -75,7 +77,6 @@ CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
 
     qmlObject_->setProperty("globalWidth",QString::number(this->width()));
 
-
     connect(time_timer, SIGNAL(timeout()), this, SLOT(slotTime()));
     connect(date_timer, SIGNAL(timeout()), this, SLOT(slotDate()));
     connect(qmlObject_, SIGNAL(placeLaunch(QString)), this, SLOT(slotExec(QString)));
@@ -84,9 +85,22 @@ CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
     connect(qmlObject_, SIGNAL(exit()), this, SLOT(slotExit()));
     connect(qmlObject_, SIGNAL(resize(int)), this, SLOT(slotResize(int)));
 
-
-
     applyStyle();
+
+experimental();
+
+}
+
+
+void CobraBar::experimental() {
+
+
+//    auto meta = qmlObject_->metaObject();
+//    int n = meta->propertyCount();
+//    for(int i = 0; i < n; ++i)
+//    {
+//      qWarning() << "Property: " << meta->property(i).name() << meta->property(i).type();
+//    }
 
 }
 
@@ -96,9 +110,11 @@ CobraBar::~CobraBar() {
 
 void CobraBar::slotResize(int height_changes) {
 
-    if(extended_height_ == false)
+    if(extended_height_ == false) {
+
         this->resize(this->width(), this->height() + height_changes);
 
+    }
 }
 
 void CobraBar::slotPosition(QString id, int x, int y , int w, int h) {
@@ -197,22 +213,21 @@ void CobraBar::applyStyle() {
     for(int i = 0; i < a->getThemeLength(); i++) {
 
         QString m_ = a->getThemeRules().at(i);
-        QStringList n_ = m_.split(",");
+        QStringList n_ = m_.split(": ");
 
         QString property_;
         QString value_;
 
-        property_.append(n_.at(0)).append('_').append(n_.at(1));
-        value_.append(n_.at(2));
+        property_ = n_.at(0);
+        value_ = n_.at(1);
 
         QByteArray aa = value_.toLatin1().trimmed();
         const char *c_value_ = aa.data();
 
-        QByteArray ba = property_.toLatin1().trimmed();
+        QByteArray ba = property_.toLower().toLatin1().trimmed();
         const char *c_property_ = ba.data();
 
-
-        if(property_.contains("general_width")) {
+        if(property_.toLower().contains("general_width")) {
 
             QDesktopWidget qw;
             QRect mainScreenSize = qw.availableGeometry(qw.primaryScreen());
@@ -221,12 +236,11 @@ void CobraBar::applyStyle() {
             this->move(mainScreenSize.width() - this->width(),0);
             qmlObject_->setProperty("globalWidth",QString::number(this->width()));
 
-        } else if(property_.contains("general_alignment") && QString(c_value_) == "left") {
+        } else if(property_.toLower().contains("general_alignment") && QString(c_value_) == "left") {
 
             this->move(0,0);
 
-            // move to resizeevent anyway
-        } else if(property_.contains("general_extended_height") && QString(c_value_) == "false") {
+        } else if(property_.toLower().contains("general_extended_height") && QString(c_value_) == "false") {
 
             auto m_ = new Stats;
             auto n_ = new CobraSettings;
@@ -253,8 +267,6 @@ void CobraBar::applyStyle() {
             qmlObject_->setProperty(c_property_, c_value_);
 
         }
-
-
     }
 
     getApplications();

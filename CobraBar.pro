@@ -13,7 +13,7 @@ SOURCES    += main.cpp          \
 HEADERS    += cobrabar.h      \
               stats.h         \
               cobrasettings.h \
-              themeparser.h   \
+              themeparser.h
 
 LIBS       += -lX11
 

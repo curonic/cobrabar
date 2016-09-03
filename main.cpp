@@ -51,4 +51,5 @@ int main(int argc, char *argv[]) {
     XSendEvent(d, QX11Info::appRootWindow(), False, SubstructureRedirectMask, &e);
 
     return a.exec();
+
 }

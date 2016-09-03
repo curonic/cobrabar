@@ -28,8 +28,7 @@
 #include <QDomNode>
 #include <QStandardPaths>
 #include <QTextStream>
-//#include <QDebug>
-
+#include <QDebug>
 
 ThemeParser::ThemeParser() {
 
@@ -108,56 +107,140 @@ void ThemeParser::uncommentTheme() {
 // mess, clean me
 void ThemeParser::formatRules() {
 
-    if(themeContent_.length() > 0) {
+    QString data = themeContent_;
+    data.prepend("}");
+    data.append("{");
 
-        QStringList a;
+    QStringList block_name;
+    QStringList block_content;
+    QString     block_begin("{");
+    QString     block_end("}");
+    QStringList starting_points;
+    QStringList ending_points;
+    QStringList mock_list;
 
-        a = themeContent_.split('\n');
+    for(int i = 0; i < data.length(); i++) {
 
-        for( int i = 0; i < a.length(); i++) {
+        QString a;
+        a = data.at(i);
 
-            if(a.at(i).contains(';') && a.at(i).contains(':') && a.at(i).contains('.')) {
+        if(a.contains(block_end)) {
 
-                QString m_;
-                m_ = ".";
+            ending_points << QString::number(i);
 
-                QString temp_w;
-                temp_w = a.at(i).trimmed();
-                temp_w.replace(temp_w.indexOf(m_),m_.size(), QString(","));
-                temp_w.replace(":",",");
-                temp_w.replace(", ",",");
-                temp_w.replace(";","");
-                temp_w.replace("-","_"); // qml properties can't handle '-'
-                temp_w.replace("\"",""); // remove silly quotes around the attributes
+        }
 
-                /* remodel and make resources (like image paths) absolute */
+        if(a.contains(block_begin)) {
 
-                if(temp_w.contains("background_image")) {
+            starting_points << QString::number(i);
 
-                    QStringList addPath_;
-                    addPath_ = temp_w.split(",");
-                    QString temp_;
-                    temp_ = addPath_.at(2).trimmed();
-                    temp_.prepend(themePath_).prepend("file://");
+        }
+    }
 
-                    QString f_;
+    for(int i = 0; i < starting_points.length(); i++) {
 
-                    f_.append(addPath_.at(0))
-                            .append(",")
-                            .append(addPath_.at(1))
-                            .append(",")
-                            .append(temp_);
+        QString clunky;
+        int s;
+        int e;
 
-                    temp_w = f_;
+        s = starting_points.at(i).toInt();
+        e = ending_points.at(i).toInt() + 1;
+
+        for (int j = e; j < s; j++) {
+
+            clunky.append(data.at(j));
+        }
+
+        clunky.remove("\n");
+        block_name << clunky;
+
+    }
+
+    for(int k = 0; k < starting_points.length() - 1; k++) {
+
+        QString clunky;
+        int s;
+        int e;
+        s = starting_points.at(k).toInt() + 1;
+        e = ending_points.at(k + 1).toInt();
+
+        for (int j = s; j < e; j++) {
+
+            clunky.append(data.at(j));
+        }
+
+        clunky.remove("\n");
+        block_content << clunky;
+
+    }
+
+    for(int i = 0; i < block_content.length(); i++) {
+
+        QStringList bb;
+        bb = block_content.at(i).split(";");
+
+        QStringList cc;
+        cc = block_name.at(i).split(",");
+
+        for(int k = 0; k < cc.length(); k++) {
+
+            for(int j = 0; j < bb.length(); j++) {
+
+                QString a;
+                QString b;
+                b = cc.at(k).trimmed();
+                a = bb.at(j);
+                a.replace("  ","");
+                QString n = a.prepend("-").prepend(b).append(";");
+
+                if(n.contains(":")) {
+
+                    mock_list.append(n);
 
                 }
-
-                themeRules_.append(temp_w);
             }
         }
     }
-}
 
+    for(int i = 0; i < mock_list.length(); i++) {
+
+        QString a;
+        a = mock_list.at(i);
+
+        if(a.at(0) == QString("#") | a.at(0) == QString(".")) {
+
+            a.remove(0,1);
+
+        }
+
+        if(!a.contains(": ")) {
+
+            a.replace(":",": ");
+        }
+
+        a.replace(";","");
+        a.replace("-","_");
+        a.replace("\"","");
+
+        if(a.contains("background_image")) {
+
+            QStringList addPath_;
+            QString temp_;
+            QString f_;
+
+            addPath_ = a.split(":");
+            temp_    = addPath_.at(1).trimmed();
+            temp_.prepend(themePath_).prepend("file://");
+
+            f_.append(addPath_.at(0)).append(": ").append(temp_);
+            a = f_;
+
+        }
+
+        themeRules_.append(a);
+
+    }
+}
 
 QString ThemeParser::getThemeContent() {
 
