@@ -1,0 +1,85 @@
+/* 
+ * This is a comment
+ * 
+ * <object.attribute: value;>
+ * 
+ * blah... add css crap maybe
+ *
+ * supported attributes:
+ *
+ * #General {
+ * radius              // int
+ * background-color    // string
+ * width               // int
+ * extended-height     // bool
+ * alignment           // string ('left' or 'right' for now)
+ * }
+ * 
+ * #Calendar {
+ * background-color    // string
+ * background-image    // string
+ * border-color        // string
+ * border-size         // int
+ * date-font-family    // string
+ * image-opacity       // float
+ * radius              // int
+ * text-color          // string
+ * time-font-family    // string
+ * }
+ * 
+ * #Pins {
+ * background-color    // string
+ * background-image    // string
+ * border-color        // string
+ * border-size         // int
+ * image-opacity       // float
+ * radius              // int
+ * }
+ * 
+ * #Pin1, #Pin2, #Pin3 {
+ * border-color        // string
+ * border-size         // int
+ * color1              // string
+ * color2              // string
+ * background-image    // string
+ * image-opacity       // float
+ * radius              // int
+ * }
+ * 
+ * #Applications {
+ * background-color    // string
+ * background-image    // string
+ * border-color        // string
+ * border-size         // int
+ * image-opacity       // float
+ * radius              // int
+ * }
+ * 
+ * #Places {
+ * background-color    // string
+ * background-image    // string
+ * border-color        // string
+ * border-size         // int
+ * image-opacity       // real
+ * radius              // int
+ * }
+ * 
+ * #Disks {
+ * background-color    // string
+ * background-image    // string
+ * border-color        // string
+ * border-size         // int
+ * image-opacity       // real
+ * radius              // int
+ * }
+ * 
+ */
+
+
+#General {
+background-color:   "#333";
+width:              200;
+extended-height:    false;
+radius:             5;
+alignment:          left;
+}
