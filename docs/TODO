@@ -4,9 +4,15 @@
 + add analog clock option
 + add shadow for main window
 + add auto reload on theme changed
-+ add more style properties (button colors, gradients, noise etc...)
 + add more styles
++ tooltips not working >>> mousearea overrides buttons. rewrite buttons as items anyway
++ turn strings "10px" & "10pt" into <int>10
++ change image-opacity to background-image-opacity maybe???
++ fix applicationbutton padding
++ do something about pins (they are too squeezed in the corner).
++ make applicationbutton properties standard for placesbutton & disksbuttons
 
+done! more style properties (button colors, gradients, noise etc...)
 done! get rid of javascripts
 done! make a theming engine
 

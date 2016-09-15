@@ -1,85 +1,153 @@
 /* 
- * This is a comment
- * 
- * <object.attribute: value;>
- * 
- * blah... add css crap maybe
- *
- * supported attributes:
- *
- * #General {
- * radius              // int
- * background-color    // string
- * width               // int
- * extended-height     // bool
- * alignment           // string ('left' or 'right' for now)
- * }
- * 
- * #Calendar {
- * background-color    // string
- * background-image    // string
- * border-color        // string
- * border-size         // int
- * date-font-family    // string
- * image-opacity       // float
- * radius              // int
- * text-color          // string
- * time-font-family    // string
- * }
- * 
- * #Pins {
- * background-color    // string
- * background-image    // string
- * border-color        // string
- * border-size         // int
- * image-opacity       // float
- * radius              // int
- * }
- * 
- * #Pin1, #Pin2, #Pin3 {
- * border-color        // string
- * border-size         // int
- * color1              // string
- * color2              // string
- * background-image    // string
- * image-opacity       // float
- * radius              // int
- * }
- * 
- * #Applications {
- * background-color    // string
- * background-image    // string
- * border-color        // string
- * border-size         // int
- * image-opacity       // float
- * radius              // int
- * }
- * 
- * #Places {
- * background-color    // string
- * background-image    // string
- * border-color        // string
- * border-size         // int
- * image-opacity       // real
- * radius              // int
- * }
- * 
- * #Disks {
- * background-color    // string
- * background-image    // string
- * border-color        // string
- * border-size         // int
- * image-opacity       // real
- * radius              // int
- * }
- * 
- */
 
+This is a comment
+
+--- theming property list (as close to css as possible) ---
 
 #General {
-background-color:   "#333";
-width:              200;
-extended-height:    false;
-radius:             5;
-alignment:          left;
+    alignment:        string; ("left" or "right" for now)
+    background-color: string;
+    background-image: string;
+    border-color:     string;
+    border-radius:    int;
+    border-width:     int;
+    extended-height:  bool;
+    image-opacity:    real; (for background-image) 
+    width:            int;
 }
+
+#Calendar {
+    background-color: string;
+    background-image: string;
+    border-color:     string;
+    border-radius:    int;
+    border-width:     int;
+    image-opacity:    real; (for background-image)
+}
+
+#Time {
+    color:        string;
+    font-family:  string;
+}
+
+#Date {
+    color:        string;
+    font-family:  string;
+}
+
+#Applications, #Disks, #Pins, #Places {
+    background-color:  string;
+    background-image:  string;
+    border-color:      string;
+    border-radius:     int;
+    border-width:      int;
+    image-opacity:     real; (for background-image)
+}
+
+#ApplicationButton {
+    border-color:           string;
+    border-gradient-bottom: string;
+    border-gradient-top:    string;
+    border-radius:          int;
+    border-width:           int;
+    color:                  string;
+    gradient-bottom:        string;
+    gradient-top:           string;
+    icon-grayscale:         bool;
+    inner-border-color:     string;
+    inner-border-width:     int;
+    outer-border-color:     string;
+    outer-border-width:     int;
+}
+
+#ApplicationButton:hover, #ApplicationButton:focus {
+    background-gradient-bottom: string;
+    background-gradient-top:    string;
+    border-gradient-bottom:     string;
+    border-gradient-top:        string;
+    border-radius:              int;
+    border-width:               int;
+    inner-border-color:         string;
+    inner-border-width:         int;
+    outer-border-color:         string;
+    outer-border-width:         int;
+}
+
+#Pin1, #Pin2, #Pin3 {
+    background-gradient-bottom: string;
+    background-gradient-top:    string;
+    background-image            string;
+    border-gradient-bottom:     string;
+    border-gradient-top:        string;
+    border-radius:              int;
+    border-width:               int;
+    image-opacity:              real;
+}
+
+*/
+
+#General {
+    width:            200;
+    extended-height:  false;
+    border-radius:    0;
+    alignment:        right;
+    background-color: #aaa;
+}
+
+#Time {
+    font-family: "Monospace";
+    color:       #fff;
+}
+
+#Date {
+    font-family: "Sans Serif";
+    color:       #fff;
+}
+
+#ApplicationButton, #ApplicationButton:hover, #ApplicationButton:focus {
+    background-gradient-top:    #fff;
+    background-gradient-bottom: #ccc;
+    border-radius:              18;
+    color:                      #555;
+}
+
+#ApplicationButton {
+    outer-border-color: #7f7f7f;
+    outer-border-width: 1;
+    icon-grayscale:     true;
+}
+
+#ApplicationButton:hover {
+    inner-border-color:     #fff;
+    inner-border-width:     1;
+    border-gradient-top:    #777;
+    border-gradient-bottom: #aaa;
+    outer-border-color:     #00aaff;
+    outer-border-width:     1;
+    border-width:           2;
+}
+
+#ApplicationButton:focus {
+    outer-border-color: #c4c4c4;
+    outer-border-width: 0;
+}
+
+#Pin1, #Pin2, #Pin3 {
+    border-width:            2;
+    border-gradient-top:     #000;
+    border-gradient-bottom:  #333;
+    background-gradient-top: #fff;
+}
+
+#Pin1 {
+    background-gradient-bottom: #66ff0000;
+}
+
+#Pin2 {
+    background-gradient-bottom: #66ffff00;
+}
+
+#Pin3 {
+    background-gradient-bottom: #6600ff00;
+}
+

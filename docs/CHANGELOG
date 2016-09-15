@@ -1,3 +1,15 @@
+--- v0.41 (15-09-2016) ---
+
++ theme parser update
++ improved ApplicationButton
+    + inner-border
+    + border-gradient
+    + outer-border
+    + :focus support
+    + :hover support
+    + label on hover
+    + grayscaled icons option
+
 --- v0.4 (04-09-2016) ---
 + make styling more css like
 
