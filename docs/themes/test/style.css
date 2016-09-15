@@ -2,6 +2,11 @@
 
 This is a comment
 
+BUG LOW! all <int>'s are in pixels, use "10" instead of "10px" ---
+BUG MED! change image-opacity to background-image-opacity ---
+BUG HIG! backround image opacity is 0 by default, even if image is set ---
+
+
 --- theming property list (as close to css as possible) ---
 
 #General {
@@ -89,19 +94,23 @@ This is a comment
 #General {
     width:            200;
     extended-height:  false;
-    border-radius:    0;
+    border-radius:    5;
     alignment:        right;
-    background-color: #aaa;
+    background-color: #ccaaaaaa;
+    background-image: "images/a.png";
+    image-opacity:    0.2;
+    border-color:     #33000000;
+    border-width:     2;
 }
 
 #Time {
     font-family: "Monospace";
-    color:       #fff;
+    color: #aa000000;
 }
 
 #Date {
     font-family: "Sans Serif";
-    color:       #fff;
+    color: #aa000000;
 }
 
 #ApplicationButton, #ApplicationButton:hover, #ApplicationButton:focus {
@@ -114,17 +123,17 @@ This is a comment
 #ApplicationButton {
     outer-border-color: #7f7f7f;
     outer-border-width: 1;
-    icon-grayscale:     true;
+    icon-grayscale: false;
 }
 
 #ApplicationButton:hover {
-    inner-border-color:     #fff;
-    inner-border-width:     1;
+    inner-border-color: #fff;
+    inner-border-width: 1;
     border-gradient-top:    #777;
     border-gradient-bottom: #aaa;
-    outer-border-color:     #00aaff;
-    outer-border-width:     1;
-    border-width:           2;
+    outer-border-color: #00aaff;
+    outer-border-width: 1;
+    border-width: 2;
 }
 
 #ApplicationButton:focus {
@@ -133,21 +142,31 @@ This is a comment
 }
 
 #Pin1, #Pin2, #Pin3 {
-    border-width:            2;
-    border-gradient-top:     #000;
-    border-gradient-bottom:  #333;
-    background-gradient-top: #fff;
+    border-gradient-top: #9a9a9a;
+    border-gradient-bottom: #ccc;
+    inner-border-width: 1;
+    border-width: 4;
 }
 
 #Pin1 {
-    background-gradient-bottom: #66ff0000;
+    background-gradient-top: #d44440;
+    background-gradient-bottom: #622e2c;
+    inner-border-color: #642828;
 }
 
 #Pin2 {
-    background-gradient-bottom: #66ffff00;
+    background-gradient-top: #d49520;
+    background-gradient-bottom: #966a17;
+    inner-border-color: #63481a;
 }
 
 #Pin3 {
-    background-gradient-bottom: #6600ff00;
+    background-gradient-top: #70d43f;
+    background-gradient-bottom: #50962d;
+    inner-border-color: #3a6325;
+}
+
+#Pins {
+
 }
 

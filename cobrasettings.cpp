@@ -228,11 +228,11 @@ int CobraSettings::getApplicationsHeight( int parent_width ) {
 
     if (line_count * 2 >= applications_count) {
 
-        return ((parent_width / 5) + (parent_width / 20)) * line_count;
+        return ((parent_width / 5) + (parent_width / 25)) * line_count;
 
     } else {
 
-        return ((parent_width / 5) + (parent_width / 20)) * (line_count + 1);
+        return ((parent_width / 5) + (parent_width / 25)) * (line_count + 1);
     }
 }
 

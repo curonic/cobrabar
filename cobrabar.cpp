@@ -227,13 +227,15 @@ void CobraBar::applyStyle() {
             int apps_height;
             int places_height;
             int cal_height;
+            int pins_height;
             int sum;
 
             cal_height    = (this->width() / 4) + (this->width() / 20); // mirroring qml numbers
             disks_height  = (this->width() / 6.5 ) * m_.getDisksCount(); // 6.5 is a guess
             apps_height   = n_.getApplicationsHeight(this->width());
             places_height = n_.getPlacesHeight(this->width());
-            sum           = disks_height + apps_height + places_height + cal_height;
+            pins_height   = this->width() / 8 + (this->width() / 20);
+            sum           = disks_height + apps_height + places_height + cal_height + pins_height;
 
             this->resize(this->width(),sum);
 

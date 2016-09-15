@@ -68,6 +68,10 @@ Item {
     property color  pin1_border_gradient_bottom:                        "#44ff0000"
     property real   pin1_image_opacity:                                 1
     property int    pin1_border_radius:                                 40
+    property color  pin1_inner_border_color:                            "#000"
+    property int    pin1_inner_border_width:                            0
+    property color  pin1_outer_border_color:                            "#000"
+    property int    pin1_outer_border_width:                            0
 
     property string pin2_background_image
     property int    pin2_border_width:                                  2
@@ -77,6 +81,10 @@ Item {
     property color  pin2_border_gradient_bottom:                        "#44ffff00"
     property real   pin2_image_opacity:                                 1
     property int    pin2_border_radius:                                 40
+    property color  pin2_inner_border_color:                            "#000"
+    property int    pin2_inner_border_width:                            0
+    property color  pin2_outer_border_color:                            "#000"
+    property int    pin2_outer_border_width:                            0
 
     property string pin3_background_image
     property int    pin3_border_width:                                  2
@@ -86,6 +94,10 @@ Item {
     property color  pin3_border_gradient_bottom:                        "#4400ff00"
     property real   pin3_image_opacity:                                 1
     property int    pin3_border_radius:                                 40
+    property color  pin3_inner_border_color:                            "#000"
+    property int    pin3_inner_border_width:                            0
+    property color  pin3_outer_border_color:                            "#000"
+    property int    pin3_outer_border_width:                            0
 
     property color  applications_background_color:                      "#00000000"
     property string applications_background_image
@@ -201,45 +213,42 @@ Item {
     Column {
         spacing:        0
         anchors.fill:   parent
+        anchors.topMargin: general_border_width
+        anchors.top: parent.top
 
-        Row {
-            width:      global_width
-            height:     global_width / 4 + global_width / 20
-
-            Loader {
-                id:     calendar
-                source: qmlCalendar
-                width:  global_width - global_width / 10
-                height: global_width / 4 + global_width / 20
-            }
-
-            Loader {
-                id:     pins
-                source: qmlPins
-                width:  global_width / 10
-                height: global_width / 4 + global_width / 20
-            }
+        Loader {
+            id:     pins
+            source: qmlPins
+            width:  global_width
+            height: global_width / 8
         }
 
         Loader {
-            id:         applications
-            source:     qmlApplications
-            width:      global_width
-            height:     applicationHeight
+            id:     calendar
+            source: qmlCalendar
+            width:  global_width
+            height: global_width / 4 + global_width / 20
         }
 
         Loader {
-            id:         places
-            source:     qmlPlaces
-            width:      global_width
-            height:     placeHeight
+            id:     applications
+            source: qmlApplications
+            width:  global_width
+            height: applicationHeight
         }
 
         Loader {
-            id:         disks
-            source:     qmlDisks
-            width:      global_width
-            height:     diskHeight
+            id:     places
+            source: qmlPlaces
+            width:  global_width
+            height: placeHeight
+        }
+
+        Loader {
+            id:     disks
+            source: qmlDisks
+            width:  global_width
+            height: diskHeight
         }
     }
 }
