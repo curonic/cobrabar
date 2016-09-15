@@ -28,16 +28,9 @@
 #include <QDesktopWidget>
 #include <QTimer>
 #include <QTime>
-#include <QDir>
-#include <QDirIterator>
 #include <QVBoxLayout>
-#include <QStandardPaths>
-#include <QDomDocument>
-#include <QFile>
 #include <QProcess>
-#include <QHBoxLayout>
 #include <QQuickItem>
-#include <QPainter>
 
 CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
 
@@ -101,7 +94,7 @@ void CobraBar::slotResize(int height_changes) {
     }
 }
 
-void CobraBar::slotPosition(QString id, int x, int y , int w, int h) {
+void CobraBar::slotPosition(QString id, int x, int y, int w, int h) {
 
     QString id_;
 
@@ -249,8 +242,6 @@ void CobraBar::applyStyle() {
         } else {
 
             qmlObject_->setProperty(c_property_, c_value_);
-
-//            std::cout << c_property_ << " : " << c_value_ << std::endl;
 
         }
     }

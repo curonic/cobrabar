@@ -4,8 +4,6 @@ import "../components/"
 
 Item {
 
-    property bool adapt:    true
-
     anchors.fill: parent
 
     Rectangle {

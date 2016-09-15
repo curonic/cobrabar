@@ -33,8 +33,6 @@ private:
     void getPlaces();
     void getDisks();
     void applyStyle();
-
-    void experimental();
 };
 
 #endif // COBRABAR_H

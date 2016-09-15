@@ -67,10 +67,10 @@ void CobraSettings::readSettings() {
     document.setContent(&file);
     file.close();
 
-    auto root    = document.firstChildElement();
-    auto a_items = root.elementsByTagName("application");
-    auto p_items = root.elementsByTagName("place");
-    auto t_items = root.elementsByTagName("theme");
+    QDomElement root     = document.firstChildElement();
+    QDomNodeList a_items = root.elementsByTagName("application");
+    QDomNodeList p_items = root.elementsByTagName("place");
+    QDomNodeList t_items = root.elementsByTagName("theme");
 
     if(a_items.count() > 0) {
 
@@ -80,11 +80,11 @@ void CobraSettings::readSettings() {
 
         for(int i = 0; i < applications_count; i++) {
 
-            auto node = a_items.at(i);
-            auto map  = node.attributes();
-            auto exec = map.namedItem("exec").toAttr().value();
-            auto icon = map.namedItem("icon").toAttr().value();
-            auto tool = map.namedItem("tooltip").toAttr().value();
+            QDomNode node        = a_items.at(i);
+            QDomNamedNodeMap map = node.attributes();
+            QString exec         = map.namedItem("exec").toAttr().value();
+            QString icon         = map.namedItem("icon").toAttr().value();
+            QString tool         = map.namedItem("tooltip").toAttr().value();
 
             QString b;
 
@@ -114,11 +114,11 @@ void CobraSettings::readSettings() {
 
         for( int i = 0; i < places_count; i++) {
 
-            auto node = p_items.at(i);
-            auto map  = node.attributes();
-            auto path = map.namedItem("path").toAttr().value();
-            auto text = map.namedItem("text").toAttr().value();
-            auto tool = map.namedItem("tooltip").toAttr().value();
+            QDomNode node        = p_items.at(i);
+            QDomNamedNodeMap map = node.attributes();
+            QString path         = map.namedItem("path").toAttr().value();
+            QString text         = map.namedItem("text").toAttr().value();
+            QString tool         = map.namedItem("tooltip").toAttr().value();
 
             QString b;
 
@@ -144,9 +144,9 @@ void CobraSettings::readSettings() {
 
     if(t_items.count() > 0) {
 
-        auto node = t_items.at(0);
-        auto map  = node.attributes();
-        auto id = map.namedItem("id").toAttr().value();
+        QDomNode node         = t_items.at(0);
+        QDomNamedNodeMap map  = node.attributes();
+        QString id            = map.namedItem("id").toAttr().value();
 
         theme_name = id;
 
@@ -189,7 +189,7 @@ QString CobraSettings::getThemePath() {
 
 QString CobraSettings::getThemeFile() {
 
-    auto m_ = themes_dir.append(theme_name)
+    QString m_ = themes_dir.append(theme_name)
                         .append(QDir::separator())
                         .append("style.css");
 
@@ -223,8 +223,8 @@ int CobraSettings::getPlacesCount() {
 
 int CobraSettings::getApplicationsHeight( int parent_width ) {
 
-    auto item_count = applications_count;
-    auto line_count = item_count / 2;
+    int item_count = applications_count;
+    int line_count = item_count / 2;
 
     if (line_count * 2 >= applications_count) {
 

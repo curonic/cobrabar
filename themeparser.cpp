@@ -198,7 +198,6 @@ void ThemeParser::formatRules() {
                         .replace(":hover","_hover")
                         .replace(":focus","_focus");
 
-
                 if(n.contains(":")) {
 
                     mock_list.append(n);
@@ -213,7 +212,7 @@ void ThemeParser::formatRules() {
         QString a;
         a = mock_list.at(i);
 
-        if(a.at(0) == QString("#") | a.at(0) == QString(".")) {
+        if( (a.at(0) == QString("#")) | (a.at(0) == QString(".")) ) {
 
             a.remove(0,1);
 
@@ -222,10 +221,11 @@ void ThemeParser::formatRules() {
         if(!a.contains(": ")) {
 
             a.replace(":",": ");
+
         }
 
         a.replace(";","");
-        a.replace("-","_"); // `font-family: sans-serif` ???
+        a.replace("-","_");
         a.replace("\"","");
 
         if(a.contains("background_image")) {

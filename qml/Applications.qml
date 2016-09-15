@@ -4,7 +4,7 @@ import "../components/"
 
 Item {
 
-    anchors.fill:       parent
+    anchors.fill:           parent
 
     Rectangle {
         anchors.centerIn:   parent
@@ -50,7 +50,7 @@ Item {
         anchors.fill:       parent
         spacing:            parent.width / 20;
         anchors.centerIn:   parent
-        onZapChanged: { // it could be optimized, but i prefer easy reading
+        onZapChanged: {
             Qt.createQmlObject(
               "QButton {
                 qwidth:         parent.width / 2 - parent.width / 25

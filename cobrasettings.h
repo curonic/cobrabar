@@ -8,7 +8,7 @@ class CobraSettings {
 public:
     CobraSettings();
     void readSettings();
-\
+
     int         applications_count;
     int         places_count;
     QString     settings_file;

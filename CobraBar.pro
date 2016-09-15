@@ -19,4 +19,4 @@ LIBS       += -lX11
 
 RESOURCES  += resources.qrc
 
-CONFIG     -= qml_debug declarative_debug debug
+CONFIG     += qml_debug declarative_debug debug

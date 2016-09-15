@@ -21,9 +21,7 @@ private:
     QString     themeFile_;
 
     void uncommentTheme();
-
-        void formatRules();
-
+    void formatRules();
 };
 
 #endif // THEMEPARSER_H

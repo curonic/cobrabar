@@ -5,7 +5,7 @@ import "../components/"
 
 Item {
 
-    anchors.fill:   parent
+    anchors.fill:           parent
 
     Rectangle {
         anchors.centerIn:   parent
@@ -60,7 +60,6 @@ Item {
             qcolor2:        pin1_background_gradient_bottom
             qbordercolor1:  pin1_border_gradient_top
             qbordercolor2:  pin1_border_gradient_bottom
-
             qbordersize:    pin1_border_width
             onQClicked:     { exit() }
         }

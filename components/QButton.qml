@@ -115,7 +115,6 @@ Item {
                 tooltip.visible  = true
                 img.visible      = false
                 colorize.visible = false
-                button.hovered   = true
 
                 effect1.stop();
                 effect1.start();
@@ -136,6 +135,8 @@ Item {
 
                 tooltip.visible = false
                 img.visible     = true
+
+                console.warn("wtf")
 
             }
 
