@@ -11,19 +11,19 @@ Item {
         anchors.centerIn:   parent
         width:              parent.width
         height:             parent.height
-        radius:             disks_radius
+        radius:             disks_border_radius
         border.color:       disks_border_color
-        border.width:       disks_border_size
+        border.width:       disks_border_width
         color:              disks_background_color
     }
 
     Image {
         id:                 img
-        source:             places_background_image
+        source:             disks_background_image
         anchors.centerIn:   parent
         layer.enabled:      true
-        width:              parent.width - disks_border_size
-        height:             parent.height - disks_border_size
+        width:              parent.width - disks_border_width
+        height:             parent.height - disks_border_width
         opacity:            disks_image_opacity
 
         layer.effect: OpacityMask {
@@ -35,10 +35,10 @@ Item {
                     anchors.centerIn: parent
                     width:            img.width
                     height:           img.height
-                    radius:           disks_radius
+                    radius:           disks_border_radius
                     border.color:     disks_border_color
-                    border.width:     disks_border_size
-                    color:            disks_background_color
+                    border.width:     disks_border_width
+                    color:            "red"
                 }
             }
         }

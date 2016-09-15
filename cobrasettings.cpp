@@ -224,9 +224,9 @@ int CobraSettings::getPlacesCount() {
 int CobraSettings::getApplicationsHeight( int parent_width ) {
 
     auto item_count = applications_count;
-    auto line_count = item_count / 4;
+    auto line_count = item_count / 2;
 
-    if (line_count * 4 >= applications_count) {
+    if (line_count * 2 >= applications_count) {
 
         return ((parent_width / 5) + (parent_width / 20)) * line_count;
 

@@ -5,13 +5,12 @@ Item {
 
     property int    qheight
     property int    qwidth
-
     property string qtime
     property string qdate
-    property color  qtextcolor
-    property font   qtimefontfamily
+    property color  qdatecolor
     property font   qdatefontfamily
-    property color  qcolor
+    property color  qtimecolor
+    property font   qtimefontfamily
 
     width:                       qwidth
     height:                      qheight
@@ -23,7 +22,7 @@ Item {
             text:                qtime
             width:               parent.width
             font.pointSize:      parent.width > 0 ? parent.width / 8 : 1
-            color:               qtextcolor
+            color:               qtimecolor
             font.family:         qtimefontfamily
             textFormat:          Text.RichText
             horizontalAlignment: Text.AlignHCenter
@@ -36,7 +35,7 @@ Item {
             text:                qdate
             width:               parent.width
             font.pointSize:      parent.width > 0 ? parent.width / 14 : 1
-            color:               qtextcolor
+            color:               qdatecolor
             font.family:         qdatefontfamily
             textFormat:          Text.RichText
             horizontalAlignment: Text.AlignHCenter

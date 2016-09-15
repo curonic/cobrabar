@@ -21,6 +21,8 @@
 #include "themeparser.h"
 #include "cobrasettings.h"
 
+#include <iostream>
+
 #include <QFile>
 #include <QDir>
 #include <QDirIterator>
@@ -32,10 +34,10 @@
 
 ThemeParser::ThemeParser() {
 
-    auto m_ = new CobraSettings;
+    CobraSettings m_;
 
-    themePath_      = m_->getThemePath();
-    themeFile_      = m_->getThemeFile();
+    themePath_      = m_.getThemePath();
+    themeFile_      = m_.getThemeFile();
 
     uncommentTheme();
 
@@ -191,7 +193,11 @@ void ThemeParser::formatRules() {
                 b = cc.at(k).trimmed();
                 a = bb.at(j);
                 a.replace("  ","");
-                QString n = a.prepend("-").prepend(b).append(";");
+                QString n = a.prepend("-").prepend(b).append(";")
+                        /* special cases */
+                        .replace(":hover","_hover")
+                        .replace(":focus","_focus");
+
 
                 if(n.contains(":")) {
 
@@ -219,7 +225,7 @@ void ThemeParser::formatRules() {
         }
 
         a.replace(";","");
-        a.replace("-","_");
+        a.replace("-","_"); // `font-family: sans-serif` ???
         a.replace("\"","");
 
         if(a.contains("background_image")) {

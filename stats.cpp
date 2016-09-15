@@ -61,8 +61,7 @@ QStringList Stats::getDisksList() {
             QByteArray m = fs_.at(0).toLatin1();
             const char *c = m.data();
             struct statvfs s;
-            float a;
-            a = statvfs(c, &s);
+            statvfs(c, &s);
             double p;
             p = 100.0 * (double) (s.f_blocks - s.f_bfree) / (double) (s.f_blocks - s.f_bfree + s.f_bavail);
             unsigned long long ds = (unsigned long long) (s.f_blocks) * (unsigned long long) (s.f_bsize);

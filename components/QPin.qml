@@ -11,7 +11,8 @@ Item {
     property    string  qcolor1
     property    string  qcolor2
     property    string  qicon
-    property    string  qbordercolor
+    property    string  qbordercolor1
+    property    string  qbordercolor2
     property    int     qbordersize
     property    real    qiconopacity
 
@@ -41,7 +42,6 @@ Item {
                     width:            img.width
                     height:           img.height
                     radius:           qradius
-                    border.color:     qbordercolor
                     border.width:     qbordersize
                 }
             }
@@ -58,22 +58,53 @@ Item {
                 width:              parent.width
                 implicitHeight:     parent.height
                 radius:             qradius
-                border.color:       qbordercolor
-                border.width:       qbordersize
                 anchors.centerIn:   parent
                 gradient: Gradient {
-                    GradientStop { position: 0.0; color: qcolor1 }
-                    GradientStop { position: 1.0; color: qcolor2 }
+                    GradientStop { position: 0.0; color: qbordercolor1 }
+                    GradientStop { position: 1.0; color: qbordercolor2 }
                 }
+
+                Rectangle {
+                                width:              parent.width - qbordersize * 2
+                                implicitHeight:     parent.height - qbordersize * 2
+                                radius:             qradius
+                                anchors.centerIn:   parent
+                                color: "pink";
+                                gradient: Gradient {
+                                    GradientStop { position: 0.0; color: qcolor1 }
+                                    GradientStop { position: 1.0; color: qcolor2 }
+                                }
+                            }
             }
+
+
         }
 
-        onHoveredChanged: effect1.start()
-        onClicked:        { effect.stop(); effect.start(); qClicked() }
+        onHoveredChanged: {
+
+            effect1.start()
+
+        }
+
+        onClicked:        {
+
+            effect.stop()
+            effect.start()
+            qClicked()
+
+        }
+
         onCheckedChanged: {
 
-            if(checked === true) { qChecked() } else { qUnchecked() }
+            if(checked === true) {
 
+                qChecked()
+
+            } else {
+
+                qUnchecked()
+
+            }
         }
 
         PropertyAnimation {

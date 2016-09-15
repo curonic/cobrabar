@@ -12,9 +12,9 @@ Item {
         anchors.centerIn:   parent
         width:              parent.width
         height:             parent.height
-        radius:             calendar_radius
+        radius:             calendar_border_radius
         border.color:       calendar_border_color
-        border.width:       calendar_border_size
+        border.width:       calendar_border_width
         color:              calendar_background_color
     }
 
@@ -23,8 +23,8 @@ Item {
         source:             calendar_background_image
         anchors.centerIn:   parent
         layer.enabled:      true
-        width:              parent.width - calendar_border_size
-        height:             parent.height - calendar_border_size
+        width:              parent.width - calendar_border_width
+        height:             parent.height - calendar_border_width
         opacity:            calendar_image_opacity
 
         layer.effect: OpacityMask {
@@ -36,9 +36,9 @@ Item {
                     anchors.centerIn: parent
                     width:            img.width
                     height:           img.height
-                    radius:           calendar_radius
+                    radius:           calendar_border_radius
                     border.color:     calendar_border_color
-                    border.width:     calendar_border_size
+                    border.width:     calendar_border_width
                     color:            "red"
                 }
             }
@@ -46,12 +46,12 @@ Item {
     }
 
     QCalendar {
-
         qdate:            calendarDate
         qtime:            calendarTime
-        qtextcolor:       calendar_text_color
-        qtimefontfamily:  calendar_time_font_family
-        qdatefontfamily:  calendar_date_font_family
+        qtimefontfamily:  time_font_family
+        qdatefontfamily:  date_font_family
+        qdatecolor:       date_color
+        qtimecolor:       time_color
         anchors.fill:     parent
         anchors.centerIn: parent
     }
