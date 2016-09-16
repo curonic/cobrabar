@@ -1,16 +1,17 @@
 + add more detailed info for places buttons (items or size)
++ add ApplicationLaunch busy indicator (QProcess stuff?)
 + add "smart popup" for calendar
 + add individual corner radius
 + add analog clock option
-+ add shadow for main window
 + add auto reload on theme changed
 + add more styles
 + tooltips not working >>> mousearea overrides buttons. rewrite buttons as items anyway
 + turn strings "10px" & "10pt" into <int>10
 + change image-opacity to background-image-opacity maybe???
 + fix applicationbutton padding
-+ make applicationbutton properties standard for placesbutton & disksbuttons
++ make applicationbutton properties standard for placesbutton & disksbuttons & pins
 
+done! add shadow for main window (kinda, semi-translucent border)
 done! something about pins (they are too squeezed in the corner)
 done! more style properties (button colors, gradients, noise etc...)
 done! get rid of javascripts

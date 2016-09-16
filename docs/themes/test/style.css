@@ -94,13 +94,13 @@ BUG HIG! backround image opacity is 0 by default, even if image is set ---
 #General {
     width:            200;
     extended-height:  false;
-    border-radius:    5;
+    border-radius:    7;
     alignment:        right;
-    background-color: #ccaaaaaa;
+    background-color: #eecccccc;
     background-image: "images/a.png";
-    image-opacity:    0.2;
+    image-opacity:    0.3;
     border-color:     #33000000;
-    border-width:     2;
+    border-width:     4;
 }
 
 #Time {
@@ -116,8 +116,8 @@ BUG HIG! backround image opacity is 0 by default, even if image is set ---
 #ApplicationButton, #ApplicationButton:hover, #ApplicationButton:focus {
     background-gradient-top:    #fff;
     background-gradient-bottom: #ccc;
-    border-radius:              18;
-    color:                      #555;
+    border-radius:              8;
+    color:                      #88000000;
 }
 
 #ApplicationButton {

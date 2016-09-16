@@ -45,16 +45,16 @@ Item {
     Flow {
         property string zap: applicationEntry
 
-        anchors.leftMargin: parent.width / 25 + 1;
+        anchors.leftMargin: parent.width / 20;
         anchors.topMargin:  parent.width / 25;
         anchors.fill:       parent
-        spacing:            parent.width / 20;
+        spacing:            parent.width / 40;
         anchors.centerIn:   parent
         onZapChanged: {
             Qt.createQmlObject(
               "QButton {
-                qwidth:         parent.width / 2 - parent.width / 25
-                qheight:        parent.width / 5
+                qwidth:         parent.width - parent.width / 20
+                qheight:        parent.width / 6
 
                 qgray:              applicationbutton_icon_grayscale
                 qcolor:             applicationbutton_color

@@ -220,6 +220,7 @@ Item {
             id:     pins
             source: qmlPins
             width:  global_width
+            anchors.horizontalCenter: parent.horizontalCenter
             height: global_width / 8
         }
 
@@ -227,6 +228,7 @@ Item {
             id:     calendar
             source: qmlCalendar
             width:  global_width
+            anchors.horizontalCenter: parent.horizontalCenter
             height: global_width / 4 + global_width / 20
         }
 
@@ -234,6 +236,7 @@ Item {
             id:     applications
             source: qmlApplications
             width:  global_width
+            anchors.horizontalCenter: parent.horizontalCenter
             height: applicationHeight
         }
 
@@ -241,6 +244,7 @@ Item {
             id:     places
             source: qmlPlaces
             width:  global_width
+            anchors.horizontalCenter: parent.horizontalCenter
             height: placeHeight
         }
 
@@ -248,6 +252,7 @@ Item {
             id:     disks
             source: qmlDisks
             width:  global_width
+            anchors.horizontalCenter: parent.horizontalCenter
             height: diskHeight
         }
     }
