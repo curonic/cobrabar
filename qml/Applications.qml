@@ -52,44 +52,51 @@ Item {
         anchors.centerIn:   parent
         onZapChanged: {
             Qt.createQmlObject(
-              "QButton {
-                qwidth:         parent.width - parent.width / 20
-                qheight:        parent.width / 6
+            "QButton {
+                width:              parent.width - parent.width / 20
+                height:             parent.width / 6
 
-                qgray:              applicationbutton_icon_grayscale
-                qcolor:             applicationbutton_color
-                qcolor1:            applicationbutton_background_gradient_top
-                qcolor2:            applicationbutton_background_gradient_bottom
-                qradius:            applicationbutton_border_radius
-                qbordersize:        applicationbutton_border_width
-                qbordercolor1:      applicationbutton_border_gradient_top
-                qbordercolor2:      applicationbutton_border_gradient_bottom
-                qouterbordercolor:  applicationbutton_outer_border_color
-                qouterbordersize:   applicationbutton_outer_border_width
-                qinnerbordersize:   applicationbutton_inner_border_width
-                qinnerbordercolor:  applicationbutton_inner_border_color
+                qbackgroundcolorbottom: applicationbutton_background_gradient_bottom
+                qbackgroundcolortop:    applicationbutton_background_gradient_top
+                qbordergradientbottom:  applicationbutton_border_gradient_bottom
+                qbordergradienttop:     applicationbutton_border_gradient_top
+                qborderradius:          applicationbutton_border_radius
+                qborderwidth:           applicationbutton_border_width
+                qcolor:                 applicationbutton_color
+                qtextshadow:            applicationbutton_text_shadow
+                qicongrayscale:         applicationbutton_icon_grayscale
+                qinnerbordercolor:      applicationbutton_inner_border_color
+                qinnerborderwidth:      applicationbutton_inner_border_width
+                qouterbordercolor:      applicationbutton_outer_border_color
+                qouterborderwidth:      applicationbutton_outer_border_width
 
-                qhcolor1:           applicationbutton_hover_background_gradient_top
-                qhcolor2:           applicationbutton_hover_background_gradient_bottom
-                qhradius:           applicationbutton_hover_border_radius
-                qhbordersize:       applicationbutton_hover_border_width
-                qhbordercolor1:     applicationbutton_hover_border_gradient_top
-                qhbordercolor2:     applicationbutton_hover_border_gradient_bottom
-                qhouterbordercolor: applicationbutton_hover_outer_border_color
-                qhouterbordersize:  applicationbutton_hover_outer_border_width
-                qhinnerbordercolor: applicationbutton_hover_inner_border_color
-                qhinnerbordersize:  applicationbutton_hover_inner_border_width
+                qhbackgroundcolorbottom: applicationbutton_hover_background_gradient_bottom
+                qhbackgroundcolortop:    applicationbutton_hover_background_gradient_top
+                qhbordergradientbottom:  applicationbutton_hover_border_gradient_bottom
+                qhbordergradienttop:     applicationbutton_hover_border_gradient_top
+                qhborderradius:          applicationbutton_hover_border_radius
+                qhborderwidth:           applicationbutton_hover_border_width
+                qhcolor:                 applicationbutton_hover_color
+                qhtextshadow:            applicationbutton_hover_text_shadow
+                qhicongrayscale:         applicationbutton_hover_icon_grayscale
+                qhinnerbordercolor:      applicationbutton_hover_inner_border_color
+                qhinnerborderwidth:      applicationbutton_hover_inner_border_width
+                qhouterbordercolor:      applicationbutton_hover_outer_border_color
+                qhouterborderwidth:      applicationbutton_hover_outer_border_width
 
-                qfcolor1:           applicationbutton_focus_background_gradient_top
-                qfcolor2:           applicationbutton_focus_background_gradient_bottom
-                qfradius:           applicationbutton_focus_border_radius
-                qfbordersize:       applicationbutton_focus_border_width
-                qfbordercolor1:     applicationbutton_focus_border_gradient_top
-                qfbordercolor2:     applicationbutton_focus_border_gradient_bottom
-                qfouterbordercolor: applicationbutton_focus_outer_border_color
-                qfouterbordersize:  applicationbutton_focus_outer_border_width
-                qfinnerbordersize:  applicationbutton_focus_inner_border_width
-                qfinnerbordercolor: applicationbutton_focus_inner_border_color
+                qfbackgroundcolorbottom: applicationbutton_focus_background_gradient_bottom
+                qfbackgroundcolortop:    applicationbutton_focus_background_gradient_top
+                qfbordergradientbottom:  applicationbutton_focus_border_gradient_bottom
+                qfbordergradienttop:     applicationbutton_focus_border_gradient_top
+                qfborderradius:          applicationbutton_focus_border_radius
+                qfborderwidth:           applicationbutton_focus_border_width
+                qfcolor:                 applicationbutton_focus_color
+                qftextshadow:            applicationbutton_focus_text_shadow
+                qficongrayscale:         applicationbutton_focus_icon_grayscale
+                qfinnerbordercolor:      applicationbutton_focus_inner_border_color
+                qfinnerborderwidth:      applicationbutton_focus_inner_border_width
+                qfouterbordercolor:      applicationbutton_focus_outer_border_color
+                qfouterborderwidth:      applicationbutton_focus_outer_border_width
 
                 qtooltip:       '"+zap.split(",",3).slice(zap.split(",",2).length)+"'
                 qicon:          'file:/"+applicationIcon+zap.split(",",2).slice(zap.split(",",1).length)+"';

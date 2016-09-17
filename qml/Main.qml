@@ -128,40 +128,45 @@ Item {
     property real   general_image_opacity:                              1
     property int    global_width:                                       0
 
-    property color  applicationbutton_color:                            "#000"
-    property color  applicationbutton_background_gradient_top:          "#555"
     property color  applicationbutton_background_gradient_bottom:       "#333"
-    property color  applicationbutton_border_gradient_top:              "#000"
-    property color  applicationbutton_outer_border_color:               "#000"
-    property int    applicationbutton_outer_border_width:               0
-    property int    applicationbutton_border_width:                     0
+    property color  applicationbutton_background_gradient_top:          "#555"
     property color  applicationbutton_border_gradient_bottom:           "#555"
+    property color  applicationbutton_border_gradient_top:              "#000"
     property int    applicationbutton_border_radius:                    8
+    property int    applicationbutton_border_width:                     0
+    property color  applicationbutton_color:                            "#000"
     property bool   applicationbutton_icon_grayscale:                   false
     property color  applicationbutton_inner_border_color:               "#000"
     property int    applicationbutton_inner_border_width:               0
-
-    property color  applicationbutton_focus_background_gradient_top:    "#555"
+    property color  applicationbutton_outer_border_color:               "#000"
+    property int    applicationbutton_outer_border_width:               0
+    property color  applicationbutton_text_shadow:                      "#55ffffff"
     property color  applicationbutton_focus_background_gradient_bottom: "#333"
-    property color  applicationbutton_focus_border_gradient_top:        "#000"
-    property color  applicationbutton_focus_outer_border_color:         "#000"
+    property color  applicationbutton_focus_background_gradient_top:    "#555"
     property color  applicationbutton_focus_border_gradient_bottom:     "#555"
-    property int    applicationbutton_focus_border_width:               0
-    property int    applicationbutton_focus_outer_border_width:         0
+    property color  applicationbutton_focus_border_gradient_top:        "#000"
     property int    applicationbutton_focus_border_radius:              8
+    property int    applicationbutton_focus_border_width:               0
+    property color  applicationbutton_focus_color:                      "#000"
+    property bool   applicationbutton_focus_icon_grayscale:             false
     property color  applicationbutton_focus_inner_border_color:         "#000"
     property int    applicationbutton_focus_inner_border_width:         0
-
-    property color  applicationbutton_hover_background_gradient_top:    "#555"
+    property color  applicationbutton_focus_outer_border_color:         "#000"
+    property int    applicationbutton_focus_outer_border_width:         0
+    property color  applicationbutton_focus_text_shadow:                "#55ffffff"
     property color  applicationbutton_hover_background_gradient_bottom: "#333"
-    property color  applicationbutton_hover_border_gradient_top:        "#000"
-    property color  applicationbutton_hover_outer_border_color:         "#000"
+    property color  applicationbutton_hover_background_gradient_top:    "#555"
     property color  applicationbutton_hover_border_gradient_bottom:     "#555"
-    property int    applicationbutton_hover_border_width:               0
-    property int    applicationbutton_hover_outer_border_width:         0
+    property color  applicationbutton_hover_border_gradient_top:        "#000"
     property int    applicationbutton_hover_border_radius:              8
+    property int    applicationbutton_hover_border_width:               0
+    property color  applicationbutton_hover_color:                      "#000"
+    property bool   applicationbutton_hover_icon_grayscale:             false
     property color  applicationbutton_hover_inner_border_color:         "#000"
     property int    applicationbutton_hover_inner_border_width:         0
+    property color  applicationbutton_hover_outer_border_color:         "#000"
+    property int    applicationbutton_hover_outer_border_width:         0
+    property color  applicationbutton_hover_text_shadow:                "#55ffffff"
 
     Timer { // ugly, but not as ugly as guessing which property will load last (x?,y?,h?,w?)!
         interval:   1

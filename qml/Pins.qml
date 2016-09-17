@@ -54,8 +54,8 @@ Item {
         anchors.leftMargin:   spacing
 
         QPin {
-            qwidth:            parent.height
-            qheight:           parent.height
+            width:             parent.height
+            height:            parent.height
             qicon:             pin1_background_image
             qiconopacity:      pin1_image_opacity
             qradius:           pin1_border_radius
@@ -73,8 +73,8 @@ Item {
         }
 
         QPin {
-            qwidth:            parent.height
-            qheight:           parent.height
+            width:             parent.height
+            height:            parent.height
             qicon:             pin2_background_image
             qiconopacity:      pin2_image_opacity
             qradius:           pin2_border_radius
@@ -93,8 +93,8 @@ Item {
         }
 
         QPin {
-            qwidth:            parent.height
-            qheight:           parent.height
+            width:             parent.height
+            height:            parent.height
             qicon:             pin3_background_image
             qiconopacity:      pin3_image_opacity
             qradius:           pin3_border_radius

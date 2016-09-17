@@ -1,4 +1,7 @@
 --- v0.42 (16-09-2016) ---
++ cleanup & improve ApplicationButtons
+
+--- v0.42 (16-09-2016) ---
 + rewrite ApplicationButtons from half-hacked qml buttons to custom items
 
 --- v0.41 (15-09-2016) ---

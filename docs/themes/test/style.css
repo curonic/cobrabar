@@ -50,19 +50,19 @@ BUG HIG! backround image opacity is 0 by default, even if image is set ---
 }
 
 #ApplicationButton {
-    border-color:           string;
-    border-gradient-bottom: string;
-    border-gradient-top:    string;
-    border-radius:          int;
-    border-width:           int;
-    color:                  string;
-    gradient-bottom:        string;
-    gradient-top:           string;
-    icon-grayscale:         bool;
-    inner-border-color:     string;
-    inner-border-width:     int;
-    outer-border-color:     string;
-    outer-border-width:     int;
+    background-gradient-bottom: string;
+    background-gradient-top:    string;
+    border-gradient-bottom:     string;
+    border-gradient-top:        string;
+    border-radius:              int;
+    border-width:               int;
+    color:                      string;
+    icon-grayscale:             bool;
+    inner-border-color:         string;
+    inner-border-width:         int;
+    outer-border-color:         string;
+    outer-border-width:         int;
+    text-shadow:                string;
 }
 
 #ApplicationButton:hover, #ApplicationButton:focus {
@@ -72,10 +72,12 @@ BUG HIG! backround image opacity is 0 by default, even if image is set ---
     border-gradient-top:        string;
     border-radius:              int;
     border-width:               int;
+    icon-grayscale:             bool;
     inner-border-color:         string;
     inner-border-width:         int;
     outer-border-color:         string;
     outer-border-width:         int;
+    text-shadow:                string;
 }
 
 #Pin1, #Pin2, #Pin3 {
@@ -123,7 +125,7 @@ BUG HIG! backround image opacity is 0 by default, even if image is set ---
 #ApplicationButton {
     outer-border-color: #7f7f7f;
     outer-border-width: 1;
-    icon-grayscale: false;
+    icon-grayscale: true;
 }
 
 #ApplicationButton:hover {
@@ -134,6 +136,8 @@ BUG HIG! backround image opacity is 0 by default, even if image is set ---
     outer-border-color: #00aaff;
     outer-border-width: 1;
     border-width: 2;
+    icon-grayscale: false;
+    color: #f00;
 }
 
 #ApplicationButton:focus {
@@ -165,8 +169,3 @@ BUG HIG! backround image opacity is 0 by default, even if image is set ---
     background-gradient-bottom: #50962d;
     inner-border-color: #3a6325;
 }
-
-#Pins {
-
-}
-
