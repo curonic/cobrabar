@@ -23,10 +23,10 @@
 #include <QApplication>
 #include <QX11Info>
 
-#include <iostream>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
+
 
 int main(int argc, char *argv[]) {
 

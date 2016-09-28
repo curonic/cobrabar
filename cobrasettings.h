@@ -31,6 +31,7 @@ public:
     QString     getThemeName();
     QString     getThemePath();
     QString     getThemeFile();
+
 };
 
 #endif // COBRASETTINGS_H

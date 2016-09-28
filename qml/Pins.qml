@@ -1,4 +1,4 @@
-import QtQuick 2.5
+import QtQuick 2.0
 import QtQuick.Layouts 1.0
 import QtGraphicalEffects 1.0
 import "../components/"
@@ -23,7 +23,7 @@ Item {
         source:             pins_background_image
         anchors.centerIn:   parent
         layer.enabled:      true
-        width:              parent.width - pins_border_width
+        width:              parent.width  - pins_border_width - general_border_width * 2
         height:             parent.height - pins_border_width
         opacity:            pins_image_opacity
 
@@ -108,8 +108,8 @@ Item {
             qinnerbordercolor: pin3_inner_border_color
             qinnerbordersize:  pin3_inner_border_width
 
-            onQChecked:     { places.visible = 0; disks.visible = 0; resize(-places.height-disks.height) }
-            onQUnchecked:   { places.visible = 1; disks.visible = 1; resize(places.height+disks.height) }
+            onQChecked:     { places.visible = 0; resize(-places.height) }
+            onQUnchecked:   { places.visible = 1; resize(+places.height) }
         }
     }
 }

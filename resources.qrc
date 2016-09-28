@@ -2,14 +2,11 @@
     <qresource prefix="/">
         <file>components/QButton.qml</file>
         <file>components/QCalendar.qml</file>
-        <file>components/QPlaceButton.qml</file>
-        <file>components/QDiskInfo.qml</file>
         <file>components/QPin.qml</file>
         <file>qml/Applications.qml</file>
         <file>qml/Calendar.qml</file>
         <file>qml/Pins.qml</file>
         <file>qml/Places.qml</file>
-        <file>qml/Stats.qml</file>
         <file>qml/Main.qml</file>
     </qresource>
 </RCC>

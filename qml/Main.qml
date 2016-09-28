@@ -1,14 +1,14 @@
-import QtQuick 2.5
+import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import QtGraphicalEffects 1.0
 import "../components/"
 
 Item {
 
+    clip: true
     // global stuff
     property string qmlCalendar:       "qrc:/qml/Calendar.qml"
     property string qmlApplications:   "qrc:/qml/Applications.qml"
-    property string qmlDisks:          "qrc:/qml/Stats.qml"
     property string qmlPlaces:         "qrc:/qml/Places.qml"
     property string qmlPins:           "qrc:/qml/Pins.qml"
     property string qmlSlideshow:      "qrc:/qml/Slideshow.qml"
@@ -28,12 +28,9 @@ Item {
 
     // places
     property string placeEntry
+    property string placeIcon
     property int    placeHeight
     signal          placeLaunch(string place)
-
-    // disks
-    property string diskEntry
-    property int    diskHeight
 
     // pins
     signal exit()
@@ -47,11 +44,11 @@ Item {
     property real   calendar_image_opacity:                             1
     property int    calendar_border_radius:                             0
 
-    property string date_font_family:                                   "Oxygen-Sans"
     property color  date_color:                                         "#aaffffff"
+    property string date_font_family:                                   "Oxygen-Sans"
 
-    property string time_font_family:                                   "Oxygen-Sans"
     property color  time_color:                                         "#aaffffff"
+    property string time_font_family:                                   "Oxygen-Sans"
 
     property color  pins_background_color:                              "#00000000"
     property string pins_background_image
@@ -113,13 +110,6 @@ Item {
     property real   places_image_opacity:                               1
     property int    places_border_radius:                               0
 
-    property color  disks_background_color:                             "#00000000"
-    property string disks_background_image
-    property color  disks_border_color:                                 "#00000000"
-    property int    disks_border_width:                                 0
-    property real   disks_image_opacity:                                1
-    property int    disks_border_radius:                                0
-
     property color  general_background_color:                           "#aa000000"
     property color  general_border_color:                               "#000000"
     property string general_background_image
@@ -135,12 +125,14 @@ Item {
     property int    applicationbutton_border_radius:                    8
     property int    applicationbutton_border_width:                     0
     property color  applicationbutton_color:                            "#000"
+    property string applicationbutton_font_family:                      "Sans"
     property bool   applicationbutton_icon_grayscale:                   false
     property color  applicationbutton_inner_border_color:               "#000"
     property int    applicationbutton_inner_border_width:               0
     property color  applicationbutton_outer_border_color:               "#000"
     property int    applicationbutton_outer_border_width:               0
-    property color  applicationbutton_text_shadow:                      "#55ffffff"
+    property string applicationbutton_text_align:                       "center"
+
     property color  applicationbutton_focus_background_gradient_bottom: "#333"
     property color  applicationbutton_focus_background_gradient_top:    "#555"
     property color  applicationbutton_focus_border_gradient_bottom:     "#555"
@@ -148,12 +140,14 @@ Item {
     property int    applicationbutton_focus_border_radius:              8
     property int    applicationbutton_focus_border_width:               0
     property color  applicationbutton_focus_color:                      "#000"
+    property string applicationbutton_focus_font_family:                "Sans"
     property bool   applicationbutton_focus_icon_grayscale:             false
     property color  applicationbutton_focus_inner_border_color:         "#000"
     property int    applicationbutton_focus_inner_border_width:         0
     property color  applicationbutton_focus_outer_border_color:         "#000"
     property int    applicationbutton_focus_outer_border_width:         0
-    property color  applicationbutton_focus_text_shadow:                "#55ffffff"
+    property string applicationbutton_focus_text_align:                 "center"
+
     property color  applicationbutton_hover_background_gradient_bottom: "#333"
     property color  applicationbutton_hover_background_gradient_top:    "#555"
     property color  applicationbutton_hover_border_gradient_bottom:     "#555"
@@ -161,12 +155,59 @@ Item {
     property int    applicationbutton_hover_border_radius:              8
     property int    applicationbutton_hover_border_width:               0
     property color  applicationbutton_hover_color:                      "#000"
+    property string applicationbutton_hover_font_family:                "Sans"
     property bool   applicationbutton_hover_icon_grayscale:             false
     property color  applicationbutton_hover_inner_border_color:         "#000"
     property int    applicationbutton_hover_inner_border_width:         0
     property color  applicationbutton_hover_outer_border_color:         "#000"
     property int    applicationbutton_hover_outer_border_width:         0
-    property color  applicationbutton_hover_text_shadow:                "#55ffffff"
+    property string applicationbutton_hover_text_align:                 "center"
+
+    property color  placebutton_background_gradient_bottom:       "#333"
+    property color  placebutton_background_gradient_top:          "#555"
+    property color  placebutton_border_gradient_bottom:           "#555"
+    property color  placebutton_border_gradient_top:              "#000"
+    property int    placebutton_border_radius:                    8
+    property int    placebutton_border_width:                     0
+    property color  placebutton_color:                            "#000"
+    property string placebutton_font_family:                      "Sans"
+    property bool   placebutton_icon_grayscale:                   false
+    property color  placebutton_inner_border_color:               "#000"
+    property int    placebutton_inner_border_width:               0
+    property color  placebutton_outer_border_color:               "#000"
+    property int    placebutton_outer_border_width:               0
+    property string placebutton_text_align:                       "center"
+
+    property color  placebutton_focus_background_gradient_bottom: "#333"
+    property color  placebutton_focus_background_gradient_top:    "#555"
+    property color  placebutton_focus_border_gradient_bottom:     "#555"
+    property color  placebutton_focus_border_gradient_top:        "#000"
+    property int    placebutton_focus_border_radius:              8
+    property int    placebutton_focus_border_width:               0
+    property color  placebutton_focus_color:                      "#000"
+    property string placebutton_focus_font_family:                "Sans"
+    property bool   placebutton_focus_icon_grayscale:             false
+    property color  placebutton_focus_inner_border_color:         "#000"
+    property int    placebutton_focus_inner_border_width:         0
+    property color  placebutton_focus_outer_border_color:         "#000"
+    property int    placebutton_focus_outer_border_width:         0
+    property string placebutton_focus_text_align:                 "center"
+
+    property color  placebutton_hover_background_gradient_bottom: "#333"
+    property color  placebutton_hover_background_gradient_top:    "#555"
+    property color  placebutton_hover_border_gradient_bottom:     "#555"
+    property color  placebutton_hover_border_gradient_top:        "#000"
+    property int    placebutton_hover_border_radius:              8
+    property int    placebutton_hover_border_width:               0
+    property color  placebutton_hover_color:                      "#000"
+    property string placebutton_hover_font_family:                "Sans"
+    property bool   placebutton_hover_icon_grayscale:             false
+    property color  placebutton_hover_inner_border_color:         "#000"
+    property int    placebutton_hover_inner_border_width:         0
+    property color  placebutton_hover_outer_border_color:         "#000"
+    property int    placebutton_hover_outer_border_width:         0
+    property string placebutton_hover_text_align:                 "center"
+
 
     Timer { // ugly, but not as ugly as guessing which property will load last (x?,y?,h?,w?)!
         interval:   1
@@ -177,26 +218,28 @@ Item {
             loaderPosition(pins.source, pins.x, pins.y, pins.width, pins.height)
             loaderPosition(applications.source, applications.x, applications.y, applications.width, applications.height)
             loaderPosition(places.source, places.x, places.y, places.width, places.height)
-            loaderPosition(disks.source, disks.x, disks.y, disks.width, disks.height)
         }
     }
 
-    anchors.fill:       parent
+    anchors.fill:     parent
 
     Rectangle {
-        anchors.fill:   parent
-        color:          general_background_color
-        radius:         general_border_radius
-        border.width:   general_border_width
-        border.color:   general_border_color
+        anchors.fill: parent
+        color:        general_background_color
+        radius:       general_border_radius
+        border.width: general_border_width
+        border.color: general_border_color
     }
 
     Image {
         id:                 img
         source:             general_background_image
         anchors.centerIn:   parent
-        width:              parent.width - general_border_width * 2
+        width:              parent.width  - general_border_width * 2
         height:             parent.height - general_border_width * 2
+        fillMode:           Image.Pad
+        horizontalAlignment: Image.AlignLeft
+        verticalAlignment: Image.AlignTop
         layer.enabled:      true
         layer.effect: OpacityMask {
             maskSource: Item {
@@ -216,10 +259,10 @@ Item {
     }
 
     Column {
-        spacing:        0
-        anchors.fill:   parent
+        spacing:      0
+        anchors.fill: parent
+        anchors.top:  parent.top
         anchors.topMargin: general_border_width
-        anchors.top: parent.top
 
         Loader {
             id:     pins
@@ -232,9 +275,9 @@ Item {
         Loader {
             id:     calendar
             source: qmlCalendar
-            width:  global_width
+            width:  global_width - general_border_width * 2
             anchors.horizontalCenter: parent.horizontalCenter
-            height: global_width / 4 + global_width / 20
+            height: global_width / 3 + global_width / 10
         }
 
         Loader {
@@ -251,14 +294,6 @@ Item {
             width:  global_width
             anchors.horizontalCenter: parent.horizontalCenter
             height: placeHeight
-        }
-
-        Loader {
-            id:     disks
-            source: qmlDisks
-            width:  global_width
-            anchors.horizontalCenter: parent.horizontalCenter
-            height: diskHeight
         }
     }
 }

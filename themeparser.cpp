@@ -65,11 +65,8 @@ void ThemeParser::uncommentTheme() {
 
     for(int i = 0; i < data.length() -1; i++) {
 
-        QString a;
-        QString b;
-        a = data.at(i);
-        b = data.at(i+1);
-
+        QString a = data.at(i);
+        QString b = data.at(i+1);
         QString c = a.append(b);
 
         if(c.contains(bad0)) {
@@ -161,10 +158,9 @@ void ThemeParser::formatRules() {
     for(int k = 0; k < starting_points.length() - 1; k++) {
 
         QString clunky;
-        int s;
-        int e;
-        s = starting_points.at(k).toInt() + 1;
-        e = ending_points.at(k + 1).toInt();
+
+        int s = starting_points.at(k).toInt() + 1;
+        int e = ending_points.at(k + 1).toInt();
 
         for (int j = s; j < e; j++) {
 
@@ -178,23 +174,20 @@ void ThemeParser::formatRules() {
 
     for(int i = 0; i < block_content.length(); i++) {
 
-        QStringList bb;
-        bb = block_content.at(i).split(";");
+        QStringList bb = block_content.at(i).split(";");
 
-        QStringList cc;
-        cc = block_name.at(i).split(",");
+        QStringList cc = block_name.at(i).split(",");
 
         for(int k = 0; k < cc.length(); k++) {
 
             for(int j = 0; j < bb.length(); j++) {
 
-                QString a;
-                QString b;
-                b = cc.at(k).trimmed();
-                a = bb.at(j);
+                QString a = bb.at(j);
+                QString b = cc.at(k).trimmed();
+
                 a.replace("  ","");
-                QString n = a.prepend("-").prepend(b).append(";")
-                        /* special cases */
+                QString n = a.prepend("-")
+                        .prepend(b).append(";")
                         .replace(":hover","_hover")
                         .replace(":focus","_focus");
 
@@ -209,8 +202,7 @@ void ThemeParser::formatRules() {
 
     for(int i = 0; i < mock_list.length(); i++) {
 
-        QString a;
-        a = mock_list.at(i);
+        QString a = mock_list.at(i);
 
         if( (a.at(0) == QString("#")) | (a.at(0) == QString(".")) ) {
 
@@ -230,14 +222,12 @@ void ThemeParser::formatRules() {
 
         if(a.contains("background_image")) {
 
-            QStringList addPath_;
-            QString temp_;
-            QString f_;
+            QStringList addPath_ = a.split(":");
+            QString temp_        = addPath_.at(1).trimmed();
 
-            addPath_ = a.split(":");
-            temp_    = addPath_.at(1).trimmed();
             temp_.prepend(themePath_).prepend("file://");
 
+            QString f_;
             f_.append(addPath_.at(0)).append(": ").append(temp_);
             a = f_;
 

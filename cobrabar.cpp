@@ -19,11 +19,8 @@
 
 
 #include "cobrabar.h"
-#include "stats.h"
 #include "cobrasettings.h"
 #include "themeparser.h"
-
-#include <iostream>
 
 #include <QDesktopWidget>
 #include <QTimer>
@@ -31,6 +28,8 @@
 #include <QVBoxLayout>
 #include <QProcess>
 #include <QQuickItem>
+#include <QFileSystemWatcher>
+#include <QDebug>
 
 CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
 
@@ -77,7 +76,18 @@ CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
     connect(qmlObject_, SIGNAL(exit()), this, SLOT(slotExit()));
     connect(qmlObject_, SIGNAL(resize(int)), this, SLOT(slotResize(int)));
 
+
+    CobraSettings s;
+
+QFileSystemWatcher *f = new QFileSystemWatcher;
+f->addPath(s.getThemePath());
+
+connect(f, SIGNAL(directoryChanged(const QString &)), this, SLOT(applyStyle()));
+
     applyStyle();
+
+    getApplications();
+    getPlaces();
 
 }
 
@@ -96,9 +106,8 @@ void CobraBar::slotResize(int height_changes) {
 
 void CobraBar::slotPosition(QString id, int x, int y, int w, int h) {
 
-    QString id_;
+    QString id_ = id;
 
-    id_ = id;
     id_.remove("qrc:/qml/").remove(".qml")
             .append(",")
             .append(QString::number(x))
@@ -144,7 +153,7 @@ void CobraBar::getApplications() {
 void CobraBar::slotExec(QString external_application) {
 
     QProcess *p = new QProcess;
-    p->start(external_application);
+    p->startDetached(external_application);
 
 }
 
@@ -152,6 +161,7 @@ void CobraBar::getPlaces() {
 
     CobraSettings a;
 
+    qmlObject_->setProperty("placeIcon", a.getIconsDir());
     qmlObject_->setProperty("placeHeight", a.getPlacesHeight(this->width()));
 
     for(int i = 0; i < a.getPlacesCount(); i++) {
@@ -159,23 +169,6 @@ void CobraBar::getPlaces() {
         qmlObject_->setProperty("placeEntry", a.getPlacesList().at(i));
 
     }
-}
-
-void CobraBar::getDisks() {
-
-    Stats s;
-
-    for( int i = 0; i < s.getDisksCount(); i++) {
-
-        qmlObject_->setProperty("diskEntry",
-                                QString(s.getDisksList().at(i))
-                                .append(",")
-                                .append(QString::number(i)));
-
-    }
-
-    qmlObject_->setProperty("diskHeight", (this->width() / 6.5) * s.getDisksCount());
-
 }
 
 void CobraBar::slotExit() {
@@ -220,22 +213,13 @@ void CobraBar::applyStyle() {
 
         } else if(property_.toLower().contains("general_extended_height") && QString(c_value_) == "false") {
 
-            Stats m_;
             CobraSettings n_;
 
-            int disks_height;
-            int apps_height;
-            int places_height;
-            int cal_height;
-            int pins_height;
-            int sum;
-
-            cal_height    = (this->width() / 4) + (this->width() / 20); // mirroring qml numbers
-            disks_height  = (this->width() / 6.5 ) * m_.getDisksCount(); // 6.5 is a guess
-            apps_height   = n_.getApplicationsHeight(this->width());
-            places_height = n_.getPlacesHeight(this->width());
-            pins_height   = this->width() / 8 + (this->width() / 20);
-            sum           = disks_height + apps_height + places_height + cal_height + pins_height;
+            int apps_height   = n_.getApplicationsHeight(this->width());
+            int places_height = n_.getPlacesHeight(this->width());
+            int cal_height    = this->width() / 3 + this->width() / 10;
+            int pins_height   = this->width() / 8 + (this->width() / 20);
+            int sum           = apps_height + places_height + cal_height + pins_height;
 
             this->resize(this->width(),sum);
 
@@ -247,9 +231,4 @@ void CobraBar::applyStyle() {
 
         }
     }
-
-    getApplications();
-    getPlaces();
-    getDisks();
-
 }

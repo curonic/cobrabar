@@ -1,8 +1,7 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
-
- /* get rid of yet another kiddy javascript stuff and add text-shadow */
-
+import QtQuick.Dialogs 1.2
+import QtQuick.Controls 1.4
 Item {
 
     id: button
@@ -10,70 +9,93 @@ Item {
     // general
     property string qicon
     property string qtooltip
+    property string qlabel
+    property int    qhasicon
+    property bool   qhaslabel
 
     // dynamic
-    property color background_color_bottom: qbackgroundcolorbottom
-    property color background_color_top:    qbackgroundcolortop
-    property color border_gradient_bottom:  qbordergradientbottom
-    property color border_gradient_top:     qbordergradienttop
-    property int   border_radius:           qborderradius
-    property int   border_width:            qborderwidth
-    property color text_color:              qcolor
-    property color text_shadow:             qtextshadow
-    property bool  icon_grayscale:          qicongrayscale
-    property color inner_border_color:      qinnerbordercolor
-    property int   inner_border_width:      qinnerborderwidth
-    property color outer_border_color:      qouterbordercolor
-    property int   outer_border_width:      qouterborderwidth
+    property color  background_color_bottom: qbackgroundcolorbottom
+    property color  background_color_top:    qbackgroundcolortop
+    property color  border_gradient_bottom:  qbordergradientbottom
+    property color  border_gradient_top:     qbordergradienttop
+    property int    border_radius:           qborderradius
+    property int    border_width:            qborderwidth
+    property string font_family:             qfontfamily
+    property bool   icon_grayscale:          qicongrayscale
+    property color  inner_border_color:      qinnerbordercolor
+    property int    inner_border_width:      qinnerborderwidth
+    property color  outer_border_color:      qouterbordercolor
+    property int    outer_border_width:      qouterborderwidth
+    property color  text_color:              qcolor
+    property string text_alignment:          qtextalign
 
     // normal
-    property color qbackgroundcolorbottom
-    property color qbackgroundcolortop
-    property color qbordergradientbottom
-    property color qbordergradienttop
-    property int   qborderradius
-    property int   qborderwidth
-    property color qcolor
-    property color qtextshadow
-    property bool  qicongrayscale
-    property color qinnerbordercolor
-    property int   qinnerborderwidth
-    property color qouterbordercolor
-    property int   qouterborderwidth
+    property color  qbackgroundcolorbottom
+    property color  qbackgroundcolortop
+    property color  qbordergradientbottom
+    property color  qbordergradienttop
+    property int    qborderradius
+    property int    qborderwidth
+    property color  qcolor
+    property string qfontfamily
+    property bool   qicongrayscale
+    property color  qinnerbordercolor
+    property int    qinnerborderwidth
+    property color  qouterbordercolor
+    property int    qouterborderwidth
+    property string qtextalign: "center"
 
     // hover
-    property color qhbackgroundcolorbottom
-    property color qhbackgroundcolortop
-    property color qhbordergradientbottom
-    property color qhbordergradienttop
-    property int   qhborderradius
-    property int   qhborderwidth
-    property color qhcolor
-    property color qhtextshadow
-    property bool  qhicongrayscale
-    property color qhinnerbordercolor
-    property int   qhinnerborderwidth
-    property color qhouterbordercolor
-    property int   qhouterborderwidth
+    property color  qhbackgroundcolorbottom
+    property color  qhbackgroundcolortop
+    property color  qhbordergradientbottom
+    property color  qhbordergradienttop
+    property int    qhborderradius
+    property int    qhborderwidth
+    property color  qhcolor
+    property string qhfontfamily
+    property bool   qhicongrayscale
+    property color  qhinnerbordercolor
+    property int    qhinnerborderwidth
+    property color  qhouterbordercolor
+    property int    qhouterborderwidth
+    property string qhtextalign: "center"
 
     // focus
-    property color qfbackgroundcolorbottom
-    property color qfbackgroundcolortop
-    property color qfbordergradientbottom
-    property color qfbordergradienttop
-    property int   qfborderradius
-    property int   qfborderwidth
-    property color qfcolor
-    property color qftextshadow
-    property bool  qficongrayscale
-    property color qfinnerbordercolor
-    property int   qfinnerborderwidth
-    property color qfouterbordercolor
-    property int   qfouterborderwidth
+    property color  qfbackgroundcolorbottom
+    property color  qfbackgroundcolortop
+    property color  qfbordergradientbottom
+    property color  qfbordergradienttop
+    property int    qfborderradius
+    property int    qfborderwidth
+    property color  qfcolor
+    property string qffontfamily
+    property bool   qficongrayscale
+    property color  qfinnerbordercolor
+    property int    qfinnerborderwidth
+    property color  qfouterbordercolor
+    property int    qfouterborderwidth
+    property string qftextalign: "center"
 
     signal qClicked()
 
+    function t_alignment(align) {
+        if(align === "left") {
+            return icon.width + icon.width / 2
+        }
+        if(align === "right") {
+            return width - tooltip.width - icon.width / 2
+        }
+        if(align === "center") {
+            return width / 2 - tooltip.width / 2 + icon.width / 2
+        }
+    }
+
+    Component.onCompleted: text_alignment = t_alignment(qtextalign)
+
+
     MouseArea {
+        id: mouse
         hoverEnabled: true
         anchors.fill: parent
 
@@ -84,16 +106,19 @@ Item {
             border_gradient_top     = qhbordergradienttop
             border_radius           = qhborderradius
             border_width            = qhborderwidth
+            font_family             = qhfontfamily
             icon_grayscale          = qhicongrayscale
             inner_border_color      = qhinnerbordercolor
             inner_border_width      = qhinnerborderwidth
             outer_border_color      = qhouterbordercolor
             outer_border_width      = qhouterborderwidth
             text_color              = qhcolor
-            text_shadow             = qhtextshadow
+            text_alignment          = t_alignment(qhtextalign)
 
-            effect1.stop();
-            effect1.start();
+            fade_effect.stop()
+            fade_effect.start()
+            qPopup(0, qlabel)
+
         }
 
         onExited: {
@@ -103,13 +128,15 @@ Item {
             border_gradient_top     = qbordergradienttop
             border_radius           = qborderradius
             border_width            = qborderwidth
+            font_family             = qfontfamily
             icon_grayscale          = qicongrayscale
             inner_border_color      = qinnerbordercolor
             inner_border_width      = qinnerborderwidth
             outer_border_color      = qouterbordercolor
             outer_border_width      = qouterborderwidth
             text_color              = qcolor
-            text_shadow             = qtextshadow
+            text_alignment          = t_alignment(qtextalign)
+            qPopup(1, qlabel)
         }
 
         onClicked:        {
@@ -119,16 +146,17 @@ Item {
             border_gradient_top     = qfbordergradienttop
             border_radius           = qfborderradius
             border_width            = qfborderwidth
+            font_family             = qffontfamily
             icon_grayscale          = qficongrayscale
             inner_border_color      = qfinnerbordercolor
             inner_border_width      = qfinnerborderwidth
             outer_border_color      = qfouterbordercolor
             outer_border_width      = qfouterborderwidth
             text_color              = qfcolor
-            text_shadow             = qftextshadow
+            text_alignment          = t_alignment(qftextalign)
 
-            effect.stop()
-            effect.start()
+            scale_effect.stop()
+            scale_effect.start()
             qClicked()
         }
     }
@@ -160,40 +188,31 @@ Item {
     }
 
     Image {
-        id:                     icon
-        source:                 qicon
-        width:                  overlay.height * 0.8
-        height:                 overlay.height * 0.8
-        anchors.leftMargin:     parent.height - parent.height * 0.8
-        anchors.left:           parent.left
-        anchors.verticalCenter: parent.verticalCenter
+        id:                 icon
+        source:             qicon
+        width:              overlay.height * 0.7 * qhasicon
+        height:             overlay.height * 0.7 * qhasicon
+        anchors.left:       parent.left
+        anchors.leftMargin: overlay.height * 0.15
+        anchors.top:        parent.top
+        anchors.topMargin:  overlay.height * 0.15
+        fillMode:           Image.PreserveAspectFit
+        smooth:             true
     }
 
     Text {
-        text:                         qtooltip
-        font.pixelSize:               parent.height / 2.5
-        anchors.leftMargin:           icon.width + icon.width / 2 + 1
-        anchors.left:                 parent.left
-        anchors.verticalCenter:       parent.verticalCenter
-        anchors.verticalCenterOffset: 1
-        horizontalAlignment:          Text.AlignHCenter
-        verticalAlignment:            Text.AlignVCenter
-        renderType:                   Text.NativeRendering
-        font.bold:                    true
-        color:                        text_shadow
-    }
-
-    Text {
+        id:                     tooltip
         text:                   qtooltip
-        font.pixelSize:         parent.height / 2.5
-        anchors.leftMargin:     icon.width + icon.width / 2
+        font.pixelSize:         parent.height / 2.3
+        font.bold:              true
+        font.family:            font_family
+        color:                  text_color
+        anchors.leftMargin:     text_alignment
         anchors.left:           parent.left
         anchors.verticalCenter: parent.verticalCenter
         horizontalAlignment:    Text.AlignHCenter
         verticalAlignment:      Text.AlignVCenter
         renderType:             Text.NativeRendering
-        font.bold:              true
-        color:                  text_color
     }
 
     Colorize {
@@ -205,20 +224,20 @@ Item {
     }
 
     PropertyAnimation {
-        id:       effect
-        property: "scale"
-        target:   button
-        from:     0.8
-        to:       1
-        duration: 100
+        id:           scale_effect
+        property:     "scale"
+        target:       button
+        from:         0.8
+        to:           1
+        duration:     100
     }
 
     PropertyAnimation {
-        id:       effect1
-        property: "opacity"
-        target:   button
-        from:     0.8
-        to:       1
-        duration: 250
+        id:           fade_effect
+        property:     "opacity"
+        target:       button
+        from:         0.8
+        to:           1
+        duration:     250
     }
 }

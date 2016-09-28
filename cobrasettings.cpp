@@ -25,7 +25,6 @@
 #include <QStandardPaths>
 #include <QDir>
 
-
 CobraSettings::CobraSettings() {
 
     settings_file = QString(QStandardPaths::standardLocations
@@ -34,7 +33,6 @@ CobraSettings::CobraSettings() {
             .append("CobraBar")
             .append(QDir::separator())
             .append("settings.xml");
-
 
     icon_dir_path = QString(QStandardPaths::standardLocations
                             (QStandardPaths::ConfigLocation).at(0))
@@ -117,7 +115,7 @@ void CobraSettings::readSettings() {
             QDomNode node        = p_items.at(i);
             QDomNamedNodeMap map = node.attributes();
             QString path         = map.namedItem("path").toAttr().value();
-            QString text         = map.namedItem("text").toAttr().value();
+            QString text         = map.namedItem("icon").toAttr().value();
             QString tool         = map.namedItem("tooltip").toAttr().value();
 
             QString b;
@@ -127,8 +125,7 @@ void CobraSettings::readSettings() {
                     .append(",").append(tool);
 
             b.replace("~", QString(QStandardPaths::standardLocations(
-                                   QStandardPaths::HomeLocation).at(0)));
-
+                                       QStandardPaths::HomeLocation).at(0)));
 
             temp_places_list.append(b);
         }
@@ -189,11 +186,7 @@ QString CobraSettings::getThemePath() {
 
 QString CobraSettings::getThemeFile() {
 
-    QString m_ = themes_dir.append(theme_name)
-                        .append(QDir::separator())
-                        .append("style.css");
-
-    return m_;
+    return getThemePath().append("style.css");
 
 }
 
@@ -223,12 +216,22 @@ int CobraSettings::getPlacesCount() {
 
 int CobraSettings::getApplicationsHeight( int parent_width ) {
 
-   return (parent_width / 6 + parent_width / 40) * applications_count;
+    int item_count = applications_count;
+    int line_count = item_count / 3;
+
+    if (line_count * 3 >= applications_count) {
+
+        return parent_width / 5 + (parent_width / 3.5 + parent_width / 40) * line_count;
+
+    } else {
+
+        return parent_width / 5 + ((parent_width / 3.5 + parent_width / 40) * (line_count + 1));
+    }
 
 }
 
 int CobraSettings::getPlacesHeight( int parent_width ) {
 
-    return (parent_width / 8 + 3) * places_count + parent_width / 40 + parent_width / 20;
+    return (parent_width / 6 + parent_width / 80) * places_count;
 
 }

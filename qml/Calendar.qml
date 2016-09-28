@@ -1,4 +1,4 @@
-import QtQuick 2.5
+import QtQuick 2.0
 import QtGraphicalEffects 1.0
 import "../components/"
 
@@ -21,7 +21,7 @@ Item {
         source:             calendar_background_image
         anchors.centerIn:   parent
         layer.enabled:      true
-        width:              parent.width - calendar_border_width
+        width:              parent.width  - calendar_border_width
         height:             parent.height - calendar_border_width
         opacity:            calendar_image_opacity
 
@@ -44,13 +44,13 @@ Item {
     }
 
     QCalendar {
-        qdate:            calendarDate
-        qtime:            calendarTime
-        qtimefontfamily:  time_font_family
-        qdatefontfamily:  date_font_family
-        qdatecolor:       date_color
-        qtimecolor:       time_color
-        anchors.fill:     parent
-        anchors.centerIn: parent
+        qdate:                 calendarDate
+        qdatecolor:            date_color
+        qdatefontfamily:       date_font_family
+        qtime:                 calendarTime
+        qtimefontfamily:       time_font_family
+        qtimecolor:            time_color
+        anchors.fill:          parent
+        anchors.centerIn:      parent
     }
 }
