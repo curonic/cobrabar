@@ -35,12 +35,13 @@ int main(int argc, char *argv[]) {
     w.show();
 
     // make a for loop
-    Display* d = QX11Info::display();
+    Display *d = QX11Info::display();
 
     Atom state = XInternAtom(d, "_NET_WM_STATE",              True);
     Atom below = XInternAtom(d, "_NET_WM_STATE_BELOW",        True);
     Atom tbar  = XInternAtom(d, "_NET_WM_STATE_SKIP_TASKBAR", True);
     Atom pgr   = XInternAtom(d, "_NET_WM_STATE_SKIP_PAGER",   True);
+
     XEvent e;
     e.xclient.type         = 33;
     e.xclient.message_type = state;

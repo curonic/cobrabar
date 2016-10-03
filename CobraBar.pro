@@ -7,14 +7,17 @@ TEMPLATE    = app
 SOURCES    += main.cpp          \
               cobrabar.cpp      \
               cobrasettings.cpp \
-              themeparser.cpp
+              themeparser.cpp   \
+              smartpopup.cpp
 
 HEADERS    += cobrabar.h      \
               cobrasettings.h \
-              themeparser.h
+              themeparser.h   \
+              smartpopup.h
 
 LIBS       += -lX11
 
 RESOURCES  += resources.qrc
 
-CONFIG     -= qml_debug declarative_debug debug
+#CONFIG     -= qml_debug declarative_debug debug
+CONFIG     += c++14

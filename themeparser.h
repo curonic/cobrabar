@@ -8,20 +8,18 @@ class ThemeParser {
 
 public:
     ThemeParser();
-
-    QString     themeContent_;
-    QStringList themeRules_;
-
     QString     getThemeContent();
     int         getThemeLength();
     QStringList getThemeRules();
 
 private:
-    QString     themePath_;
+    void        formatRules();
+    void        uncommentTheme();
+    QString     themeContent_;
     QString     themeFile_;
+    QString     themePath_;
+    QStringList themeRules_;
 
-    void uncommentTheme();
-    void formatRules();
 };
 
 #endif // THEMEPARSER_H

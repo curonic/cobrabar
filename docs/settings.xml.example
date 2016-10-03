@@ -22,14 +22,14 @@
     </applications>
     
     <places>
-        <place path="~"           text="Home"         tooltip="Home">         </place>
-        <place path="~/Apps"      text="Applications" tooltip="Applications"> </place>
-        <place path="~/Documents" text="Documents"    tooltip="Documents">    </place>
-        <place path="~/Downloads" text="Downloads"    tooltip="Downloads">    </place>
-        <place path="~/Movies"    text="Movies"       tooltip="Movies">       </place>
-        <place path="~/Music"     text="Music"        tooltip="Music">        </place>
-        <place path="~/Books"     text="Books"        tooltip="Books">        </place>
-        <place path="~/Games"     text="Games"        tooltip="Games">        </place>
+        <place path="~"           label="Home"         icon="example.png"     tooltip="Home"> </place>
+        <place path="~/Apps"      label="Applications" tooltip="Applications">             </place>
+        <place path="~/Documents" label="Documents"    tooltip="Documents">    </place>
+        <place path="~/Downloads" label="Downloads"    tooltip="Downloads">    </place>
+        <place path="~/Movies"    label="Movies"       tooltip="Movies">       </place>
+        <place path="~/Music"     label="Music"        tooltip="Music">        </place>
+        <place path="~/Books"     label="Books"        tooltip="Books">        </place>
+        <place path="~/Games"     label="Games"        tooltip="Games">        </place>
     </places>
     
 </qbar>

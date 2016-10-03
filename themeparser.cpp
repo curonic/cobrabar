@@ -21,23 +21,14 @@
 #include "themeparser.h"
 #include "cobrasettings.h"
 
-#include <iostream>
-
 #include <QFile>
-#include <QDir>
-#include <QDirIterator>
-#include <QDomElement>
-#include <QDomNode>
-#include <QStandardPaths>
 #include <QTextStream>
 
 
 ThemeParser::ThemeParser() {
 
-    CobraSettings m_;
-
-    themePath_      = m_.getThemePath();
-    themeFile_      = m_.getThemeFile();
+    themePath_      = CobraSettings().getThemePath();
+    themeFile_      = CobraSettings().getThemeFile();
 
     uncommentTheme();
 
@@ -63,10 +54,10 @@ void ThemeParser::uncommentTheme() {
     QStringList comment_begin;
     QStringList comment_end;
 
-    for(int i = 0; i < data.length() -1; i++) {
+    for(int i = 0; i < data.length() - 1; i++) {
 
         QString a = data.at(i);
-        QString b = data.at(i+1);
+        QString b = data.at(i + 1);
         QString c = a.append(b);
 
         if(c.contains(bad0)) {
@@ -84,7 +75,7 @@ void ThemeParser::uncommentTheme() {
 
     if(comment_begin.length() != comment_end.length()) {
 
-        themeContent_ = "i can't parse this theme! broken `comment` policy";
+        themeContent_ = "i can't parse this theme! broken `comment policy`";
 
     } else {
 
@@ -95,7 +86,7 @@ void ThemeParser::uncommentTheme() {
             int aa        = start.toInt();
             int bb        = end.toInt() + 2; // + 2 is for "*/" itself
 
-            themeContent_ = data.remove(aa,bb-aa);
+            themeContent_ = data.remove(aa, bb - aa);
 
         }
     }
@@ -120,8 +111,7 @@ void ThemeParser::formatRules() {
 
     for(int i = 0; i < data.length(); i++) {
 
-        QString a;
-        a = data.at(i);
+        QString a = data.at(i);
 
         if(a.contains(block_end)) {
 
@@ -185,11 +175,11 @@ void ThemeParser::formatRules() {
                 QString a = bb.at(j);
                 QString b = cc.at(k).trimmed();
 
-                a.replace("  ","");
+                a.replace("  ", "");
                 QString n = a.prepend("-")
                         .prepend(b).append(";")
-                        .replace(":hover","_hover")
-                        .replace(":focus","_focus");
+                        .replace(":hover", "_hover")
+                        .replace(":focus", "_focus");
 
                 if(n.contains(":")) {
 
@@ -212,13 +202,13 @@ void ThemeParser::formatRules() {
 
         if(!a.contains(": ")) {
 
-            a.replace(":",": ");
+            a.replace(":", ": ");
 
         }
 
-        a.replace(";","");
-        a.replace("-","_");
-        a.replace("\"","");
+        a.replace(";", "");
+        a.replace("-", "_");
+        a.replace("\"", "");
 
         if(a.contains("background_image")) {
 

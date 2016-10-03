@@ -79,23 +79,47 @@ Item {
 
     signal qClicked()
 
+
     function t_alignment(align) {
         if(align === "left") {
             return icon.width + icon.width / 2
         }
         if(align === "right") {
-            return width - tooltip.width - icon.width / 2
+            return width - label.width - icon.width / 2
         }
         if(align === "center") {
-            return width / 2 - tooltip.width / 2 + icon.width / 2
+            return width / 2 - label.width / 2 + icon.width / 2
         }
     }
 
-    Component.onCompleted: text_alignment = t_alignment(qtextalign)
+    Component.onCompleted: label.anchors.leftMargin = t_alignment(qtextalign)
 
+    Timer {
+        id: start_popup
+        interval: 1000
+        repeat: false
+        running: false
+        onTriggered: spopup(qtooltip, tooltip.width, tooltip.height)
+    }
+
+    Timer {
+        id: stop_popup
+        interval: 1
+        repeat: false
+        running: false
+        onTriggered: cpopup()
+    }
+
+    Text {
+        id:                 tooltip
+        text:               qtooltip
+        font.pixelSize:     14
+        height:             14
+        visible: false
+    }
 
     MouseArea {
-        id: mouse
+        id:           mouse
         hoverEnabled: true
         anchors.fill: parent
 
@@ -114,10 +138,10 @@ Item {
             outer_border_width      = qhouterborderwidth
             text_color              = qhcolor
             text_alignment          = t_alignment(qhtextalign)
-
+            label.anchors.leftMargin = t_alignment(qhtextalign)
             fade_effect.stop()
             fade_effect.start()
-            qPopup(0, qlabel)
+            start_popup.start()
 
         }
 
@@ -136,7 +160,9 @@ Item {
             outer_border_width      = qouterborderwidth
             text_color              = qcolor
             text_alignment          = t_alignment(qtextalign)
-            qPopup(1, qlabel)
+            label.anchors.leftMargin = t_alignment(qtextalign)
+            start_popup.stop()
+            stop_popup.start()
         }
 
         onClicked:        {
@@ -190,19 +216,19 @@ Item {
     Image {
         id:                 icon
         source:             qicon
-        width:              overlay.height * 0.7 * qhasicon
-        height:             overlay.height * 0.7 * qhasicon
+        width:              overlay.height * 0.8 * qhasicon
+        height:             overlay.height * 0.8 * qhasicon
         anchors.left:       parent.left
-        anchors.leftMargin: overlay.height * 0.15
+        anchors.leftMargin: overlay.height * 0.1 + border_width + outer_border_width
         anchors.top:        parent.top
-        anchors.topMargin:  overlay.height * 0.15
+        anchors.topMargin:  overlay.height * 0.1 + border_width + outer_border_width
         fillMode:           Image.PreserveAspectFit
         smooth:             true
     }
 
     Text {
-        id:                     tooltip
-        text:                   qtooltip
+        id:                     label
+        text:                   qlabel
         font.pixelSize:         parent.height / 2.3
         font.bold:              true
         font.family:            font_family

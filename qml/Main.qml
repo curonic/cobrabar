@@ -15,6 +15,8 @@ Item {
 
     // pretty much everything c++ needs to know about qml dimensions
     signal loaderPosition(string id, int x, int y, int w, int h)
+    signal spopup(string tooltip, int tooltip_width, int tooltip_height)
+    signal cpopup()
 
     // calendar
     property string calendarTime
@@ -209,16 +211,11 @@ Item {
     property string placebutton_hover_text_align:                 "center"
 
 
-    Timer { // ugly, but not as ugly as guessing which property will load last (x?,y?,h?,w?)!
-        interval:   1
-        running:    true
-        repeat:     false
-        onTriggered: {
-            loaderPosition(calendar.source, calendar.x, calendar.y, calendar.width, calendar.height)
-            loaderPosition(pins.source, pins.x, pins.y, pins.width, pins.height)
-            loaderPosition(applications.source, applications.x, applications.y, applications.width, applications.height)
-            loaderPosition(places.source, places.x, places.y, places.width, places.height)
-        }
+    Component.onCompleted: {
+        loaderPosition(calendar.source, calendar.x, calendar.y, calendar.width, calendar.height)
+        loaderPosition(pins.source, pins.x, pins.y, pins.width, pins.height)
+        loaderPosition(applications.source, applications.x, applications.y, applications.width, applications.height)
+        loaderPosition(places.source, places.x, places.y, places.width, places.height)
     }
 
     anchors.fill:     parent

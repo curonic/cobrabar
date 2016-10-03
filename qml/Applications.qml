@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
+import QtQuick.Controls 1.0
 import "../components/"
 
 Item {
@@ -42,60 +43,12 @@ Item {
         }
     }
 
-    signal qPopup(int state, string popup_text)
-
-    onQPopup: {
-        popup.text = popup_text
-
-        if(state === 0)
-            pop_holder.visible = true
-            popup.visible      = true
-
-        if(state === 1)
-            pop_holder.visible = false
-            popup.visible      = true
-    }
-
-    // Popup, move to Popup.qml someday
-    Rectangle {
-        id:                       pop_holder
-        anchors.top:              parent.top
-        anchors.topMargin:        parent.width / 20
-        anchors.horizontalCenter: parent.horizontalCenter
-        width:                    popup.width + parent.width / 20
-        height:                   parent.width / 10;
-        color:                    "#00000000"
-        radius:                   applicationbutton_border_radius
-        visible:                  false
-
-        Text {
-            id:               popup
-            font.family:      applicationbutton_font_family
-            anchors.centerIn: pop_holder
-            color:            applicationbutton_color
-            font.pixelSize:   parent.height * 0.8
-            visible:          false
-            font.bold: true
-            renderType:       Text.NativeRendering
-        }
-
-        DropShadow {
-            anchors.fill: popup
-            horizontalOffset: 2
-            verticalOffset: 2
-            radius: 10.0
-            samples: 17
-            color: "#000"
-            source: popup
-        }
-    }
-    // /Popup
-
     Flow {
+
         property string zap: applicationEntry
 
         anchors.leftMargin: parent.width / 20;
-        anchors.topMargin:  parent.width / 5;
+        anchors.topMargin:  parent.width / 40;
         anchors.fill:       parent
         spacing:            parent.width / 40;
         anchors.centerIn:   parent
@@ -151,9 +104,9 @@ Item {
                 qftextalign:             applicationbutton_text_align
 
                 qhasicon:   1
-                qlabel:     '"+zap.split(",",3).slice(zap.split(",",2).length)+"'
+                qtooltip:   '"+zap.split(",",3).slice(zap.split(",",2).length)+"'
                 qicon:      'file:/"+applicationIcon+zap.split(",",2).slice(zap.split(",",1).length)+"';
-                onQClicked: applicationLaunch('"+zap.split(",",1)+"')
+                onQClicked: { applicationLaunch('"+zap.split(",",1)+"'); }
                 }", this, "../components/QButton")
         }
     }

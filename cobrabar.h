@@ -1,6 +1,8 @@
 #ifndef COBRABAR_H
 #define COBRABAR_H
 
+#include "smartpopup.h"
+
 #include <QMainWindow>
 #include <QObject>
 #include <QQuickView>
@@ -12,7 +14,6 @@ class CobraBar : public QWidget {
 
 public:
     CobraBar(QWidget *parent = 0);
-    ~CobraBar();
 
 private slots:
     void slotTime();
@@ -21,8 +22,10 @@ private slots:
     void slotPosition(QString id, int x, int y, int w, int h);
     void slotExit();
     void slotResize(int height_changes);
-    void applyStyle();
+    void slotApplyStyle();
 
+    void slotPopupShow(QString tooltip, int tooltip_width, int tooltip_height);
+        void slotPopupClose();
 private:
     QObject     *qmlObject_;
     QWidget     *qmlWidget_;
@@ -32,6 +35,8 @@ private:
 
     void getApplications();
     void getPlaces();
+
+    SmartPopup *popup_;
 
 };
 

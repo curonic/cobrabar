@@ -1,4 +1,14 @@
---- v0.42 (16-09-2016) ---
+--- v0.45 (03-19-2016) ---
++ tooltips added (need cleanup)
++ tooltip attribute for both (places & applications) in config
++ label attribute for places in config
++ minor fixes in style
+
+--- v0.44 (28-09-2016) ---
+- remove stats (for now?)
++ add style watcher (reads changes in style.css without restarting application)
+
+--- v0.43 (16-09-2016) ---
 + cleanup & improve ApplicationButtons
 
 --- v0.42 (16-09-2016) ---

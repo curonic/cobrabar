@@ -112,20 +112,22 @@ void CobraSettings::readSettings() {
 
         for( int i = 0; i < places_count; i++) {
 
-            QDomNode node        = p_items.at(i);
-            QDomNamedNodeMap map = node.attributes();
-            QString path         = map.namedItem("path").toAttr().value();
-            QString text         = map.namedItem("icon").toAttr().value();
-            QString tool         = map.namedItem("tooltip").toAttr().value();
+            QDomNode         node  = p_items.at(i);
+            QDomNamedNodeMap map   = node.attributes();
+            QString          path  = map.namedItem("path").toAttr().value();
+            QString          text  = map.namedItem("icon").toAttr().value();
+            QString          label = map.namedItem("label").toAttr().value();
+            QString          tool  = map.namedItem("tooltip").toAttr().value();
 
             QString b;
 
             b.append(path)
-                    .append(",").append(text)
-                    .append(",").append(tool);
+             .append(",").append(text)
+             .append(",").append(label)
+             .append(",").append(tool);
 
             b.replace("~", QString(QStandardPaths::standardLocations(
-                                       QStandardPaths::HomeLocation).at(0)));
+                                   QStandardPaths::HomeLocation).at(0)));
 
             temp_places_list.append(b);
         }
@@ -141,9 +143,9 @@ void CobraSettings::readSettings() {
 
     if(t_items.count() > 0) {
 
-        QDomNode node         = t_items.at(0);
+        QDomNode         node = t_items.at(0);
         QDomNamedNodeMap map  = node.attributes();
-        QString id            = map.namedItem("id").toAttr().value();
+        QString          id   = map.namedItem("id").toAttr().value();
 
         theme_name = id;
 
@@ -221,17 +223,17 @@ int CobraSettings::getApplicationsHeight( int parent_width ) {
 
     if (line_count * 3 >= applications_count) {
 
-        return parent_width / 5 + (parent_width / 3.5 + parent_width / 40) * line_count;
+        return parent_width / 40 + (parent_width / 3.5 + parent_width / 40) * line_count;
 
     } else {
 
-        return parent_width / 5 + ((parent_width / 3.5 + parent_width / 40) * (line_count + 1));
+        return parent_width / 40+ ((parent_width / 3.5 + parent_width / 40) * (line_count + 1));
     }
 
 }
 
 int CobraSettings::getPlacesHeight( int parent_width ) {
 
-    return (parent_width / 6 + parent_width / 80) * places_count;
+    return (parent_width / 6 + parent_width / 80) * places_count + parent_width / 20 - parent_width / 80;
 
 }

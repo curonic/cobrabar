@@ -7,17 +7,6 @@ class CobraSettings {
 
 public:
     CobraSettings();
-    void readSettings();
-
-    int         applications_count;
-    int         places_count;
-    QString     settings_file;
-    QString     icon_dir_path;
-    QStringList application_list;
-    QStringList places_list;
-    QString     themes_dir;
-    QString     theme_name;
-
     int         getApplicationsCount();
     int         getApplicationsHeight(int parent_width);
     QStringList getApplicationsList();
@@ -27,10 +16,20 @@ public:
     QStringList getPlacesList();
     QString     getSettingsFile();
     QString     getThemesDir();
-
     QString     getThemeName();
     QString     getThemePath();
     QString     getThemeFile();
+
+private:
+    void        readSettings();
+    int         applications_count;
+    int         places_count;
+    QString     settings_file;
+    QString     icon_dir_path;
+    QStringList application_list;
+    QStringList places_list;
+    QString     themes_dir;
+    QString     theme_name;
 
 };
 

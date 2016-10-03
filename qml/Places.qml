@@ -105,7 +105,8 @@ Item {
                 qftextalign:             placebutton_text_align
 
                 qhasicon:                1
-                qtooltip:                '"+zap.split(",",3).slice(zap.split(",",2).length)+"'
+                qlabel:                  '"+zap.split(",",3).slice(zap.split(",",2).length)+"'
+                qtooltip:                '"+zap.split(",",4).slice(zap.split(",",3).length)+"'
                 qicon:                   'file:/"+placeIcon+zap.split(",",2).slice(zap.split(",",1).length)+"'
                 onQClicked:              placeLaunch('xdg-open "+zap.split(",",1)+"')
                 }", this, "../components/QButton")

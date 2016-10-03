@@ -21,6 +21,7 @@
 #include "cobrabar.h"
 #include "cobrasettings.h"
 #include "themeparser.h"
+#include "smartpopup.h"
 
 #include <QDesktopWidget>
 #include <QTimer>
@@ -29,7 +30,6 @@
 #include <QProcess>
 #include <QQuickItem>
 #include <QFileSystemWatcher>
-#include <QDebug>
 
 CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
 
@@ -76,22 +76,34 @@ CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
     connect(qmlObject_, SIGNAL(exit()), this, SLOT(slotExit()));
     connect(qmlObject_, SIGNAL(resize(int)), this, SLOT(slotResize(int)));
 
+    connect(qmlObject_, SIGNAL(spopup(QString, int, int)), this, SLOT(slotPopupShow(QString, int, int)));
+    connect(qmlObject_, SIGNAL(cpopup()), this, SLOT(slotPopupClose()));
 
     CobraSettings s;
 
-QFileSystemWatcher *f = new QFileSystemWatcher;
-f->addPath(s.getThemePath());
+    QFileSystemWatcher *f = new QFileSystemWatcher;
+    f->addPath(s.getThemePath());
 
-connect(f, SIGNAL(directoryChanged(const QString &)), this, SLOT(applyStyle()));
+    connect(f, SIGNAL(directoryChanged(const QString &)), this, SLOT(slotApplyStyle()));
 
-    applyStyle();
-
+    slotApplyStyle();
     getApplications();
     getPlaces();
 
+    popup_ = new SmartPopup;
+
+
 }
 
-CobraBar::~CobraBar() {
+void CobraBar::slotPopupShow(QString tooltip, int tooltip_width, int tooltip_height) {
+
+    popup_->showm(tooltip, tooltip_width, tooltip_height);
+
+}
+
+void CobraBar::slotPopupClose() {
+
+    popup_->close();
 
 }
 
@@ -141,7 +153,6 @@ void CobraBar::getApplications() {
     CobraSettings a;
 
     qmlObject_->setProperty("applicationIcon", a.getIconsDir());
-    qmlObject_->setProperty("applicationHeight", a.getApplicationsHeight(this->width()));
 
     for(int i = 0; i < a.getApplicationsCount(); i++) {
 
@@ -162,7 +173,6 @@ void CobraBar::getPlaces() {
     CobraSettings a;
 
     qmlObject_->setProperty("placeIcon", a.getIconsDir());
-    qmlObject_->setProperty("placeHeight", a.getPlacesHeight(this->width()));
 
     for(int i = 0; i < a.getPlacesCount(); i++) {
 
@@ -177,9 +187,13 @@ void CobraBar::slotExit() {
 
 }
 
-void CobraBar::applyStyle() {
+void CobraBar::slotApplyStyle() {
+
+    CobraSettings settings;
 
     ThemeParser a;
+    QDesktopWidget qw;
+    QRect mainScreenSize = qw.availableGeometry(qw.primaryScreen());
 
     for(int i = 0; i < a.getThemeLength(); i++) {
 
@@ -200,8 +214,7 @@ void CobraBar::applyStyle() {
 
         if(property_.toLower().contains("general_width")) {
 
-            QDesktopWidget qw;
-            QRect mainScreenSize = qw.availableGeometry(qw.primaryScreen());
+
 
             this->resize(QString(c_value_).toInt(),this->height());
             this->move(mainScreenSize.width() - this->width(),0);
@@ -231,4 +244,6 @@ void CobraBar::applyStyle() {
 
         }
     }
+    qmlObject_->setProperty("placeHeight", settings.getPlacesHeight(this->width()));
+    qmlObject_->setProperty("applicationHeight", settings.getApplicationsHeight(this->width()));
 }
