@@ -7,13 +7,13 @@ TEMPLATE    = app
 SOURCES    += main.cpp          \
               cobrabar.cpp      \
               cobrasettings.cpp \
-              themeparser.cpp   \
-              smartpopup.cpp
+              themeparser.cpp \
+    tooltip.cpp
 
 HEADERS    += cobrabar.h      \
               cobrasettings.h \
-              themeparser.h   \
-              smartpopup.h
+              themeparser.h \
+    tooltip.h
 
 LIBS       += -lX11
 

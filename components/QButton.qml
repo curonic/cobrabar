@@ -95,27 +95,30 @@ Item {
     Component.onCompleted: label.anchors.leftMargin = t_alignment(qtextalign)
 
     Timer {
-        id: start_popup
-        interval: 1000
-        repeat: false
-        running: false
-        onTriggered: spopup(qtooltip, tooltip.width, tooltip.height)
+        id:          show_tooltip
+        interval:    1000
+        repeat:      false
+        running:     false
+        onTriggered: tooltipShow(qtooltip, tooltip.width, tooltip.height)
     }
 
     Timer {
-        id: stop_popup
-        interval: 1
-        repeat: false
-        running: false
-        onTriggered: cpopup()
+        id:          close_tooltip
+        interval:    1
+        repeat:      false
+        running:     false
+        onTriggered: tooltipClose()
     }
 
     Text {
-        id:                 tooltip
-        text:               qtooltip
-        font.pixelSize:     14
-        height:             14
-        visible: false
+        id:                  tooltip
+        text:                qtooltip
+        font.pixelSize:      14
+        height:              14
+        visible:             false
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment:   Text.AlignVCenter
+        renderType:          Text.NativeRendering
     }
 
     MouseArea {
@@ -141,7 +144,7 @@ Item {
             label.anchors.leftMargin = t_alignment(qhtextalign)
             fade_effect.stop()
             fade_effect.start()
-            start_popup.start()
+            show_tooltip.start()
 
         }
 
@@ -161,8 +164,8 @@ Item {
             text_color              = qcolor
             text_alignment          = t_alignment(qtextalign)
             label.anchors.leftMargin = t_alignment(qtextalign)
-            start_popup.stop()
-            stop_popup.start()
+            show_tooltip.stop()
+            close_tooltip.start()
         }
 
         onClicked:        {
@@ -183,6 +186,8 @@ Item {
 
             scale_effect.stop()
             scale_effect.start()
+            show_tooltip.stop()
+            close_tooltip.start()
             qClicked()
         }
     }

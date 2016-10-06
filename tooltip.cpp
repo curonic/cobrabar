@@ -1,4 +1,4 @@
-#include "smartpopup.h"
+#include "tooltip.h"
 #include <QDesktopWidget>
 
 SmartPopup::SmartPopup() {

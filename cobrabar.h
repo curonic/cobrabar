@@ -23,9 +23,9 @@ private slots:
     void slotExit();
     void slotResize(int height_changes);
     void slotApplyStyle();
+    void slotTooltipShow(QString tooltip, int tooltip_width, int tooltip_height);
+    void slotTooltipClose();
 
-    void slotPopupShow(QString tooltip, int tooltip_width, int tooltip_height);
-        void slotPopupClose();
 private:
     QObject     *qmlObject_;
     QWidget     *qmlWidget_;
@@ -36,7 +36,7 @@ private:
     void getApplications();
     void getPlaces();
 
-    SmartPopup *popup_;
+    SmartPopup *tooltip_;
 
 };
 

@@ -15,8 +15,8 @@ Item {
 
     // pretty much everything c++ needs to know about qml dimensions
     signal loaderPosition(string id, int x, int y, int w, int h)
-    signal spopup(string tooltip, int tooltip_width, int tooltip_height)
-    signal cpopup()
+    signal tooltipShow(string tooltip, int tooltip_width, int tooltip_height)
+    signal tooltipClose()
 
     // calendar
     property string calendarTime
@@ -272,7 +272,7 @@ Item {
         Loader {
             id:     calendar
             source: qmlCalendar
-            width:  global_width - general_border_width * 2
+            width:  global_width
             anchors.horizontalCenter: parent.horizontalCenter
             height: global_width / 3 + global_width / 10
         }

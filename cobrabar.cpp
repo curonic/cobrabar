@@ -21,7 +21,7 @@
 #include "cobrabar.h"
 #include "cobrasettings.h"
 #include "themeparser.h"
-#include "smartpopup.h"
+#include "tooltip.h"
 
 #include <QDesktopWidget>
 #include <QTimer>
@@ -76,8 +76,8 @@ CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
     connect(qmlObject_, SIGNAL(exit()), this, SLOT(slotExit()));
     connect(qmlObject_, SIGNAL(resize(int)), this, SLOT(slotResize(int)));
 
-    connect(qmlObject_, SIGNAL(spopup(QString, int, int)), this, SLOT(slotPopupShow(QString, int, int)));
-    connect(qmlObject_, SIGNAL(cpopup()), this, SLOT(slotPopupClose()));
+    connect(qmlObject_, SIGNAL(tooltipShow(QString, int, int)), this, SLOT(slotTooltipShow(QString, int, int)));
+    connect(qmlObject_, SIGNAL(tooltipClose()), this, SLOT(slotTooltipClose()));
 
     CobraSettings s;
 
@@ -90,20 +90,20 @@ CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
     getApplications();
     getPlaces();
 
-    popup_ = new SmartPopup;
+    tooltip_ = new Tooltip;
 
 
 }
 
-void CobraBar::slotPopupShow(QString tooltip, int tooltip_width, int tooltip_height) {
+void CobraBar::slotTooltipShow(QString tooltip, int tooltip_width, int tooltip_height) {
 
-    popup_->showm(tooltip, tooltip_width, tooltip_height);
+    tooltip_->showm(tooltip, tooltip_width, tooltip_height);
 
 }
 
-void CobraBar::slotPopupClose() {
+void CobraBar::slotTooltipClose() {
 
-    popup_->close();
+    tooltip_->close();
 
 }
 
