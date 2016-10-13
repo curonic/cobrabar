@@ -1,14 +1,14 @@
-#ifndef SMARTPOPUP_H
-#define SMARTPOPUP_H
+#ifndef TOOLTIP_H
+#define TOOLTIP_H
 
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QLabel>
 
-class SmartPopup : public QWidget {
+class Tooltip : public QWidget {
 
 public:
-    SmartPopup();
+    Tooltip();
     void showm(QString tooltip, int tooltip_width, int tooltip_height);
 
 private:
@@ -17,4 +17,4 @@ private:
 
 };
 
-#endif // SMARTPOPUP_H
+#endif // TOOLTIP_H

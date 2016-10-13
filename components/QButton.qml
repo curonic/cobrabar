@@ -92,6 +92,20 @@ Item {
         }
     }
 
+    onQbackgroundcolorbottomChanged: background_color_bottom = qbackgroundcolorbottom
+    onQbackgroundcolortopChanged:    background_color_top    = qbackgroundcolortop
+    onQbordergradientbottomChanged:  border_gradient_bottom  = qbordergradientbottom
+    onQbordergradienttopChanged:     border_gradient_top     = qbordergradienttop
+    onQborderradiusChanged:          border_radius           = qborderradius
+    onQhborderwidthChanged:          border_width            = qborderwidth
+    onQfontfamilyChanged:            font_family             = qfontfamily
+    onQicongrayscaleChanged:         icon_grayscale          = qicongrayscale
+    onQinnerbordercolorChanged:      inner_border_color      = qinnerbordercolor
+    onQinnerborderwidthChanged:      inner_border_width      = qinnerborderwidth
+    onQouterbordercolorChanged:      outer_border_color      = qouterbordercolor
+    onQouterborderwidthChanged:      outer_border_width      = qouterborderwidth
+    onQcolorChanged:                 text_color              = qcolor
+
     Component.onCompleted: label.anchors.leftMargin = t_alignment(qtextalign)
 
     Timer {

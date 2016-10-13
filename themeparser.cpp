@@ -23,7 +23,9 @@
 
 #include <QFile>
 #include <QTextStream>
+#include <QDesktopWidget>
 
+#include <QDebug>
 
 ThemeParser::ThemeParser() {
 
@@ -31,7 +33,7 @@ ThemeParser::ThemeParser() {
     themeFile_      = CobraSettings().getThemeFile();
 
     uncommentTheme();
-
+    resetValues();
 }
 
 void ThemeParser::uncommentTheme() {
@@ -165,7 +167,6 @@ void ThemeParser::formatRules() {
     for(int i = 0; i < block_content.length(); i++) {
 
         QStringList bb = block_content.at(i).split(";");
-
         QStringList cc = block_name.at(i).split(",");
 
         for(int k = 0; k < cc.length(); k++) {
@@ -178,6 +179,8 @@ void ThemeParser::formatRules() {
                 a.replace("  ", "");
                 QString n = a.prepend("-")
                         .prepend(b).append(";")
+                        .replace("px;",";")
+                        .replace("pt;",";")
                         .replace(":hover", "_hover")
                         .replace(":focus", "_focus");
 
@@ -206,22 +209,23 @@ void ThemeParser::formatRules() {
 
         }
 
-        a.replace(";", "");
-        a.replace("-", "_");
         a.replace("\"", "");
 
-        if(a.contains("background_image")) {
+        QStringList xx_;
+        xx_ = a.split(": ");
+        QString n0 = xx_.at(0); // property
+        n0.replace("-","_").append(": ");
+        QString n1 = xx_.at(1); // value
+        n1.replace(";","");
 
-            QStringList addPath_ = a.split(":");
-            QString temp_        = addPath_.at(1).trimmed();
+        if(n0.contains("background_image")) {
 
-            temp_.prepend(themePath_).prepend("file://");
-
-            QString f_;
-            f_.append(addPath_.at(0)).append(": ").append(temp_);
-            a = f_;
+            n1.prepend(themePath_).prepend("file://").replace(" ", "%20");
 
         }
+
+        a.clear();
+        a.append(n0.toLower()).append(n1);
 
         themeRules_.append(a);
 
@@ -238,7 +242,322 @@ QStringList ThemeParser::getThemeRules() {
     return themeRules_;
 }
 
+QStringList ThemeParser::getDefaultRules() {
+
+    resetValues();
+    return defaultRules_;
+
+}
+
 int ThemeParser::getThemeLength() {
 
     return themeRules_.length();
+}
+
+void ThemeParser::setDefaultValues(QWidget *widget, QObject *&qmlobject) {
+
+    resetValues();
+    CobraSettings settings;
+
+    QDesktopWidget qw;
+    QRect mainScreenSize = qw.availableGeometry(qw.primaryScreen());
+
+    for(int i = 0; i < defaultRules_.length(); i++) {
+
+        QString m_ = defaultRules_.at(i);
+        QStringList n_ = m_.split(": ");
+
+        QString property_;
+        QString value_;
+
+        property_ = n_.at(0);
+        value_ = n_.at(1);
+
+        QByteArray aa = value_.toLatin1().trimmed();
+        const char *c_value_ = aa.data();
+
+        QByteArray ba = property_.toLower().toLatin1().trimmed().replace(" ","");
+        const char *c_property_ = ba.data();
+
+
+        if(property_.toLower().contains("general_width")) {
+
+            widget->resize(QString(c_value_).toInt(), widget->height());
+            widget->move(mainScreenSize.width() - widget->width(),0);
+            qmlobject->setProperty("global_width",QString::number(widget->width()));
+
+        } else if(property_.toLower().contains("general_alignment") && QString(c_value_) == "left") {
+
+            widget->move(0,0);
+
+        } else if(property_.toLower().contains("general_extended_height") && QString(c_value_) == "false") {
+
+            CobraSettings n_;
+
+            int apps_height   = n_.getApplicationsHeight(widget->width());
+            int places_height = n_.getPlacesHeight(widget->width());
+            int cal_height    = widget->width() / 3 + widget->width() / 10;
+            int pins_height   = widget->width() / 8 + (widget->width() / 20);
+            int sum           = apps_height + places_height + cal_height + pins_height;
+
+            qmlobject->setProperty("general_extended_height", "false");
+            widget->resize(widget->width(),sum);
+
+        } else if(property_.toLower().contains("general_extended_height") && QString(c_value_) == "true") {
+
+            qmlobject->setProperty("general_extended_height", "true");
+            widget->resize(widget->width(),mainScreenSize.height());
+
+        } else {
+
+            qmlobject->setProperty(c_property_, c_value_);
+
+        }
+
+        qmlobject->setProperty("placeHeight", settings.getPlacesHeight(widget->width()));
+        qmlobject->setProperty("applicationHeight", settings.getApplicationsHeight(widget->width()));
+
+    }
+
+}
+
+void ThemeParser::setThemeValues(QWidget *widget, QObject *&qmlobject) {
+
+    CobraSettings settings;
+    QDesktopWidget qw;
+    QRect mainScreenSize = qw.availableGeometry(qw.primaryScreen());
+
+    for(int i = 0; i < themeRules_.length(); i++) {
+
+        QString m_ = themeRules_.at(i);
+        QStringList n_ = m_.split(": ");
+
+        QString property_;
+        QString value_;
+
+        property_ = n_.at(0);
+        value_ = n_.at(1);
+
+        QByteArray aa = value_.toLatin1().trimmed();
+        const char *c_value_ = aa.data();
+
+        QByteArray ba = property_.toLower().toLatin1().trimmed().replace(" ","");
+        const char *c_property_ = ba.data();
+
+        if(property_.toLower().contains("general_width")) {
+
+            widget->resize(QString(c_value_).toInt(),widget->height());
+            widget->move(mainScreenSize.width() - widget->width(),0);
+            qmlobject->setProperty("global_width",QString::number(widget->width()));
+
+        } else if(property_.toLower().contains("general_alignment") && QString(c_value_) == "left") {
+
+            widget->move(0,0);
+
+        } else if(property_.toLower().contains("general_extended_height") && QString(c_value_) == "false") {
+
+            CobraSettings n_;
+
+            int apps_height   = n_.getApplicationsHeight(widget->width());
+            int places_height = n_.getPlacesHeight(widget->width());
+            int cal_height    = widget->width() / 3 + widget->width() / 10;
+            int pins_height   = widget->width() / 8 + (widget->width() / 20);
+            int sum           = apps_height + places_height + cal_height + pins_height;
+
+            widget->resize(widget->width(),sum);
+            qmlobject->setProperty("general_extended_height", "false");
+
+        } else if(property_.toLower().contains("general_extended_height") && QString(c_value_) == "true") {
+
+            qmlobject->setProperty("general_extended_height", "true");
+            widget->resize(widget->width(),mainScreenSize.height());
+
+        } else {
+
+            qmlobject->setProperty(c_property_, c_value_);
+
+        }
+    }
+
+    qmlobject->setProperty("placeHeight", settings.getPlacesHeight(widget->width()));
+    qmlobject->setProperty("applicationHeight", settings.getApplicationsHeight(widget->width()));
+
+}
+
+void ThemeParser::resetValues() {
+
+
+    defaultRules_
+            << "calendar_background_color: #00000000"
+            << "calendar_background_image: "
+            << "calendar_border_color: #00000000"
+            << "calendar_border_width: 0"
+            << "calendar_image_opacity: 1"
+            << "calendar_border_radius: 0"
+
+            << "date_color: #aaffffff"
+            << "date_font_family: Oxygen-Sans"
+
+            << "time_color: #aaffffff"
+            << "time_font_family: Oxygen-Sans"
+
+            << "pins_background_color: #00000000"
+            << "pins_background_image: "
+            << "pins_border_color: #00000000"
+            << "pins_border_width: 0"
+            << "pins_image_opacity: 1"
+            << "pins_border_radius: 0"
+
+            << "pin1_background_image: "
+            << "pin1_border_width: 2"
+            << "pin1_background_gradient_top: #333"
+            << "pin1_background_gradient_bottom: #000"
+            << "pin1_border_gradient_top: #000"
+            << "pin1_border_gradient_bottom: #44ff0000"
+            << "pin1_image_opacity: 1"
+            << "pin1_border_radius: 40"
+            << "pin1_inner_border_color: #000"
+            << "pin1_inner_border_width: 0"
+            << "pin1_outer_border_color: #000"
+            << "pin1_outer_border_width: 0"
+
+            << "pin2_background_image: "
+            << "pin2_border_width: 2"
+            << "pin2_background_gradient_top: #333"
+            << "pin2_background_gradient_bottom: #000"
+            << "pin2_border_gradient_top: #000"
+            << "pin2_border_gradient_bottom: #44ff0000"
+            << "pin2_image_opacity: 1"
+            << "pin2_border_radius: 40"
+            << "pin2_inner_border_color: #000"
+            << "pin2_inner_border_width: 0"
+            << "pin2_outer_border_color: #000"
+            << "pin2_outer_border_width: 0"
+
+            << "pin3_background_image: "
+            << "pin3_border_width: 2"
+            << "pin3_background_gradient_top: #333"
+            << "pin3_background_gradient_bottom: #000"
+            << "pin3_border_gradient_top: #000"
+            << "pin3_border_gradient_bottom: #44ff0000"
+            << "pin3_image_opacity: 1"
+            << "pin3_border_radius: 40"
+            << "pin3_inner_border_color: #000"
+            << "pin3_inner_border_width: 0"
+            << "pin3_outer_border_color: #000"
+            << "pin3_outer_border_width: 0"
+
+            << "applications_background_color: #00000000"
+            << "applications_background_image: "
+            << "applications_border_color: #00000000"
+            << "applications_border_width: 0"
+            << "applications_image_opacity: 1"
+            << "applications_border_radius: 0"
+
+            << "places_background_color: #00000000"
+            << "places_background_image: "
+            << "places_border_color: #00000000"
+            << "places_border_width: 0"
+            << "places_image_opacity: 1"
+            << "places_border_radius: 0"
+
+            << "general_background_color: #aa000000"
+            << "general_border_color: #000000"
+            << "general_background_image: "
+            << "general_border_radius: 0"
+            << "general_border_width: 0"
+            << "general_image_opacity: 1"
+            << "general_width: 200"
+            << "general_extended_height: true"
+
+            << "applicationbutton_background_gradient_bottom: #333"
+            << "applicationbutton_background_gradient_top: #00555555"
+            << "applicationbutton_border_gradient_bottom: #555"
+            << "applicationbutton_border_gradient_top: #000"
+            << "applicationbutton_border_radius: 8"
+            << "applicationbutton_border_width: 0"
+            << "applicationbutton_color: #000"
+            << "applicationbutton_font_family: Sans"
+            << "applicationbutton_icon_grayscale: false"
+            << "applicationbutton_inner_border_color: #000"
+            << "applicationbutton_inner_border_width: 0"
+            << "applicationbutton_outer_border_color: #000"
+            << "applicationbutton_outer_border_width: 0"
+            << "applicationbutton_text_align: center"
+
+            << "applicationbutton_focus_background_gradient_bottom: #333"
+            << "applicationbutton_focus_background_gradient_top: #555"
+            << "applicationbutton_focus_border_gradient_bottom: #555"
+            << "applicationbutton_focus_border_gradient_top: #000"
+            << "applicationbutton_focus_border_radius: 8"
+            << "applicationbutton_focus_border_width: 0"
+            << "applicationbutton_focus_color: #000"
+            << "applicationbutton_focus_font_family: Sans"
+            << "applicationbutton_focus_icon_grayscale: false"
+            << "applicationbutton_focus_inner_border_color: #000"
+            << "applicationbutton_focus_inner_border_width: 0"
+            << "applicationbutton_focus_outer_border_color: #000"
+            << "applicationbutton_focus_outer_border_width: 0"
+            << "applicationbutton_focus_text_align: center"
+
+            << "applicationbutton_hover_background_gradient_bottom: #333"
+            << "applicationbutton_hover_background_gradient_top: #00555555"
+            << "applicationbutton_hover_border_gradient_bottom: #555"
+            << "applicationbutton_hover_border_gradient_top: #000"
+            << "applicationbutton_hover_border_radius: 8"
+            << "applicationbutton_hover_border_width: 0"
+            << "applicationbutton_hover_color: #000"
+            << "applicationbutton_hover_font_family: Sans"
+            << "applicationbutton_hover_icon_grayscale: false"
+            << "applicationbutton_hover_inner_border_color: #000"
+            << "applicationbutton_hover_inner_border_width: 0"
+            << "applicationbutton_hover_outer_border_color: #000"
+            << "applicationbutton_hover_outer_border_width: 0"
+            << "applicationbutton_hover_text_align: center"
+
+            << "placebutton_background_gradient_bottom: #333"
+            << "placebutton_background_gradient_top: #555"
+            << "placebutton_border_gradient_bottom: #555"
+            << "placebutton_border_gradient_top: #000"
+            << "placebutton_border_radius: 8"
+            << "placebutton_border_width: 0"
+            << "placebutton_color: #000"
+            << "placebutton_font_family: Sans"
+            << "placebutton_icon_grayscale: false"
+            << "placebutton_inner_border_color: #000"
+            << "placebutton_inner_border_width: 0"
+            << "placebutton_outer_border_color: #000"
+            << "placebutton_outer_border_width: 0"
+            << "placebutton_text_align: center"
+
+            << "placebutton_focus_background_gradient_bottom: #333"
+            << "placebutton_focus_background_gradient_top: #555"
+            << "placebutton_focus_border_gradient_bottom: #555"
+            << "placebutton_focus_border_gradient_top: #000"
+            << "placebutton_focus_border_radius: 8"
+            << "placebutton_focus_border_width: 0"
+            << "placebutton_focus_color: #000"
+            << "placebutton_focus_font_family: Sans"
+            << "placebutton_focus_icon_grayscale: false"
+            << "placebutton_focus_inner_border_color: #000"
+            << "placebutton_focus_inner_border_width: 0"
+            << "placebutton_focus_outer_border_color: #000"
+            << "placebutton_focus_outer_border_width: 0"
+            << "placebutton_focus_text_align: center"
+
+            << "placebutton_hover_background_gradient_bottom: #333"
+            << "placebutton_hover_background_gradient_top: #555"
+            << "placebutton_hover_border_gradient_bottom: #555"
+            << "placebutton_hover_border_gradient_top: #000"
+            << "placebutton_hover_border_radius: 8"
+            << "placebutton_hover_border_width: 0"
+            << "placebutton_hover_color: #000"
+            << "placebutton_hover_font_family: Sans"
+            << "placebutton_hover_icon_grayscale: false"
+            << "placebutton_hover_inner_border_color: #000"
+            << "placebutton_hover_inner_border_width: 0"
+            << "placebutton_hover_outer_border_color: #000"
+            << "placebutton_hover_outer_border_width: 0"
+            << "placebutton_hover_text_align: center";
+
 }

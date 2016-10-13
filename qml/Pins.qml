@@ -5,6 +5,7 @@ import "../components/"
 
 Item {
 
+
     anchors.fill:           parent
 
     Rectangle {
@@ -88,8 +89,13 @@ Item {
             qinnerbordercolor: pin2_inner_border_color
             qinnerbordersize:  pin2_inner_border_width
 
-            onQChecked:     { applications.visible = 0; resize(-applications.height) }
-            onQUnchecked:   { applications.visible = 1; resize(+applications.height) }
+            onQChecked:     { applications.visible = 0;
+                    resize(-applications.height, general_extended_height)
+            }
+
+            onQUnchecked:   { applications.visible = 1;
+                    resize(+applications.height, general_extended_height)
+            }
         }
 
         QPin {
@@ -108,8 +114,10 @@ Item {
             qinnerbordercolor: pin3_inner_border_color
             qinnerbordersize:  pin3_inner_border_width
 
-            onQChecked:     { places.visible = 0; resize(-places.height) }
-            onQUnchecked:   { places.visible = 1; resize(+places.height) }
+            onQChecked:     {
+                console.log(general_extended_height)
+                places.visible = 0; resize(-places.height, general_extended_height) }
+            onQUnchecked:   { places.visible = 1; resize(+places.height, general_extended_height) }
         }
     }
 }

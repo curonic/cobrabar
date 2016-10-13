@@ -30,16 +30,22 @@
 #include <QProcess>
 #include <QQuickItem>
 #include <QFileSystemWatcher>
+#include <QFileInfo>
+#include <QThread>
+#include <QDebug>
+
 
 CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
 
     QDesktopWidget qw;
     QRect mainScreenSize = qw.availableGeometry(qw.primaryScreen());
 
-    position_   = new QStringList;
-    qmlObject_  = new QObject;
-    qmlWidget_  = new QWidget;
-    qmlView_    = new QQuickView;
+    position_    = new QStringList;
+    qmlObject_   = new QObject;
+    qmlWidget_   = new QWidget;
+    qmlView_     = new QQuickView;
+    tooltip_     = new Tooltip;
+    fileWatcher_ = new QFileSystemWatcher;
 
     qmlView_->setSource(QUrl("qrc:/qml/Main.qml"));
     qmlView_->setColor(QColor(Qt::transparent));
@@ -74,24 +80,15 @@ CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
     connect(qmlObject_, SIGNAL(applicationLaunch(QString)), this, SLOT(slotExec(QString)));
     connect(qmlObject_, SIGNAL(loaderPosition(QString, int, int, int, int)), this, SLOT(slotPosition(QString, int, int, int, int)));
     connect(qmlObject_, SIGNAL(exit()), this, SLOT(slotExit()));
-    connect(qmlObject_, SIGNAL(resize(int)), this, SLOT(slotResize(int)));
-
+    connect(qmlObject_, SIGNAL(resize(int, bool)), this, SLOT(slotResize(int, bool)));
     connect(qmlObject_, SIGNAL(tooltipShow(QString, int, int)), this, SLOT(slotTooltipShow(QString, int, int)));
     connect(qmlObject_, SIGNAL(tooltipClose()), this, SLOT(slotTooltipClose()));
 
-    CobraSettings s;
-
-    QFileSystemWatcher *f = new QFileSystemWatcher;
-    f->addPath(s.getThemePath());
-
-    connect(f, SIGNAL(directoryChanged(const QString &)), this, SLOT(slotApplyStyle()));
+    connect(fileWatcher_, SIGNAL(fileChanged(const QString &)), this, SLOT(slotApplyStyle()));
 
     slotApplyStyle();
     getApplications();
     getPlaces();
-
-    tooltip_ = new Tooltip;
-
 
 }
 
@@ -107,9 +104,10 @@ void CobraBar::slotTooltipClose() {
 
 }
 
-void CobraBar::slotResize(int height_changes) {
+void CobraBar::slotResize(int height_changes, bool extended) {
 
-    if(extended_height_ == false) {
+    qDebug() << extended;
+    if(extended == false) {
 
         this->resize(this->width(), this->height() + height_changes);
 
@@ -189,61 +187,13 @@ void CobraBar::slotExit() {
 
 void CobraBar::slotApplyStyle() {
 
-    CobraSettings settings;
+    ThemeParser().setDefaultValues(this->window(), qmlObject_);
+    ThemeParser().setThemeValues(this->window(), qmlObject_);
 
-    ThemeParser a;
-    QDesktopWidget qw;
-    QRect mainScreenSize = qw.availableGeometry(qw.primaryScreen());
+    CobraSettings s;
+    QFileInfo f(s.getThemeFile());
+    while(!f.exists()) { thread()->sleep(10); }
 
-    for(int i = 0; i < a.getThemeLength(); i++) {
+    fileWatcher_->addPath(s.getThemeFile());
 
-        QString m_ = a.getThemeRules().at(i);
-        QStringList n_ = m_.split(": ");
-
-        QString property_;
-        QString value_;
-
-        property_ = n_.at(0);
-        value_ = n_.at(1);
-
-        QByteArray aa = value_.toLatin1().trimmed();
-        const char *c_value_ = aa.data();
-
-        QByteArray ba = property_.toLower().toLatin1().trimmed().replace(" ","");
-        const char *c_property_ = ba.data();
-
-        if(property_.toLower().contains("general_width")) {
-
-
-
-            this->resize(QString(c_value_).toInt(),this->height());
-            this->move(mainScreenSize.width() - this->width(),0);
-            qmlObject_->setProperty("global_width",QString::number(this->width()));
-
-        } else if(property_.toLower().contains("general_alignment") && QString(c_value_) == "left") {
-
-            this->move(0,0);
-
-        } else if(property_.toLower().contains("general_extended_height") && QString(c_value_) == "false") {
-
-            CobraSettings n_;
-
-            int apps_height   = n_.getApplicationsHeight(this->width());
-            int places_height = n_.getPlacesHeight(this->width());
-            int cal_height    = this->width() / 3 + this->width() / 10;
-            int pins_height   = this->width() / 8 + (this->width() / 20);
-            int sum           = apps_height + places_height + cal_height + pins_height;
-
-            this->resize(this->width(),sum);
-
-            extended_height_ = false;
-
-        } else {
-
-            qmlObject_->setProperty(c_property_, c_value_);
-
-        }
-    }
-    qmlObject_->setProperty("placeHeight", settings.getPlacesHeight(this->width()));
-    qmlObject_->setProperty("applicationHeight", settings.getApplicationsHeight(this->width()));
 }

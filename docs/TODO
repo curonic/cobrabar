@@ -1,10 +1,13 @@
++ add settings page
 + add ApplicationLaunch busy indicator (QProcess stuff?)
 + add individual corner radius
 + add analog clock option
 + add more styles
-+ turn strings "10px" & "10pt" into <int>10
 + change image-opacity to background-image-opacity maybe???
++ fix extended-height on theme changes (including hide/close maths)
++ remove back images on theme changes
 
+done! turn strings "10px" & "10pt" into <int>10
 done! make applicationbutton properties standard for placesbutton & disksbuttons & pins
 done! fix applicationbutton padding
 done! tooltips not working >>> mousearea overrides buttons. rewrite buttons as items anyway

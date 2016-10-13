@@ -1,12 +1,13 @@
 #ifndef COBRABAR_H
 #define COBRABAR_H
 
-#include "smartpopup.h"
+#include "tooltip.h"
 
 #include <QMainWindow>
 #include <QObject>
 #include <QQuickView>
 #include <QQuickItem>
+#include <QFileSystemWatcher>
 
 class CobraBar : public QWidget {
 
@@ -21,7 +22,7 @@ private slots:
     void slotExec(QString external_application);
     void slotPosition(QString id, int x, int y, int w, int h);
     void slotExit();
-    void slotResize(int height_changes);
+    void slotResize(int height_changes, bool extended);
     void slotApplyStyle();
     void slotTooltipShow(QString tooltip, int tooltip_width, int tooltip_height);
     void slotTooltipClose();
@@ -31,12 +32,13 @@ private:
     QWidget     *qmlWidget_;
     QQuickView  *qmlView_;
     QStringList *position_;
+    QFileSystemWatcher *fileWatcher_;
     bool         extended_height_;
 
     void getApplications();
     void getPlaces();
 
-    SmartPopup *tooltip_;
+    Tooltip *tooltip_;
 
 };
 

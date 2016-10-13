@@ -1,7 +1,7 @@
 #include "tooltip.h"
 #include <QDesktopWidget>
 
-SmartPopup::SmartPopup() {
+Tooltip::Tooltip() {
 
     label  = new QLabel;
     label->setAlignment(Qt::AlignCenter);
@@ -22,7 +22,7 @@ SmartPopup::SmartPopup() {
 
 }
 
-void SmartPopup::showm(QString tooltip, int tooltip_width, int tooltip_height) {
+void Tooltip::showm(QString tooltip, int tooltip_width, int tooltip_height) {
 
     QCursor a;
     QDesktopWidget qw;

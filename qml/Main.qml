@@ -36,180 +36,181 @@ Item {
 
     // pins
     signal exit()
-    signal resize(int changed_height)
+    signal resize(int changed_height, bool extended)
 
     // style stuff (default values)
-    property color  calendar_background_color:                          "#00000000"
+    property color  calendar_background_color
     property string calendar_background_image
-    property color  calendar_border_color:                              "#00000000"
-    property int    calendar_border_width:                              0
-    property real   calendar_image_opacity:                             1
-    property int    calendar_border_radius:                             0
+    property color  calendar_border_color
+    property int    calendar_border_width
+    property real   calendar_image_opacity
+    property int    calendar_border_radius
 
-    property color  date_color:                                         "#aaffffff"
-    property string date_font_family:                                   "Oxygen-Sans"
+    property color  date_color
+    property string date_font_family
 
-    property color  time_color:                                         "#aaffffff"
-    property string time_font_family:                                   "Oxygen-Sans"
+    property color  time_color
+    property string time_font_family
 
-    property color  pins_background_color:                              "#00000000"
+    property color  pins_background_color
     property string pins_background_image
-    property color  pins_border_color:                                  "#00000000"
-    property int    pins_border_width:                                  0
-    property real   pins_image_opacity:                                 1
-    property int    pins_border_radius:                                 0
+    property color  pins_border_color
+    property int    pins_border_width
+    property real   pins_image_opacity
+    property int    pins_border_radius
 
     property string pin1_background_image
-    property int    pin1_border_width:                                  2
-    property color  pin1_background_gradient_top:                       "#333"
-    property color  pin1_background_gradient_bottom:                    "#000"
-    property color  pin1_border_gradient_top:                           "#000"
-    property color  pin1_border_gradient_bottom:                        "#44ff0000"
-    property real   pin1_image_opacity:                                 1
-    property int    pin1_border_radius:                                 40
-    property color  pin1_inner_border_color:                            "#000"
-    property int    pin1_inner_border_width:                            0
-    property color  pin1_outer_border_color:                            "#000"
-    property int    pin1_outer_border_width:                            0
+    property int    pin1_border_width
+    property color  pin1_background_gradient_top
+    property color  pin1_background_gradient_bottom
+    property color  pin1_border_gradient_top
+    property color  pin1_border_gradient_bottom
+    property real   pin1_image_opacity
+    property int    pin1_border_radius
+    property color  pin1_inner_border_color
+    property int    pin1_inner_border_width
+    property color  pin1_outer_border_color
+    property int    pin1_outer_border_width
 
     property string pin2_background_image
-    property int    pin2_border_width:                                  2
-    property color  pin2_background_gradient_top:                       "#333"
-    property color  pin2_background_gradient_bottom:                    "#000"
-    property color  pin2_border_gradient_top:                           "#000"
-    property color  pin2_border_gradient_bottom:                        "#44ffff00"
-    property real   pin2_image_opacity:                                 1
-    property int    pin2_border_radius:                                 40
-    property color  pin2_inner_border_color:                            "#000"
-    property int    pin2_inner_border_width:                            0
-    property color  pin2_outer_border_color:                            "#000"
-    property int    pin2_outer_border_width:                            0
+    property int    pin2_border_width
+    property color  pin2_background_gradient_top
+    property color  pin2_background_gradient_bottom
+    property color  pin2_border_gradient_top
+    property color  pin2_border_gradient_bottom
+    property real   pin2_image_opacity
+    property int    pin2_border_radius
+    property color  pin2_inner_border_color
+    property int    pin2_inner_border_width
+    property color  pin2_outer_border_color
+    property int    pin2_outer_border_width
 
     property string pin3_background_image
-    property int    pin3_border_width:                                  2
-    property color  pin3_background_gradient_top:                       "#333"
-    property color  pin3_background_gradient_bottom:                    "#000"
-    property color  pin3_border_gradient_top:                           "#000"
-    property color  pin3_border_gradient_bottom:                        "#4400ff00"
-    property real   pin3_image_opacity:                                 1
-    property int    pin3_border_radius:                                 40
-    property color  pin3_inner_border_color:                            "#000"
-    property int    pin3_inner_border_width:                            0
-    property color  pin3_outer_border_color:                            "#000"
-    property int    pin3_outer_border_width:                            0
+    property int    pin3_border_width
+    property color  pin3_background_gradient_top
+    property color  pin3_background_gradient_bottom
+    property color  pin3_border_gradient_top
+    property color  pin3_border_gradient_bottom
+    property real   pin3_image_opacity
+    property int    pin3_border_radius
+    property color  pin3_inner_border_color
+    property int    pin3_inner_border_width
+    property color  pin3_outer_border_color
+    property int    pin3_outer_border_width
 
-    property color  applications_background_color:                      "#00000000"
+    property color  applications_background_color
     property string applications_background_image
-    property color  applications_border_color:                          "#00000000"
-    property int    applications_border_width:                          0
-    property real   applications_image_opacity:                         1
-    property int    applications_border_radius:                         0
+    property color  applications_border_color
+    property int    applications_border_width
+    property real   applications_image_opacity
+    property int    applications_border_radius
 
-    property color  places_background_color:                            "#00000000"
+    property color  places_background_color
     property string places_background_image
-    property color  places_border_color:                                "#00000000"
-    property int    places_border_width:                                0
-    property real   places_image_opacity:                               1
-    property int    places_border_radius:                               0
+    property color  places_border_color
+    property int    places_border_width
+    property real   places_image_opacity
+    property int    places_border_radius
 
-    property color  general_background_color:                           "#aa000000"
-    property color  general_border_color:                               "#000000"
+    property color  general_background_color
+    property color  general_border_color
     property string general_background_image
-    property int    general_border_radius:                              0
-    property int    general_border_width:                               0
-    property real   general_image_opacity:                              1
-    property int    global_width:                                       0
+    property int    general_border_radius
+    property int    general_border_width
+    property real   general_image_opacity
+    property int    global_width
+    property bool   general_extended_height
+    property bool   extended_height
 
-    property color  applicationbutton_background_gradient_bottom:       "#333"
-    property color  applicationbutton_background_gradient_top:          "#555"
-    property color  applicationbutton_border_gradient_bottom:           "#555"
-    property color  applicationbutton_border_gradient_top:              "#000"
-    property int    applicationbutton_border_radius:                    8
-    property int    applicationbutton_border_width:                     0
-    property color  applicationbutton_color:                            "#000"
-    property string applicationbutton_font_family:                      "Sans"
-    property bool   applicationbutton_icon_grayscale:                   false
-    property color  applicationbutton_inner_border_color:               "#000"
-    property int    applicationbutton_inner_border_width:               0
-    property color  applicationbutton_outer_border_color:               "#000"
-    property int    applicationbutton_outer_border_width:               0
-    property string applicationbutton_text_align:                       "center"
+    property color  applicationbutton_background_gradient_bottom
+    property color  applicationbutton_background_gradient_top
+    property color  applicationbutton_border_gradient_bottom
+    property color  applicationbutton_border_gradient_top
+    property int    applicationbutton_border_radius
+    property int    applicationbutton_border_width
+    property color  applicationbutton_color
+    property string applicationbutton_font_family
+    property bool   applicationbutton_icon_grayscale
+    property color  applicationbutton_inner_border_color
+    property int    applicationbutton_inner_border_width
+    property color  applicationbutton_outer_border_color
+    property int    applicationbutton_outer_border_width
+    property string applicationbutton_text_align
 
-    property color  applicationbutton_focus_background_gradient_bottom: "#333"
-    property color  applicationbutton_focus_background_gradient_top:    "#555"
-    property color  applicationbutton_focus_border_gradient_bottom:     "#555"
-    property color  applicationbutton_focus_border_gradient_top:        "#000"
-    property int    applicationbutton_focus_border_radius:              8
-    property int    applicationbutton_focus_border_width:               0
-    property color  applicationbutton_focus_color:                      "#000"
-    property string applicationbutton_focus_font_family:                "Sans"
-    property bool   applicationbutton_focus_icon_grayscale:             false
-    property color  applicationbutton_focus_inner_border_color:         "#000"
-    property int    applicationbutton_focus_inner_border_width:         0
-    property color  applicationbutton_focus_outer_border_color:         "#000"
-    property int    applicationbutton_focus_outer_border_width:         0
-    property string applicationbutton_focus_text_align:                 "center"
+    property color  applicationbutton_focus_background_gradient_bottom
+    property color  applicationbutton_focus_background_gradient_top
+    property color  applicationbutton_focus_border_gradient_bottom
+    property color  applicationbutton_focus_border_gradient_top
+    property int    applicationbutton_focus_border_radius
+    property int    applicationbutton_focus_border_width
+    property color  applicationbutton_focus_color
+    property string applicationbutton_focus_font_family
+    property bool   applicationbutton_focus_icon_grayscale
+    property color  applicationbutton_focus_inner_border_color
+    property int    applicationbutton_focus_inner_border_width
+    property color  applicationbutton_focus_outer_border_color
+    property int    applicationbutton_focus_outer_border_width
+    property string applicationbutton_focus_text_align
 
-    property color  applicationbutton_hover_background_gradient_bottom: "#333"
-    property color  applicationbutton_hover_background_gradient_top:    "#555"
-    property color  applicationbutton_hover_border_gradient_bottom:     "#555"
-    property color  applicationbutton_hover_border_gradient_top:        "#000"
-    property int    applicationbutton_hover_border_radius:              8
-    property int    applicationbutton_hover_border_width:               0
-    property color  applicationbutton_hover_color:                      "#000"
-    property string applicationbutton_hover_font_family:                "Sans"
-    property bool   applicationbutton_hover_icon_grayscale:             false
-    property color  applicationbutton_hover_inner_border_color:         "#000"
-    property int    applicationbutton_hover_inner_border_width:         0
-    property color  applicationbutton_hover_outer_border_color:         "#000"
-    property int    applicationbutton_hover_outer_border_width:         0
-    property string applicationbutton_hover_text_align:                 "center"
+    property color  applicationbutton_hover_background_gradient_bottom
+    property color  applicationbutton_hover_background_gradient_top
+    property color  applicationbutton_hover_border_gradient_bottom
+    property color  applicationbutton_hover_border_gradient_top
+    property int    applicationbutton_hover_border_radius
+    property int    applicationbutton_hover_border_width
+    property color  applicationbutton_hover_color
+    property string applicationbutton_hover_font_family
+    property bool   applicationbutton_hover_icon_grayscale
+    property color  applicationbutton_hover_inner_border_color
+    property int    applicationbutton_hover_inner_border_width
+    property color  applicationbutton_hover_outer_border_color
+    property int    applicationbutton_hover_outer_border_width
+    property string applicationbutton_hover_text_align
 
-    property color  placebutton_background_gradient_bottom:       "#333"
-    property color  placebutton_background_gradient_top:          "#555"
-    property color  placebutton_border_gradient_bottom:           "#555"
-    property color  placebutton_border_gradient_top:              "#000"
-    property int    placebutton_border_radius:                    8
-    property int    placebutton_border_width:                     0
-    property color  placebutton_color:                            "#000"
-    property string placebutton_font_family:                      "Sans"
-    property bool   placebutton_icon_grayscale:                   false
-    property color  placebutton_inner_border_color:               "#000"
-    property int    placebutton_inner_border_width:               0
-    property color  placebutton_outer_border_color:               "#000"
-    property int    placebutton_outer_border_width:               0
-    property string placebutton_text_align:                       "center"
+    property color  placebutton_background_gradient_bottom
+    property color  placebutton_background_gradient_top
+    property color  placebutton_border_gradient_bottom
+    property color  placebutton_border_gradient_top
+    property int    placebutton_border_radius
+    property int    placebutton_border_width
+    property color  placebutton_color
+    property string placebutton_font_family
+    property bool   placebutton_icon_grayscale
+    property color  placebutton_inner_border_color
+    property int    placebutton_inner_border_width
+    property color  placebutton_outer_border_color
+    property int    placebutton_outer_border_width
+    property string placebutton_text_align
 
-    property color  placebutton_focus_background_gradient_bottom: "#333"
-    property color  placebutton_focus_background_gradient_top:    "#555"
-    property color  placebutton_focus_border_gradient_bottom:     "#555"
-    property color  placebutton_focus_border_gradient_top:        "#000"
-    property int    placebutton_focus_border_radius:              8
-    property int    placebutton_focus_border_width:               0
-    property color  placebutton_focus_color:                      "#000"
-    property string placebutton_focus_font_family:                "Sans"
-    property bool   placebutton_focus_icon_grayscale:             false
-    property color  placebutton_focus_inner_border_color:         "#000"
-    property int    placebutton_focus_inner_border_width:         0
-    property color  placebutton_focus_outer_border_color:         "#000"
-    property int    placebutton_focus_outer_border_width:         0
-    property string placebutton_focus_text_align:                 "center"
+    property color  placebutton_focus_background_gradient_bottom
+    property color  placebutton_focus_background_gradient_top
+    property color  placebutton_focus_border_gradient_bottom
+    property color  placebutton_focus_border_gradient_top
+    property int    placebutton_focus_border_radius
+    property int    placebutton_focus_border_width
+    property color  placebutton_focus_color
+    property string placebutton_focus_font_family
+    property bool   placebutton_focus_icon_grayscale
+    property color  placebutton_focus_inner_border_color
+    property int    placebutton_focus_inner_border_width
+    property color  placebutton_focus_outer_border_color
+    property int    placebutton_focus_outer_border_width
+    property string placebutton_focus_text_align
 
-    property color  placebutton_hover_background_gradient_bottom: "#333"
-    property color  placebutton_hover_background_gradient_top:    "#555"
-    property color  placebutton_hover_border_gradient_bottom:     "#555"
-    property color  placebutton_hover_border_gradient_top:        "#000"
-    property int    placebutton_hover_border_radius:              8
-    property int    placebutton_hover_border_width:               0
-    property color  placebutton_hover_color:                      "#000"
-    property string placebutton_hover_font_family:                "Sans"
-    property bool   placebutton_hover_icon_grayscale:             false
-    property color  placebutton_hover_inner_border_color:         "#000"
-    property int    placebutton_hover_inner_border_width:         0
-    property color  placebutton_hover_outer_border_color:         "#000"
-    property int    placebutton_hover_outer_border_width:         0
-    property string placebutton_hover_text_align:                 "center"
-
+    property color  placebutton_hover_background_gradient_bottom
+    property color  placebutton_hover_background_gradient_top
+    property color  placebutton_hover_border_gradient_bottom
+    property color  placebutton_hover_border_gradient_top
+    property int    placebutton_hover_border_radius
+    property int    placebutton_hover_border_width
+    property color  placebutton_hover_color
+    property string placebutton_hover_font_family
+    property bool   placebutton_hover_icon_grayscale
+    property color  placebutton_hover_inner_border_color
+    property int    placebutton_hover_inner_border_width
+    property color  placebutton_hover_outer_border_color
+    property int    placebutton_hover_outer_border_width
+    property string placebutton_hover_text_align
 
     Component.onCompleted: {
         loaderPosition(calendar.source, calendar.x, calendar.y, calendar.width, calendar.height)
@@ -229,15 +230,15 @@ Item {
     }
 
     Image {
-        id:                 img
-        source:             general_background_image
-        anchors.centerIn:   parent
-        width:              parent.width  - general_border_width * 2
-        height:             parent.height - general_border_width * 2
-        fillMode:           Image.Pad
+        id:                  img
+        source:              general_background_image
+        anchors.centerIn:    parent
+        width:               parent.width  - general_border_width * 2
+        height:              parent.height - general_border_width * 2
+        fillMode:            Image.Pad
         horizontalAlignment: Image.AlignLeft
-        verticalAlignment: Image.AlignTop
-        layer.enabled:      true
+        verticalAlignment:   Image.AlignTop
+        layer.enabled:       true
         layer.effect: OpacityMask {
             maskSource: Item {
                 width:      img.width
