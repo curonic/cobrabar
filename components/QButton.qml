@@ -43,7 +43,7 @@ Item {
     property int    qinnerborderwidth
     property color  qouterbordercolor
     property int    qouterborderwidth
-    property string qtextalign: "center"
+    property string qtextalign
 
     // hover
     property color  qhbackgroundcolorbottom
@@ -59,7 +59,7 @@ Item {
     property int    qhinnerborderwidth
     property color  qhouterbordercolor
     property int    qhouterborderwidth
-    property string qhtextalign: "center"
+    property string qhtextalign
 
     // focus
     property color  qfbackgroundcolorbottom
@@ -75,7 +75,7 @@ Item {
     property int    qfinnerborderwidth
     property color  qfouterbordercolor
     property int    qfouterborderwidth
-    property string qftextalign: "center"
+    property string qftextalign
 
     signal qClicked()
 
@@ -105,8 +105,8 @@ Item {
     onQouterbordercolorChanged:      outer_border_color      = qouterbordercolor
     onQouterborderwidthChanged:      outer_border_width      = qouterborderwidth
     onQcolorChanged:                 text_color              = qcolor
-
-    Component.onCompleted: label.anchors.leftMargin = t_alignment(qtextalign)
+    onQtextalignChanged:             label.anchors.leftMargin = t_alignment(qtextalign)
+    Component.onCompleted:           label.anchors.leftMargin = t_alignment(qtextalign)
 
     Timer {
         id:          show_tooltip
