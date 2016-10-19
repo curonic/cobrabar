@@ -2,6 +2,7 @@
 #define COBRABAR_H
 
 #include "tooltip.h"
+#include "themeparser.h"
 
 #include <QMainWindow>
 #include <QObject>
@@ -22,7 +23,6 @@ private slots:
     void slotExec(QString external_application);
     void slotPosition(QString id, int x, int y, int w, int h);
     void slotExit();
-    void slotResize(int height_changes, bool extended);
     void slotApplyStyle();
     void slotTooltipShow(QString tooltip, int tooltip_width, int tooltip_height);
     void slotTooltipClose();
@@ -39,6 +39,7 @@ private:
     void getPlaces();
 
     Tooltip *tooltip_;
+    ThemeParser *t;
 
 };
 

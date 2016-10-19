@@ -107,10 +107,10 @@ Item {
     onQcolorChanged:                 text_color              = qcolor
     onQtextalignChanged:             label.anchors.leftMargin = t_alignment(qtextalign)
     Component.onCompleted:           label.anchors.leftMargin = t_alignment(qtextalign)
-
+    onWidthChanged:                  label.anchors.leftMargin = t_alignment(qtextalign)
     Timer {
         id:          show_tooltip
-        interval:    1000
+        interval:    100
         repeat:      false
         running:     false
         onTriggered: tooltipShow(qtooltip, tooltip.width, tooltip.height)

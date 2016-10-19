@@ -20,10 +20,7 @@
 
 #include "cobrabar.h"
 #include "cobrasettings.h"
-#include "themeparser.h"
-#include "tooltip.h"
 
-#include <QDesktopWidget>
 #include <QTimer>
 #include <QTime>
 #include <QVBoxLayout>
@@ -37,14 +34,12 @@
 
 CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
 
-    QDesktopWidget qw;
-    QRect mainScreenSize = qw.availableGeometry(qw.primaryScreen());
-
     position_    = new QStringList;
     qmlObject_   = new QObject;
     qmlWidget_   = new QWidget;
     qmlView_     = new QQuickView;
     tooltip_     = new Tooltip;
+    t            = new ThemeParser;
     fileWatcher_ = new QFileSystemWatcher;
 
     qmlView_->setSource(QUrl("qrc:/qml/Main.qml"));
@@ -62,8 +57,7 @@ CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
     this->setObjectName("CobraBar");
     this->setFocusPolicy(Qt::NoFocus);
     this->setLayout(layout);
-    this->move(mainScreenSize.width() - 200,0);
-    this->resize(200,mainScreenSize.height());
+
     this->setWindowFlags(Qt::CustomizeWindowHint);
 
     QTimer *time_timer = new QTimer(this);
@@ -72,15 +66,12 @@ CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
     QTimer *date_timer = new QTimer(this);
     date_timer->start(4000);
 
-    qmlObject_->setProperty("global_width",QString::number(this->width()));
-
     connect(time_timer, SIGNAL(timeout()), this, SLOT(slotTime()));
     connect(date_timer, SIGNAL(timeout()), this, SLOT(slotDate()));
     connect(qmlObject_, SIGNAL(placeLaunch(QString)), this, SLOT(slotExec(QString)));
     connect(qmlObject_, SIGNAL(applicationLaunch(QString)), this, SLOT(slotExec(QString)));
     connect(qmlObject_, SIGNAL(loaderPosition(QString, int, int, int, int)), this, SLOT(slotPosition(QString, int, int, int, int)));
     connect(qmlObject_, SIGNAL(exit()), this, SLOT(slotExit()));
-    connect(qmlObject_, SIGNAL(resize(int, bool)), this, SLOT(slotResize(int, bool)));
     connect(qmlObject_, SIGNAL(tooltipShow(QString, int, int)), this, SLOT(slotTooltipShow(QString, int, int)));
     connect(qmlObject_, SIGNAL(tooltipClose()), this, SLOT(slotTooltipClose()));
 
@@ -104,16 +95,6 @@ void CobraBar::slotTooltipClose() {
 
 }
 
-void CobraBar::slotResize(int height_changes, bool extended) {
-
-    qDebug() << extended;
-    if(extended == false) {
-
-        this->resize(this->width(), this->height() + height_changes);
-
-    }
-}
-
 void CobraBar::slotPosition(QString id, int x, int y, int w, int h) {
 
     QString id_ = id;
@@ -134,15 +115,13 @@ void CobraBar::slotPosition(QString id, int x, int y, int w, int h) {
 
 void CobraBar::slotDate() {
 
-    QDate date = QDate::currentDate();
-    qmlObject_->setProperty("calendarDate", date.toString("dd-MM-yyyy"));
+    qmlObject_->setProperty("calendarDate", QDate::currentDate().toString("dd-MM-yyyy"));
 
 }
 
 void CobraBar::slotTime() {
 
-    QTime time = QTime::currentTime();
-    qmlObject_->setProperty("calendarTime", time.toString("hh:mm:ss"));
+    qmlObject_->setProperty("calendarTime", QTime::currentTime().toString("hh:mm:ss"));
 
 }
 
@@ -161,8 +140,7 @@ void CobraBar::getApplications() {
 
 void CobraBar::slotExec(QString external_application) {
 
-    QProcess *p = new QProcess;
-    p->startDetached(external_application);
+    QProcess::startDetached(external_application);
 
 }
 
@@ -187,13 +165,19 @@ void CobraBar::slotExit() {
 
 void CobraBar::slotApplyStyle() {
 
-    ThemeParser().setDefaultValues(this->window(), qmlObject_);
-    ThemeParser().setThemeValues(this->window(), qmlObject_);
+
+    t->setThemeRules(window(), qmlObject_);
 
     CobraSettings s;
     QFileInfo f(s.getThemeFile());
-    while(!f.exists()) { thread()->sleep(10); }
 
-    fileWatcher_->addPath(s.getThemeFile());
+    if(!f.exists()) {
 
+        thread()->usleep(1);
+
+    } else {
+
+        fileWatcher_->addPath(s.getThemeFile());
+
+    }
 }

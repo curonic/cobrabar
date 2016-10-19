@@ -89,13 +89,9 @@ Item {
             qinnerbordercolor: pin2_inner_border_color
             qinnerbordersize:  pin2_inner_border_width
 
-            onQChecked:     { applications.visible = 0;
-                    resize(-applications.height, general_extended_height)
-            }
+            onQChecked:     { applications.visible = 0 }
 
-            onQUnchecked:   { applications.visible = 1;
-                    resize(+applications.height, general_extended_height)
-            }
+            onQUnchecked:   { applications.visible = 1 }
         }
 
         QPin {
@@ -114,10 +110,8 @@ Item {
             qinnerbordercolor: pin3_inner_border_color
             qinnerbordersize:  pin3_inner_border_width
 
-            onQChecked:     {
-                console.log(general_extended_height)
-                places.visible = 0; resize(-places.height, general_extended_height) }
-            onQUnchecked:   { places.visible = 1; resize(+places.height, general_extended_height) }
+            onQChecked:     { places.visible = 0 }
+            onQUnchecked:   { places.visible = 1 }
         }
     }
 }

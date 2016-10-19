@@ -17,6 +17,10 @@ Item {
     signal loaderPosition(string id, int x, int y, int w, int h)
     signal tooltipShow(string tooltip, int tooltip_width, int tooltip_height)
     signal tooltipClose()
+    signal globalPosition(string left_or_right)
+    signal globalWidth(int width)
+    signal globalExtended(bool state)
+
 
     // calendar
     property string calendarTime
@@ -112,15 +116,14 @@ Item {
     property real   places_image_opacity
     property int    places_border_radius
 
+    property string general_alignment
     property color  general_background_color
     property color  general_border_color
     property string general_background_image
     property int    general_border_radius
     property int    general_border_width
     property real   general_image_opacity
-    property int    global_width
-    property bool   general_extended_height
-    property bool   extended_height
+    property int    general_width
 
     property color  applicationbutton_background_gradient_bottom
     property color  applicationbutton_background_gradient_top
@@ -217,6 +220,8 @@ Item {
         loaderPosition(pins.source, pins.x, pins.y, pins.width, pins.height)
         loaderPosition(applications.source, applications.x, applications.y, applications.width, applications.height)
         loaderPosition(places.source, places.x, places.y, places.width, places.height)
+
+
     }
 
     anchors.fill:     parent
@@ -265,23 +270,23 @@ Item {
         Loader {
             id:     pins
             source: qmlPins
-            width:  global_width
+            width:  general_width
             anchors.horizontalCenter: parent.horizontalCenter
-            height: global_width / 8
+            height: general_width / 8
         }
 
         Loader {
             id:     calendar
             source: qmlCalendar
-            width:  global_width
+            width:  general_width
             anchors.horizontalCenter: parent.horizontalCenter
-            height: global_width / 3 + global_width / 10
+            height: general_width / 3 + general_width / 10
         }
 
         Loader {
             id:     applications
             source: qmlApplications
-            width:  global_width
+            width:  general_width
             anchors.horizontalCenter: parent.horizontalCenter
             height: applicationHeight
         }
@@ -289,7 +294,7 @@ Item {
         Loader {
             id:     places
             source: qmlPlaces
-            width:  global_width
+            width:  general_width
             anchors.horizontalCenter: parent.horizontalCenter
             height: placeHeight
         }

@@ -39,7 +39,7 @@ void Tooltip::showm(QString tooltip, int tooltip_width, int tooltip_height) {
 
     }
 
-    this->resize(0, 0); // reset (some objects may don't have a popup or it is empty)
+    this->resize(0, 0); // reset (some objects may have no popup or a popup is empty)
 
     if(tooltip.length() > 1) {
 
