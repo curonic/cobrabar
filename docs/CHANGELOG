@@ -1,4 +1,9 @@
---- v0.45 (03-19-2016) ---
+--- v0.46 (02-11-2016) ---
++ fix heights for individual qmls (gives an option to hide/show/extend)
++ add license crap
++ add snapshot
+
+--- v0.45 (03-10-2016) ---
 + tooltips added (need cleanup)
 + tooltip attribute for both (places & applications) in config
 + label attribute for places in config

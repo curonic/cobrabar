@@ -1,78 +1,168 @@
+/* 
+
+This is a comment
+
+BUG MED! change image-opacity to background-image-opacity ---
+BUG HIG! backround image opacity is 0 by default, even if image is set ---
+
+
+--- theming property list (as close to css as possible) ---
+
 #General {
-    width:            180;
-    extended-height:  false;
+    alignment:        string; ("left" or "right" for now)
+    background-color: string;
+    background-image: string;
+    border-color:     string;
+    border-radius:    int;
+    border-width:     int;
+    extended-height:  bool;
+    image-opacity:    real; (for background-image) 
+    width:            int;
+}
+
+#Calendar {
+    background-color: string;
+    background-image: string;
+    border-color:     string;
+    border-radius:    int;
+    border-width:     int;
+    image-opacity:    real; (for background-image)
+}
+
+#Time {
+    color:        string;
+    font-family:  string;
+}
+
+#Date {
+    color:        string;
+    font-family:  string;
+}
+
+#Applications, #Pins, #Places {
+    background-color:  string;
+    background-image:  string;
+    border-color:      string;
+    border-radius:     int;
+    border-width:      int;
+    image-opacity:     real; (for background-image)
+}
+
+#ApplicationButton, #PlaceButton {
+    background-gradient-bottom: string;
+    background-gradient-top:    string;
+    border-gradient-bottom:     string;
+    border-gradient-top:        string;
+    border-radius:              int;
+    border-width:               int;
+    color:                      string;
+    icon-grayscale:             bool;
+    inner-border-color:         string;
+    inner-border-width:         int;
+    outer-border-color:         string;
+    outer-border-width:         int;
+}
+
+#ApplicationButton:hover, #ApplicationButton:focus,
+#PlaceButton:hover, #PlaceButton:focus {
+    background-gradient-bottom: string;
+    background-gradient-top:    string;
+    border-gradient-bottom:     string;
+    border-gradient-top:        string;
+    border-radius:              int;
+    border-width:               int;
+    icon-grayscale:             bool;
+    inner-border-color:         string;
+    inner-border-width:         int;
+    outer-border-color:         string;
+    outer-border-width:         int;
+}
+
+#Pin1, #Pin2, #Pin3 {
+    background-gradient-bottom: string;
+    background-gradient-top:    string;
+    background-image            string;
+    border-gradient-bottom:     string;
+    border-gradient-top:        string;
+    border-radius:              int;
+    border-width:               int;
+    image-opacity:              real;
+}
+
+*/
+
+#General {
+    width:            189;
     border-radius:    8;
     alignment:        right;
-    background-color: #bbffffff;
-    background-image: "images/s_back.jpeg";
-    image-opacity:    0.2;
-    border-color:     #55000000;
-    border-width:     4;
+    background-color: #88000000;
+    border-color:     #44ffffff;
+    border-width:     1;
+    extended-height:  false;
+
 }
 
 #Time {
     font-family: "Monospace";
-    color:       #aa000000;
+    color: #ccc;
 }
 
 #Date {
     font-family: "Oxygen-Sans";
-    color:       #99000000;
+    color: #aaa;
 }
 
-#ApplicationButton,
-#PlaceButton,
-#PlaceButton:hover,
-#PlaceButton:focus,
-#ApplicationButton:hover,
-#ApplicationButton:focus {
-    background-gradient-top:    #ffffff;
-    background-gradient-bottom: #ccc;
+#Tooltip {
+    color: #fff;
+    background-color: #cc000000;
+    border-radius: 5;
+}
+
+#ApplicationButton, #ApplicationButton:focus {
+    border-color:               #22000000;
+    border-width:               2;
+    background-gradient-top:    #44ffffff;
+    background-gradient-bottom: #00ffffff;
     border-radius:              4;
-    color:                      #88000000;
+    color:                      #000;
 }
 
-#ApplicationButton {
-    outer-border-color: #7f7f7f;
-    outer-border-width: 1;
-    color:              #fff;
+#ApplicationButton:hover {
+    border-color:               #00aaff;
+    border-width:               2;
+    background-gradient-top:    #44ffffff;
+    background-gradient-bottom: #00ffffff;
+    border-radius:              4;
+    color:                      #000;
 }
 
- #PlaceButton {
-    outer-border-color: #7f7f7f;
-    outer-border-width: 1;
-    color:              #fff;
-    text-align:         left;
+#PlaceButton, #PlaceButton:focus {
+    background-gradient-top:    #88ffffff;
+    background-gradient-bottom: #44ffffff;
+    border-radius:              4;
+    color:                      #000;
+    border-color:               #aa000000;
+    border-width:               1;
+    icon-grayscale:             true;
+    text-align:                 left;
 }
 
-
-#PlaceButton {
-    outer-border-color: #7f7f7f;
-    outer-border-width: 1;
-    icon-grayscale:     false;
-    color:              #000;
-    text-align:         center;
-}
-
-#ApplicationButton:hover, #PlaceButton:hover {
-    inner-border-color: #fff;
-    inner-border-width: 1;
-    outer-border-color: #00aaff;
-    outer-border-width: 1;
-    icon-grayscale:     true;
-}
-
-#ApplicationButton:focus {
-    outer-border-color: #c4c4c4;
-    outer-border-width: 0;
+#PlaceButton:hover {
+    background-gradient-top:    #88ffffff;
+    background-gradient-bottom: #44ffffff;
+    border-radius:              4;
+    color:                      #000;
+    border-color:               #00aaff;
+    border-width:               1;
+    icon-grayscale:             true;
+    text-align:                 left;
 }
 
 #Pin1, #Pin2, #Pin3 {
-    border-gradient-top:    #666;
-    border-gradient-bottom: #bbb;
-    inner-border-width:     1;
-    outer-border-width:     0;
+    border-gradient-top:    #55000000;
+    border-gradient-bottom: #55ffffff;
     border-width:           2;
+
 }
 
 #Pin1 {

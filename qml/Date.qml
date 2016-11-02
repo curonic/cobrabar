@@ -44,13 +44,11 @@ Item {
     }
 
     QCalendar {
-        qdate:                 calendarDate
-        qdatecolor:            date_color
-        qdatefontfamily:       date_font_family
-        qtime:                 calendarTime
-        qtimefontfamily:       time_font_family
-        qtimecolor:            time_color
-        anchors.fill:          parent
-        anchors.centerIn:      parent
+        qcal:             calendarDate
+        qcalcolor:        date_color
+        qcalfontfamily:   date_font_family
+        anchors.fill:     parent
+        anchors.centerIn: parent
     }
+
 }
