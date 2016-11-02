@@ -8,7 +8,6 @@ class ThemeParser {
 
 public:
     ThemeParser();
-
     void setThemeRules(QWidget *widget, QObject *&qmlobject);
 
 private:
@@ -27,6 +26,8 @@ private:
     int globalWidth_;
     int globalAWidth_;
     int globalAlignment_;
+    int globalBorderWidth_;
+    int globalAHeight_;
 };
 
 #endif // THEMEPARSER_H

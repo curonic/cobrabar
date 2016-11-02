@@ -4,9 +4,10 @@
         <file>components/QCalendar.qml</file>
         <file>components/QPin.qml</file>
         <file>qml/Applications.qml</file>
-        <file>qml/Calendar.qml</file>
+        <file>qml/Time.qml</file>
         <file>qml/Pins.qml</file>
         <file>qml/Places.qml</file>
         <file>qml/Main.qml</file>
+        <file>qml/Date.qml</file>
     </qresource>
 </RCC>

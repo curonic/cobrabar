@@ -9,7 +9,7 @@ class Tooltip : public QWidget {
 
 public:
     Tooltip();
-    void showm(QString tooltip, int tooltip_width, int tooltip_height);
+    void showm(QString text, int width, int height, QString color, QString background, int radius);
 
 private:
     QVBoxLayout *layout;

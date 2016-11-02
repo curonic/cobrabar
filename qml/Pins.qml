@@ -88,10 +88,11 @@ Item {
             qouterbordersize:  pin2_outer_border_width
             qinnerbordercolor: pin2_inner_border_color
             qinnerbordersize:  pin2_inner_border_width
+            onQChecked: { applications.visible = 0;
+                if(general_extended_height == 0) resize(-applicationHeight); }
 
-            onQChecked:     { applications.visible = 0 }
-
-            onQUnchecked:   { applications.visible = 1 }
+            onQUnchecked: { applications.visible = 1;
+                if(general_extended_height == 0) resize(applicationHeight); }
         }
 
         QPin {
@@ -109,9 +110,11 @@ Item {
             qouterbordersize:  pin3_outer_border_width
             qinnerbordercolor: pin3_inner_border_color
             qinnerbordersize:  pin3_inner_border_width
+            onQChecked: { places.visible = 0;
+                if(general_extended_height == 0) resize(-placeHeight); }
 
-            onQChecked:     { places.visible = 0 }
-            onQUnchecked:   { places.visible = 1 }
+            onQUnchecked: { places.visible = 1;
+                if(general_extended_height == 0) resize(placeHeight); }
         }
     }
 }

@@ -28,14 +28,14 @@
 CobraSettings::CobraSettings() {
 
     settings_file = QString(QStandardPaths::standardLocations
-                            (QStandardPaths::ConfigLocation).at(0))
+                            (QStandardPaths::ConfigLocation)[0])
             .append(QDir::separator())
             .append("CobraBar")
             .append(QDir::separator())
             .append("settings.xml");
 
     icon_dir_path = QString(QStandardPaths::standardLocations
-                            (QStandardPaths::ConfigLocation).at(0))
+                            (QStandardPaths::ConfigLocation)[0])
             .append(QDir::separator())
             .append("CobraBar")
             .append(QDir::separator())
@@ -43,7 +43,7 @@ CobraSettings::CobraSettings() {
             .append(QDir::separator());
 
     themes_dir = QString(QStandardPaths::standardLocations
-                         (QStandardPaths::ConfigLocation).at(0))
+                         (QStandardPaths::ConfigLocation)[0])
             .append(QDir::separator())
             .append("CobraBar")
             .append(QDir::separator())
@@ -65,10 +65,9 @@ void CobraSettings::readSettings() {
     document.setContent(&file);
     file.close();
 
-    QDomElement root     = document.firstChildElement();
-    QDomNodeList a_items = root.elementsByTagName("application");
-    QDomNodeList p_items = root.elementsByTagName("place");
-    QDomNodeList t_items = root.elementsByTagName("theme");
+    QDomNodeList a_items = document.firstChildElement().elementsByTagName("application");
+    QDomNodeList p_items = document.firstChildElement().elementsByTagName("place");
+    QDomNodeList t_items = document.firstChildElement().elementsByTagName("theme");
 
     if(a_items.count() > 0) {
 
@@ -78,18 +77,16 @@ void CobraSettings::readSettings() {
 
         for(int i = 0; i < applications_count; i++) {
 
-            QDomNode node        = a_items.at(i);
-            QDomNamedNodeMap map = node.attributes();
-            QString exec         = map.namedItem("exec").toAttr().value();
-            QString icon         = map.namedItem("icon").toAttr().value();
-            QString tool         = map.namedItem("tooltip").toAttr().value();
+            QString exec = a_items.at(i).attributes().namedItem("exec").toAttr().value();
+            QString icon = a_items.at(i).attributes().namedItem("icon").toAttr().value();
+            QString tool = a_items.at(i).attributes().namedItem("tooltip").toAttr().value();
 
             QString b;
 
             b.append(exec).append(",").append(icon).append(",").append(tool);
 
             b.replace("~", QString(QStandardPaths::standardLocations(
-                                       QStandardPaths::HomeLocation).at(0)));
+                                   QStandardPaths::HomeLocation).at(0)));
 
             temp_app_list.append(b);
 
@@ -110,14 +107,12 @@ void CobraSettings::readSettings() {
 
         QStringList temp_places_list;
 
-        for( int i = 0; i < places_count; i++) {
+        for( int i = 0; i < p_items.count(); i++) {
 
-            QDomNode         node  = p_items.at(i);
-            QDomNamedNodeMap map   = node.attributes();
-            QString          path  = map.namedItem("path").toAttr().value();
-            QString          text  = map.namedItem("icon").toAttr().value();
-            QString          label = map.namedItem("label").toAttr().value();
-            QString          tool  = map.namedItem("tooltip").toAttr().value();
+            QString path  = p_items.at(i).attributes().namedItem("path").toAttr().value();
+            QString text  = p_items.at(i).attributes().namedItem("icon").toAttr().value();
+            QString label = p_items.at(i).attributes().namedItem("label").toAttr().value();
+            QString tool  = p_items.at(i).attributes().namedItem("tooltip").toAttr().value();
 
             QString b;
 
@@ -143,11 +138,7 @@ void CobraSettings::readSettings() {
 
     if(t_items.count() > 0) {
 
-        QDomNode         node = t_items.at(0);
-        QDomNamedNodeMap map  = node.attributes();
-        QString          id   = map.namedItem("id").toAttr().value();
-
-        theme_name = id;
+        theme_name = t_items.at(0).attributes().namedItem("id").toAttr().value();
 
     } else {
 
@@ -216,24 +207,40 @@ int CobraSettings::getPlacesCount() {
 
 }
 
-int CobraSettings::getApplicationsHeight( int parent_width ) {
+int CobraSettings::getApplicationsHeight( int parent_width, int border_width ) {
 
-    int item_count = applications_count;
-    int line_count = item_count / 3;
-
-    if (line_count * 3 >= applications_count) {
-
-        return parent_width / 40 + (parent_width / 3.5 + parent_width / 40) * line_count;
-
-    } else {
-
-        return parent_width / 40+ ((parent_width / 3.5 + parent_width / 40) * (line_count + 1));
-    }
+    int spacing = 4;
+    double w = ((double)parent_width - (double)border_width * 2) / 4 - 4;
+    int line_count = applications_count / 4;
+    if (line_count * 4 >= applications_count)
+        return qRound(w) * line_count + (line_count + 1) * spacing;
+     else
+        return qRound(w) * (line_count + 1) + (line_count + 2) * spacing;
 
 }
 
-int CobraSettings::getPlacesHeight( int parent_width ) {
+int CobraSettings::getPlacesHeight( int parent_width, int border_width ) {
 
-    return (parent_width / 6 + parent_width / 80) * places_count + parent_width / 20 - parent_width / 80;
+    int spacing = 4;
+    double h = ((double)parent_width - (double)border_width * 2) / 6;
+    return places_count * qRound(h) + spacing * (places_count + 1);
+
+}
+
+int CobraSettings::getTimeHeight( int parent_width, int border_width ) {
+
+    return (parent_width - border_width * 2) / 6;
+
+}
+
+int CobraSettings::getDateHeight( int parent_width, int border_width ) {
+
+    return (parent_width - border_width * 2) / 6 * 0.6;
+
+}
+
+int CobraSettings::getPinsHeight( int parent_width, int border_width ) {
+
+    return (parent_width - border_width * 2) / 8;
 
 }

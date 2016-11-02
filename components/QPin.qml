@@ -3,8 +3,6 @@ import QtGraphicalEffects 1.0
 
 Item {
 
-    id: button
-
     property int     qradius
     property color   qcolor1
     property color   qcolor2
@@ -24,14 +22,9 @@ Item {
     signal qUnchecked()
 
     MouseArea {
-        hoverEnabled: true
-        anchors.fill: parent
-
-        onHoveredChanged: {
-
-            effect1.start()
-
-        }
+        hoverEnabled:     true
+        anchors.fill:     parent
+        onHoveredChanged: effect1.start()
 
         onClicked: {
 
@@ -53,6 +46,7 @@ Item {
     }
 
     Rectangle {
+        id: button
         width:            parent.width
         height:           parent.height
         radius:           qradius

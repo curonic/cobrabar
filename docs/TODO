@@ -7,6 +7,7 @@
 + fix extended-height on theme changes (including hide/close maths)
 + remove back images on theme changes
 
+done! add fake blur
 done! turn strings "10px" & "10pt" into <int>10
 done! make applicationbutton properties standard for placesbutton & disksbuttons & pins
 done! fix applicationbutton padding

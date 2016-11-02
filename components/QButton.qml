@@ -16,104 +16,88 @@ Item {
     // dynamic
     property color  background_color_bottom: qbackgroundcolorbottom
     property color  background_color_top:    qbackgroundcolortop
-    property color  border_gradient_bottom:  qbordergradientbottom
-    property color  border_gradient_top:     qbordergradienttop
+    property color  border_color:            qbordercolor
     property int    border_radius:           qborderradius
     property int    border_width:            qborderwidth
     property string font_family:             qfontfamily
     property bool   icon_grayscale:          qicongrayscale
-    property color  inner_border_color:      qinnerbordercolor
-    property int    inner_border_width:      qinnerborderwidth
-    property color  outer_border_color:      qouterbordercolor
-    property int    outer_border_width:      qouterborderwidth
     property color  text_color:              qcolor
     property string text_alignment:          qtextalign
 
     // normal
     property color  qbackgroundcolorbottom
     property color  qbackgroundcolortop
-    property color  qbordergradientbottom
-    property color  qbordergradienttop
+    property color  qbordercolor
     property int    qborderradius
     property int    qborderwidth
     property color  qcolor
     property string qfontfamily
     property bool   qicongrayscale
-    property color  qinnerbordercolor
-    property int    qinnerborderwidth
-    property color  qouterbordercolor
-    property int    qouterborderwidth
     property string qtextalign
 
     // hover
     property color  qhbackgroundcolorbottom
     property color  qhbackgroundcolortop
-    property color  qhbordergradientbottom
-    property color  qhbordergradienttop
+    property color  qhbordercolor
     property int    qhborderradius
     property int    qhborderwidth
     property color  qhcolor
     property string qhfontfamily
     property bool   qhicongrayscale
-    property color  qhinnerbordercolor
-    property int    qhinnerborderwidth
-    property color  qhouterbordercolor
-    property int    qhouterborderwidth
     property string qhtextalign
 
     // focus
     property color  qfbackgroundcolorbottom
     property color  qfbackgroundcolortop
-    property color  qfbordergradientbottom
-    property color  qfbordergradienttop
+    property color  qfbordercolor
     property int    qfborderradius
     property int    qfborderwidth
     property color  qfcolor
     property string qffontfamily
     property bool   qficongrayscale
-    property color  qfinnerbordercolor
-    property int    qfinnerborderwidth
-    property color  qfouterbordercolor
-    property int    qfouterborderwidth
     property string qftextalign
 
     signal qClicked()
 
-
     function t_alignment(align) {
+        var s = border.height * 0.7 * qhasicon
         if(align === "left") {
-            return icon.width + icon.width / 2
+            return s + s / 2
         }
         if(align === "right") {
-            return width - label.width - icon.width / 2
+            return width - label.width - s / 2
         }
         if(align === "center") {
-            return width / 2 - label.width / 2 + icon.width / 2
+            return width / 2 - label.width / 2 + s / 2
         }
     }
 
     onQbackgroundcolorbottomChanged: background_color_bottom = qbackgroundcolorbottom
     onQbackgroundcolortopChanged:    background_color_top    = qbackgroundcolortop
-    onQbordergradientbottomChanged:  border_gradient_bottom  = qbordergradientbottom
-    onQbordergradienttopChanged:     border_gradient_top     = qbordergradienttop
     onQborderradiusChanged:          border_radius           = qborderradius
     onQhborderwidthChanged:          border_width            = qborderwidth
+    onQbordercolorChanged:           border_color            = qbordercolor
     onQfontfamilyChanged:            font_family             = qfontfamily
     onQicongrayscaleChanged:         icon_grayscale          = qicongrayscale
-    onQinnerbordercolorChanged:      inner_border_color      = qinnerbordercolor
-    onQinnerborderwidthChanged:      inner_border_width      = qinnerborderwidth
-    onQouterbordercolorChanged:      outer_border_color      = qouterbordercolor
-    onQouterborderwidthChanged:      outer_border_width      = qouterborderwidth
     onQcolorChanged:                 text_color              = qcolor
     onQtextalignChanged:             label.anchors.leftMargin = t_alignment(qtextalign)
     Component.onCompleted:           label.anchors.leftMargin = t_alignment(qtextalign)
     onWidthChanged:                  label.anchors.leftMargin = t_alignment(qtextalign)
+    onQiconChanged: {
+
+        if(qicon.charAt(qicon.length - 1) == "/") {
+            icon.width = 0
+            icon.height = 0
+            icon.source = ""
+        }
+    }
+
     Timer {
         id:          show_tooltip
         interval:    100
         repeat:      false
         running:     false
-        onTriggered: tooltipShow(qtooltip, tooltip.width, tooltip.height)
+        onTriggered: tooltipShow(qtooltip, tooltip.width, tooltip.height, tooltip_color, tooltip_background_color, tooltip_border_radius)
     }
 
     Timer {
@@ -136,45 +120,33 @@ Item {
     }
 
     MouseArea {
-        id:           mouse
         hoverEnabled: true
         anchors.fill: parent
 
         onEntered: {
             background_color_bottom = qhbackgroundcolorbottom
             background_color_top    = qhbackgroundcolortop
-            border_gradient_bottom  = qhbordergradientbottom
-            border_gradient_top     = qhbordergradienttop
+            border_color            = qhbordercolor
             border_radius           = qhborderradius
             border_width            = qhborderwidth
             font_family             = qhfontfamily
             icon_grayscale          = qhicongrayscale
-            inner_border_color      = qhinnerbordercolor
-            inner_border_width      = qhinnerborderwidth
-            outer_border_color      = qhouterbordercolor
-            outer_border_width      = qhouterborderwidth
             text_color              = qhcolor
             text_alignment          = t_alignment(qhtextalign)
             label.anchors.leftMargin = t_alignment(qhtextalign)
             fade_effect.stop()
             fade_effect.start()
             show_tooltip.start()
-
         }
 
         onExited: {
             background_color_bottom = qbackgroundcolorbottom
             background_color_top    = qbackgroundcolortop
-            border_gradient_bottom  = qbordergradientbottom
-            border_gradient_top     = qbordergradienttop
+            border_color            = qbordercolor
             border_radius           = qborderradius
             border_width            = qborderwidth
             font_family             = qfontfamily
             icon_grayscale          = qicongrayscale
-            inner_border_color      = qinnerbordercolor
-            inner_border_width      = qinnerborderwidth
-            outer_border_color      = qouterbordercolor
-            outer_border_width      = qouterborderwidth
             text_color              = qcolor
             text_alignment          = t_alignment(qtextalign)
             label.anchors.leftMargin = t_alignment(qtextalign)
@@ -185,19 +157,13 @@ Item {
         onClicked:        {
             background_color_bottom = qfbackgroundcolorbottom
             background_color_top    = qfbackgroundcolortop
-            border_gradient_bottom  = qfbordergradientbottom
-            border_gradient_top     = qfbordergradienttop
+            border_color            = qfbordercolor
             border_radius           = qfborderradius
             border_width            = qfborderwidth
             font_family             = qffontfamily
             icon_grayscale          = qficongrayscale
-            inner_border_color      = qfinnerbordercolor
-            inner_border_width      = qfinnerborderwidth
-            outer_border_color      = qfouterbordercolor
-            outer_border_width      = qfouterborderwidth
             text_color              = qfcolor
             text_alignment          = t_alignment(qftextalign)
-
             scale_effect.stop()
             scale_effect.start()
             show_tooltip.stop()
@@ -206,26 +172,15 @@ Item {
         }
     }
 
-    Rectangle {
-        anchors.centerIn: parent
-        anchors.fill:     parent
-        border.color:     outer_border_color
-        border.width:     outer_border_width
-        radius:           border_radius
-        gradient: Gradient {
-            GradientStop { position: 0; color: border_gradient_top }
-            GradientStop { position: 1; color: border_gradient_bottom }
-        }
-    }
 
     Rectangle {
-        id:               overlay
-        width:            parent.width  - ( border_width + outer_border_width ) * 2
-        height:           parent.height - ( border_width + outer_border_width ) * 2
-        radius:           border_radius - outer_border_width
+        id:               border
+        width:            parent.width
+        height:           parent.height
+        radius:           border_radius
         anchors.centerIn: parent
-        border.width:     inner_border_width
-        border.color:     inner_border_color
+        border.width:     border_width
+        border.color:     border_color
         gradient: Gradient {
             GradientStop { position: 0; color: background_color_top }
             GradientStop { position: 1; color: background_color_bottom }
@@ -235,12 +190,12 @@ Item {
     Image {
         id:                 icon
         source:             qicon
-        width:              overlay.height * 0.8 * qhasicon
-        height:             overlay.height * 0.8 * qhasicon
+        width:              border.height * 0.7 * qhasicon
+        height:             border.height * 0.7 * qhasicon
         anchors.left:       parent.left
-        anchors.leftMargin: overlay.height * 0.1 + border_width + outer_border_width
+        anchors.leftMargin: border.height * 0.15
         anchors.top:        parent.top
-        anchors.topMargin:  overlay.height * 0.1 + border_width + outer_border_width
+        anchors.topMargin:  border.height * 0.15
         fillMode:           Image.PreserveAspectFit
         smooth:             true
     }
@@ -249,7 +204,6 @@ Item {
         id:                     label
         text:                   qlabel
         font.pixelSize:         parent.height / 2.3
-        font.bold:              true
         font.family:            font_family
         color:                  text_color
         anchors.leftMargin:     text_alignment

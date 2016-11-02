@@ -9,16 +9,16 @@
     <theme id="test"></theme>
     
     <applications>
-        <application exec="firefox"             icon="firefox.png"         tooltip="Web Browser">      </application>
-        <application exec="konsole --workdir=~" icon="konsole.png"         tooltip="Terminal">         </application>
-        <application exec="dolphin"             icon="dolphin.png"         tooltip="File Manager">     </application>
-        <application exec="okteta"              icon="okteta.png"          tooltip="Hex Editor">       </application>
-        <application exec="okular"              icon="okular.png"          tooltip="PDF Reader">       </application>
-        <application exec="qtcreator"           icon="qtcreator.png"       tooltip="RAM Destroyer">    </application>
-        <application exec="cantata"             icon="cantata.png"         tooltip="Audio Player">     </application>
-        <application exec="systemsettings5"     icon="systemsettings5.png" tooltip="KDE Settings">     </application>
-        <application exec="kate"                icon="kate.png"            tooltip="Text Editor">      </application>
-        <application exec="kcolorchooser"       icon="kolourchooser.png"   tooltip="Color Picker">     </application>
+        <application exec="firefox"             icon="firefox.png"         tooltip="Web Browser">   </application>
+        <application exec="konsole --workdir=~" icon="konsole.png"         tooltip="Terminal">      </application>
+        <application exec="dolphin"             icon="dolphin.png"         tooltip="File Manager">  </application>
+        <application exec="okteta"              icon="okteta.png"          tooltip="Hex Editor">    </application>
+        <application exec="okular"              icon="okular.png"          tooltip="PDF Reader">    </application>
+        <application exec="qtcreator"           icon="qtcreator.png"       tooltip="RAM Destroyer"> </application>
+        <application exec="cantata"             icon="cantata.png"         tooltip="Audio Player">  </application>
+        <application exec="systemsettings5"     icon="systemsettings5.png" tooltip="KDE Settings">  </application>
+        <application exec="kate"                icon="kate.png"            tooltip="Text Editor">   </application>
+        <application exec="kcolorchooser"       icon="kolourchooser.png"   tooltip="Color Picker">  </application>
     </applications>
     
     <places>

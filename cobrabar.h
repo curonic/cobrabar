@@ -4,11 +4,11 @@
 #include "tooltip.h"
 #include "themeparser.h"
 
+#include <QFileSystemWatcher>
 #include <QMainWindow>
 #include <QObject>
-#include <QQuickView>
 #include <QQuickItem>
-#include <QFileSystemWatcher>
+#include <QQuickView>
 
 class CobraBar : public QWidget {
 
@@ -18,29 +18,27 @@ public:
     CobraBar(QWidget *parent = 0);
 
 private slots:
-    void slotTime();
+    void slotApplyStyle();
     void slotDate();
     void slotExec(QString external_application);
-    void slotPosition(QString id, int x, int y, int w, int h);
     void slotExit();
-    void slotApplyStyle();
-    void slotTooltipShow(QString tooltip, int tooltip_width, int tooltip_height);
+    void slotTime();
     void slotTooltipClose();
-
+    void slotTooltipShow(QString text, int width, int height, QString color, QString background, int radius);
+    void slotResize(int height_changes);
 private:
-    QObject     *qmlObject_;
-    QWidget     *qmlWidget_;
-    QQuickView  *qmlView_;
-    QStringList *position_;
-    QFileSystemWatcher *fileWatcher_;
-    bool         extended_height_;
+    QObject                 *qmlObject_;
+    QWidget                 *qmlWidget_;
+    QQuickView              *qmlView_;
+    QStringList             *position_;
+    QFileSystemWatcher      *fileWatcher_;
+    Tooltip                 *tooltip_;
+    ThemeParser             *themeParser_;
+    bool                    extended_height_;
 
-    void getApplications();
-    void getPlaces();
+    void getObjects();
 
-    Tooltip *tooltip_;
-    ThemeParser *t;
-
+    void flagGuard();
 };
 
 #endif // COBRABAR_H

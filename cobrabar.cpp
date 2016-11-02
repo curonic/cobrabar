@@ -17,33 +17,36 @@
  *                                                                          *
  ****************************************************************************/
 
-
 #include "cobrabar.h"
 #include "cobrasettings.h"
 
-#include <QTimer>
-#include <QTime>
-#include <QVBoxLayout>
+#include <QDebug>
+#include <QFileInfo>
+#include <QFileSystemWatcher>
 #include <QProcess>
 #include <QQuickItem>
-#include <QFileSystemWatcher>
-#include <QFileInfo>
 #include <QThread>
-#include <QDebug>
+#include <QTime>
+#include <QTimer>
+#include <QVBoxLayout>
+#include <QX11Info>
 
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+#include <X11/Xutil.h>
 
-CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
+CobraBar::CobraBar(QWidget *parent) : QWidget(parent, Qt::FramelessWindowHint) {
 
     position_    = new QStringList;
     qmlObject_   = new QObject;
     qmlWidget_   = new QWidget;
     qmlView_     = new QQuickView;
     tooltip_     = new Tooltip;
-    t            = new ThemeParser;
+    themeParser_ = new ThemeParser;
     fileWatcher_ = new QFileSystemWatcher;
 
     qmlView_->setSource(QUrl("qrc:/qml/Main.qml"));
-    qmlView_->setColor(QColor(Qt::transparent));
+    qmlView_->setColor(Qt::transparent);
 
     qmlObject_ = qmlView_->rootObject();
     qmlWidget_ = QWidget::createWindowContainer(qmlView_);
@@ -58,58 +61,44 @@ CobraBar::CobraBar(QWidget *parent) : QWidget(parent) {
     this->setFocusPolicy(Qt::NoFocus);
     this->setLayout(layout);
 
-    this->setWindowFlags(Qt::CustomizeWindowHint);
-
     QTimer *time_timer = new QTimer(this);
     time_timer->start(500);
 
     QTimer *date_timer = new QTimer(this);
     date_timer->start(4000);
 
-    connect(time_timer, SIGNAL(timeout()), this, SLOT(slotTime()));
-    connect(date_timer, SIGNAL(timeout()), this, SLOT(slotDate()));
-    connect(qmlObject_, SIGNAL(placeLaunch(QString)), this, SLOT(slotExec(QString)));
-    connect(qmlObject_, SIGNAL(applicationLaunch(QString)), this, SLOT(slotExec(QString)));
-    connect(qmlObject_, SIGNAL(loaderPosition(QString, int, int, int, int)), this, SLOT(slotPosition(QString, int, int, int, int)));
-    connect(qmlObject_, SIGNAL(exit()), this, SLOT(slotExit()));
-    connect(qmlObject_, SIGNAL(tooltipShow(QString, int, int)), this, SLOT(slotTooltipShow(QString, int, int)));
-    connect(qmlObject_, SIGNAL(tooltipClose()), this, SLOT(slotTooltipClose()));
-
+    connect(time_timer,   SIGNAL(timeout()), this, SLOT(slotTime()));
+    connect(date_timer,   SIGNAL(timeout()), this, SLOT(slotDate()));
+    connect(qmlObject_,   SIGNAL(placeLaunch(QString)), this, SLOT(slotExec(QString)));
+    connect(qmlObject_,   SIGNAL(applicationLaunch(QString)), this, SLOT(slotExec(QString)));
+    connect(qmlObject_,   SIGNAL(exit()), this, SLOT(slotExit()));
+    connect(qmlObject_,   SIGNAL(tooltipShow(QString, int, int, QString, QString, int)), this, SLOT(slotTooltipShow(QString, int, int, QString, QString, int)));
+    connect(qmlObject_,   SIGNAL(tooltipClose()), this, SLOT(slotTooltipClose()));
+    connect(qmlObject_,   SIGNAL(resize(int)), this, SLOT(slotResize(int)));
     connect(fileWatcher_, SIGNAL(fileChanged(const QString &)), this, SLOT(slotApplyStyle()));
 
     slotApplyStyle();
-    getApplications();
-    getPlaces();
+    getObjects();
+
+    flagGuard();
 
 }
 
-void CobraBar::slotTooltipShow(QString tooltip, int tooltip_width, int tooltip_height) {
+void CobraBar::slotTooltipShow(QString text, int width, int height, QString color, QString background, int radius) {
 
-    tooltip_->showm(tooltip, tooltip_width, tooltip_height);
+    tooltip_->showm(text, width, height, color, background, radius);
+
+}
+
+void CobraBar::slotResize(int height_changes) {
+
+    resize(width(), height() + height_changes);
 
 }
 
 void CobraBar::slotTooltipClose() {
 
     tooltip_->close();
-
-}
-
-void CobraBar::slotPosition(QString id, int x, int y, int w, int h) {
-
-    QString id_ = id;
-
-    id_.remove("qrc:/qml/").remove(".qml")
-            .append(",")
-            .append(QString::number(x))
-            .append(",")
-            .append(QString::number(y))
-            .append(",")
-            .append(QString::number(w))
-            .append(",")
-            .append(QString::number(h));
-
-    position_->append(id_.toLower());
 
 }
 
@@ -125,36 +114,27 @@ void CobraBar::slotTime() {
 
 }
 
-void CobraBar::getApplications() {
+void CobraBar::getObjects() {
 
     CobraSettings a;
 
     qmlObject_->setProperty("applicationIcon", a.getIconsDir());
+    qmlObject_->setProperty("placeIcon", a.getIconsDir());
 
-    for(int i = 0; i < a.getApplicationsCount(); i++) {
+    for(int i = 0; i < a.getApplicationsCount(); i++)
 
-        qmlObject_->setProperty("applicationEntry", a.getApplicationsList().at(i));
+        qmlObject_->setProperty("applicationEntry", a.getApplicationsList()[i]);
 
-    }
+    for(int i = 0; i < a.getPlacesCount(); i++)
+
+        qmlObject_->setProperty("placeEntry", a.getPlacesList()[i]);
+
 }
 
 void CobraBar::slotExec(QString external_application) {
 
     QProcess::startDetached(external_application);
 
-}
-
-void CobraBar::getPlaces() {
-
-    CobraSettings a;
-
-    qmlObject_->setProperty("placeIcon", a.getIconsDir());
-
-    for(int i = 0; i < a.getPlacesCount(); i++) {
-
-        qmlObject_->setProperty("placeEntry", a.getPlacesList().at(i));
-
-    }
 }
 
 void CobraBar::slotExit() {
@@ -165,19 +145,60 @@ void CobraBar::slotExit() {
 
 void CobraBar::slotApplyStyle() {
 
+    hide();
 
-    t->setThemeRules(window(), qmlObject_);
+    themeParser_->setThemeRules(this->window(), qmlObject_);
 
     CobraSettings s;
     QFileInfo f(s.getThemeFile());
 
-    if(!f.exists()) {
+    if(!f.exists())
 
-        thread()->usleep(1);
+        thread()->usleep(10);
 
-    } else {
+     else
 
         fileWatcher_->addPath(s.getThemeFile());
 
-    }
+    flagGuard();
+}
+
+void CobraBar::flagGuard() {
+
+    show();
+
+    Display *d = QX11Info::display();
+
+    Atom state = XInternAtom(d, "_NET_WM_STATE",              1);
+    Atom below = XInternAtom(d, "_NET_WM_STATE_BELOW",        1);
+    Atom tbar  = XInternAtom(d, "_NET_WM_STATE_SKIP_TASKBAR", 1);
+    Atom pgr   = XInternAtom(d, "_NET_WM_STATE_SKIP_PAGER",   1);
+
+    XEvent e;
+    e.xclient.type         = 33;
+    e.xclient.message_type = state;
+    e.xclient.display      = d;
+    e.xclient.window       = winId();
+    e.xclient.format       = 32;
+    e.xclient.data.l[0]    = 1;
+    e.xclient.data.l[1]    = below;
+    e.xclient.data.l[2]    = tbar;
+
+    XEvent f;
+    f.xclient.type         = 33;
+    f.xclient.message_type = state;
+    f.xclient.display      = d;
+    f.xclient.window       = winId();
+    f.xclient.format       = 32;
+    f.xclient.data.l[0]    = 1;
+    f.xclient.data.l[1]    = pgr;
+
+    XSendEvent(d, QX11Info::appRootWindow(), 0, SubstructureRedirectMask, &e);
+    XSendEvent(d, QX11Info::appRootWindow(), 0, SubstructureRedirectMask, &f);
+
+    Atom type  = XInternAtom(d, "_NET_WM_WINDOW_TYPE",         1);
+    Atom value = XInternAtom(d, "_NET_WM_WINDOW_TYPE_UTILITY", 1);
+
+    XChangeProperty(d, winId(), type, XA_ATOM, 32, PropModeReplace, (uchar*) &value, 1);
+
 }

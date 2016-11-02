@@ -19,14 +19,7 @@
 
 
 #include "cobrabar.h"
-
 #include <QApplication>
-#include <QX11Info>
-
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
-#include <X11/Xutil.h>
-
 
 int main(int argc, char *argv[]) {
 
@@ -34,42 +27,6 @@ int main(int argc, char *argv[]) {
     CobraBar w;
     w.show();
 
-    // make a for loop
-    Display *d = QX11Info::display();
-
-    Atom state = XInternAtom(d, "_NET_WM_STATE",              True);
-    Atom below = XInternAtom(d, "_NET_WM_STATE_BELOW",        True);
-    Atom tbar  = XInternAtom(d, "_NET_WM_STATE_SKIP_TASKBAR", True);
-    Atom pgr   = XInternAtom(d, "_NET_WM_STATE_SKIP_PAGER",   True);
-
-    XEvent e;
-    e.xclient.type         = 33;
-    e.xclient.message_type = state;
-    e.xclient.display      = d;
-    e.xclient.window       = w.winId();
-    e.xclient.format       = 32;
-    e.xclient.data.l[0]    = 1;
-    e.xclient.data.l[1]    = below;
-    e.xclient.data.l[2]    = tbar;
-
-    XEvent f;
-    f.xclient.type         = 33;
-    f.xclient.message_type = state;
-    f.xclient.display      = d;
-    f.xclient.window       = w.winId();
-    f.xclient.format       = 32;
-    f.xclient.data.l[0]    = 1;
-    f.xclient.data.l[1]    = pgr;
-
-    XSendEvent(d, QX11Info::appRootWindow(), False, SubstructureRedirectMask, &e);
-    XSendEvent(d, QX11Info::appRootWindow(), False, SubstructureRedirectMask, &f);
-
-    // skip switcher the right way
-    Atom type  = XInternAtom(d, "_NET_WM_WINDOW_TYPE",         False);
-    Atom value = XInternAtom(d, "_NET_WM_WINDOW_TYPE_UTILITY", False);
-
-    XChangeProperty(d, w.winId(), type, XA_ATOM, 32, PropModeReplace, (uchar*) &value, 1);
-
     return a.exec();
-
 }
+

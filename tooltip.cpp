@@ -1,4 +1,5 @@
 #include "tooltip.h"
+#include "themeparser.h"
 #include <QDesktopWidget>
 
 Tooltip::Tooltip() {
@@ -18,38 +19,38 @@ Tooltip::Tooltip() {
                          Qt::Popup |
                          Qt::ToolTip |
                          Qt::WindowDoesNotAcceptFocus);
-    this->setStyleSheet("background: #cc000000; border-radius: 6px; color: #fff;");
 
 }
 
-void Tooltip::showm(QString tooltip, int tooltip_width, int tooltip_height) {
+void Tooltip::showm(QString text, int width, int height, QString color, QString background, int radius) {
 
     QCursor a;
     QDesktopWidget qw;
+    QString cu = QString::number(radius);
+
     QPoint point(a.pos().x(), a.pos().y() + 24);
+    this->setStyleSheet("background: "+background+"; border-radius:"+cu+"px; color: "+color+";");
 
+    if(point.x() + width + height > qw.width())
 
-    if(point.x() + tooltip_width + tooltip_height > qw.width()) {
+        move(qw.width() - width - height,a.pos().y() + 24);
 
-        this->move(qw.width() - tooltip_width - tooltip_height,a.pos().y() + 24);
+     else
 
-    } else {
+        move(point);
 
-        this->move(point);
-
-    }
 
     this->resize(0, 0); // reset (some objects may have no popup or a popup is empty)
 
-    if(tooltip.length() > 1) {
+    if(text.length() > 1) {
 
         show();
 
-        label->setText(tooltip);
+        label->setText(text);
 
-        this->resize(tooltip_width + tooltip_height, tooltip_height * 2);
+        this->resize(width + height, height * 2);
         // weird bug (a typical qt/qml signal carousel by the looks)
-        this->resize(tooltip_width + tooltip_height, tooltip_height * 2);
+        this->resize(width + height, height * 2);
 
     }
 }

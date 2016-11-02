@@ -1,30 +1,30 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import QtGraphicalEffects 1.0
+
 import "../components/"
 
 Item {
 
     clip: true
     // global stuff
-    property string qmlCalendar:       "qrc:/qml/Calendar.qml"
+    property string qmlDate:       "qrc:/qml/Date.qml"
+    property string qmlTime:       "qrc:/qml/Time.qml"
     property string qmlApplications:   "qrc:/qml/Applications.qml"
     property string qmlPlaces:         "qrc:/qml/Places.qml"
     property string qmlPins:           "qrc:/qml/Pins.qml"
     property string qmlSlideshow:      "qrc:/qml/Slideshow.qml"
 
-    // pretty much everything c++ needs to know about qml dimensions
-    signal loaderPosition(string id, int x, int y, int w, int h)
-    signal tooltipShow(string tooltip, int tooltip_width, int tooltip_height)
+    signal tooltipShow(string tooltip, int tooltip_width, int tooltip_height, string tooltip_color, string tooltip_background_color, int tooltip_border_radius)
     signal tooltipClose()
-    signal globalPosition(string left_or_right)
     signal globalWidth(int width)
     signal globalExtended(bool state)
-
 
     // calendar
     property string calendarTime
     property string calendarDate
+    property int    timeHeight
+    property int    dateHeight
 
     // apps
     property string applicationEntry
@@ -39,8 +39,9 @@ Item {
     signal          placeLaunch(string place)
 
     // pins
+    property int    pinsHeight
     signal exit()
-    signal resize(int changed_height, bool extended)
+    signal resize(int changed_height)
 
     // style stuff (default values)
     property color  calendar_background_color
@@ -120,109 +121,76 @@ Item {
     property color  general_background_color
     property color  general_border_color
     property string general_background_image
+    property int    general_blur_radius
     property int    general_border_radius
     property int    general_border_width
     property real   general_image_opacity
     property int    general_width
+    property bool   general_extended_height
 
     property color  applicationbutton_background_gradient_bottom
     property color  applicationbutton_background_gradient_top
-    property color  applicationbutton_border_gradient_bottom
-    property color  applicationbutton_border_gradient_top
+    property color  applicationbutton_border_color
     property int    applicationbutton_border_radius
     property int    applicationbutton_border_width
     property color  applicationbutton_color
     property string applicationbutton_font_family
     property bool   applicationbutton_icon_grayscale
-    property color  applicationbutton_inner_border_color
-    property int    applicationbutton_inner_border_width
-    property color  applicationbutton_outer_border_color
-    property int    applicationbutton_outer_border_width
     property string applicationbutton_text_align
 
     property color  applicationbutton_focus_background_gradient_bottom
     property color  applicationbutton_focus_background_gradient_top
-    property color  applicationbutton_focus_border_gradient_bottom
-    property color  applicationbutton_focus_border_gradient_top
+    property color  applicationbutton_focus_border_color
     property int    applicationbutton_focus_border_radius
     property int    applicationbutton_focus_border_width
     property color  applicationbutton_focus_color
     property string applicationbutton_focus_font_family
     property bool   applicationbutton_focus_icon_grayscale
-    property color  applicationbutton_focus_inner_border_color
-    property int    applicationbutton_focus_inner_border_width
-    property color  applicationbutton_focus_outer_border_color
-    property int    applicationbutton_focus_outer_border_width
     property string applicationbutton_focus_text_align
 
     property color  applicationbutton_hover_background_gradient_bottom
     property color  applicationbutton_hover_background_gradient_top
-    property color  applicationbutton_hover_border_gradient_bottom
-    property color  applicationbutton_hover_border_gradient_top
+    property color  applicationbutton_hover_border_color
     property int    applicationbutton_hover_border_radius
     property int    applicationbutton_hover_border_width
     property color  applicationbutton_hover_color
     property string applicationbutton_hover_font_family
     property bool   applicationbutton_hover_icon_grayscale
-    property color  applicationbutton_hover_inner_border_color
-    property int    applicationbutton_hover_inner_border_width
-    property color  applicationbutton_hover_outer_border_color
-    property int    applicationbutton_hover_outer_border_width
     property string applicationbutton_hover_text_align
 
     property color  placebutton_background_gradient_bottom
     property color  placebutton_background_gradient_top
-    property color  placebutton_border_gradient_bottom
-    property color  placebutton_border_gradient_top
+    property color  placebutton_border_color
     property int    placebutton_border_radius
     property int    placebutton_border_width
     property color  placebutton_color
     property string placebutton_font_family
     property bool   placebutton_icon_grayscale
-    property color  placebutton_inner_border_color
-    property int    placebutton_inner_border_width
-    property color  placebutton_outer_border_color
-    property int    placebutton_outer_border_width
     property string placebutton_text_align
 
     property color  placebutton_focus_background_gradient_bottom
     property color  placebutton_focus_background_gradient_top
-    property color  placebutton_focus_border_gradient_bottom
-    property color  placebutton_focus_border_gradient_top
+    property color  placebutton_focus_border_color
     property int    placebutton_focus_border_radius
     property int    placebutton_focus_border_width
     property color  placebutton_focus_color
     property string placebutton_focus_font_family
     property bool   placebutton_focus_icon_grayscale
-    property color  placebutton_focus_inner_border_color
-    property int    placebutton_focus_inner_border_width
-    property color  placebutton_focus_outer_border_color
-    property int    placebutton_focus_outer_border_width
     property string placebutton_focus_text_align
 
     property color  placebutton_hover_background_gradient_bottom
     property color  placebutton_hover_background_gradient_top
-    property color  placebutton_hover_border_gradient_bottom
-    property color  placebutton_hover_border_gradient_top
+    property color  placebutton_hover_border_color
     property int    placebutton_hover_border_radius
     property int    placebutton_hover_border_width
     property color  placebutton_hover_color
     property string placebutton_hover_font_family
     property bool   placebutton_hover_icon_grayscale
-    property color  placebutton_hover_inner_border_color
-    property int    placebutton_hover_inner_border_width
-    property color  placebutton_hover_outer_border_color
-    property int    placebutton_hover_outer_border_width
     property string placebutton_hover_text_align
 
-    Component.onCompleted: {
-        loaderPosition(calendar.source, calendar.x, calendar.y, calendar.width, calendar.height)
-        loaderPosition(pins.source, pins.x, pins.y, pins.width, pins.height)
-        loaderPosition(applications.source, applications.x, applications.y, applications.width, applications.height)
-        loaderPosition(places.source, places.x, places.y, places.width, places.height)
-
-
-    }
+    property string tooltip_color
+    property string tooltip_background_color
+    property int    tooltip_border_radius
 
     anchors.fill:     parent
 
@@ -244,8 +212,9 @@ Item {
         horizontalAlignment: Image.AlignLeft
         verticalAlignment:   Image.AlignTop
         layer.enabled:       true
-        layer.effect: OpacityMask {
-            maskSource: Item {
+        layer.effect:
+            OpacityMask { maskSource:
+                Item {
                 width:      img.width
                 height:     img.height
 
@@ -255,38 +224,45 @@ Item {
                     height:           parent.height
                     radius:           general_border_radius
                     opacity:          general_image_opacity
-                    color:            "red"
                 }
             }
         }
     }
 
     Column {
-        spacing:      0
-        anchors.fill: parent
-        anchors.top:  parent.top
+        spacing:           0
+        anchors.fill:      parent
+        anchors.top:       parent.top
         anchors.topMargin: general_border_width
 
         Loader {
-            id:     pins
-            source: qmlPins
-            width:  general_width
+            id:                       pins
+            source:                   qmlPins
+            width:                    general_width - general_border_width * 2
             anchors.horizontalCenter: parent.horizontalCenter
-            height: general_width / 8
+            height:                   pinsHeight
         }
 
         Loader {
-            id:     calendar
-            source: qmlCalendar
-            width:  general_width
+            id:     time
+            source: qmlTime
+            width:  general_width - general_border_width * 2
             anchors.horizontalCenter: parent.horizontalCenter
-            height: general_width / 3 + general_width / 10
+            height: timeHeight
+        }
+
+        Loader {
+            id:     date
+            source: qmlDate
+            width:  general_width - general_border_width * 2
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: dateHeight;
         }
 
         Loader {
             id:     applications
             source: qmlApplications
-            width:  general_width
+            width:  general_width - general_border_width * 2
             anchors.horizontalCenter: parent.horizontalCenter
             height: applicationHeight
         }
@@ -294,7 +270,7 @@ Item {
         Loader {
             id:     places
             source: qmlPlaces
-            width:  general_width
+            width:  general_width - general_border_width * 2
             anchors.horizontalCenter: parent.horizontalCenter
             height: placeHeight
         }
